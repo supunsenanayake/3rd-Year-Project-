@@ -4,8 +4,9 @@
 
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -33.866, lng: 151.196},
-        zoom: 15
+        center: {lat: 7.702874, lng: 80.499782},
+
+        zoom: 9
     });
 
     var infowindow = new google.maps.InfoWindow();
