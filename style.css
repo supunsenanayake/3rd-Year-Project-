@@ -34,7 +34,7 @@ audio:not([controls]) {
 
 html {
   background: #fff;
-  color: #000;
+  color: #000000;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%; }
 
@@ -56,7 +56,7 @@ a {
     outline: 0; }
 
 h1 {
-  font-size: 2em;
+  font-size: 20em;
   margin: 0.67em 0; }
 
 h2 {
@@ -216,7 +216,7 @@ body {
   font-size: 14px;
   font-weight: 300;
   line-height: 1.5;
-  background: #1e202b; }
+  background: #002160; }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
@@ -225,7 +225,7 @@ h1, h2, h3, h4, h5, h6 {
 
 hr {
   border: none;
-  border-bottom: 1px solid #777; }
+  border-bottom: 1px solid #5d5d5d; }
 
 ul, ol {
   margin: 0;
@@ -1124,7 +1124,7 @@ form textarea {
       margin-right: 10px; }
     .site-header .branding .site-title {
       margin-bottom: 5px;
-      font-size: 16px;
+      font-size: 30px;
       font-size: 1.1428571429em;
       color: white; }
     .site-header .branding .site-description {
@@ -1227,7 +1227,7 @@ form textarea {
 
 .forecast-container {
   width: 100%;
-  background: #323544;
+  background: #29405a;
   display: table;
   table-layout: fixed;
   width: 100%;
@@ -1643,7 +1643,7 @@ form textarea {
  * Footer Styles
  */
 .site-footer {
-  background: #262936;
+  background: #070d2a;
   padding: 50px 0; }
   .site-footer .subscribe-form {
     position: relative;
