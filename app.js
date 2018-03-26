@@ -9,6 +9,10 @@ var hbs  = require('express-handlebars');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var profile = require('./routes/profile');
+var chatBox = require('./routes/chatBox');
+var newsFeed = require('./routes/newsFeed');
+var uploadPost = require('./routes/uploadPost');
+var donation = require('./routes/donation');
 
 var app = express();
 
@@ -27,6 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/profile', profile);
+app.use('/chatBox', chatBox);
+app.use('/newsFeed', newsFeed);
+app.use('/uploadPost', uploadPost);
+app.use('/donation', donation);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

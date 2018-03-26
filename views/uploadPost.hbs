@@ -1,0 +1,29 @@
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+
+            <form method="post" action="/uploadPost/upload">
+                <div class="form-group">
+                    <label for="formGroupPostTitle">Post Title</label>
+                    <input type="text" class="form-control" id="formGroupPostTitle" placeholder="Title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">News Description</label>
+                    <textarea class="form-control" rows="3" name="news" placeholder="Type News Here"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Upload Image</label><br>
+                    <input type="file"  id="formGroupImage" name="image">
+                </div>
+                <div class="form-group col-xs-4">
+                    <button type="submit" class="btn btn-primary" name="submit" value="create">Upload</button>
+                    <button class="btn btn-danger" name="submit" value="false">Cancel</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</section>
+
+

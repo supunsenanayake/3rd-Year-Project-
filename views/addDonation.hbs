@@ -1,0 +1,32 @@
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <h1>Donations</h1>
+                <hr>
+            <form method="post" action="/donation/donate">
+                <div class="form-group col-lg-4">
+                    <label for="formGroupPostDonor">Donor Name</label>
+                    <input type="text" class="form-control" id="formGroupdonor" placeholder="Name" name="name">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label for="formGroupMobile">Mobile Number</label>
+                    <input type="number" class="form-control" id="formGroupMobile" placeholder="valid mobile number" name="mobile">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label for="formGroupPost">Red Rice 1KG(Amount)</label>
+                    <input type="number" class="form-control" id="formGroupAmount" placeholder="Amount" name="amount">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="formGroupItem"  name="item">
+                </div>
+                <div class="form-group col-xs-4">
+                    <button type="submit" class="btn btn-primary" name="submit" value="create">Donate</button>
+                    <button class="btn btn-danger" name="submit" value="false">Cancel</button>
+                </div>
+            </form>
+            </div>
+
+        </div>
+    </div>
+</section>
