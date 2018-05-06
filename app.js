@@ -13,8 +13,11 @@ var chatBox = require('./routes/chatBox');
 var newsFeed = require('./routes/newsFeed');
 var uploadPost = require('./routes/uploadPost');
 var donation = require('./routes/donation');
+var mongoose = require('mongoose');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/sahana');
 
 // view engine setup
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'main', layoutsDir:__dirname+'/views/layouts/'}));
