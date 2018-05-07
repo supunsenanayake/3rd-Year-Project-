@@ -5,12 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs  = require('express-handlebars');
+var session= require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var profile = require('./routes/profile');
 var chatBox = require('./routes/chatBox');
-var newsFeed = require('./routes/newsFeed');
+//var newsFeed = require('./routes/newsFeed');
 var uploadPost = require('./routes/uploadPost');
 var donation = require('./routes/donation');
 var mongoose = require('mongoose');
@@ -20,7 +21,7 @@ var app = express();
 mongoose.connect('mongodb://localhost:27017/sahana');
 
 // view engine setup
-app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'main', layoutsDir:__dirname+'/views/layouts/'}));
+app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'landing', layoutsDir:__dirname+'/views/layouts/'}));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -35,7 +36,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/profile', profile);
 app.use('/chatBox', chatBox);
-app.use('/newsFeed', newsFeed);
+//app.use('/newsFeed', newsFeed);
 app.use('/uploadPost', uploadPost);
 app.use('/donation', donation);
 
