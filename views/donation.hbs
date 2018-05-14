@@ -1,38 +1,29 @@
 <section class="banner-sec">
+    {{#if msgSuccess}}
+        <div id="charge-error" class="alert alert-success">
+            {{msgSuccess}}
+        </div>
+    {{/if}}
     <div class="container">
         <div class="row">
 
 
             <div class=" col-md-9 col-lg-9 ">
-
+                <h6>
                     <table class="table table-user-information" align="center">
                         <tbody>
                         <tr style="font-size: 130%">
                             <td>List</td>
                             <td>Amount</td>
-                             <td>Donate</td>
+                            <td>Donate</td>
                         </tr>
-                        <h6>
-                        <tr>
-                            <td>Red Rice(1KG)</td>
-                            <td>10</td>
-                            <td><a href="/donation/addDonation">Add Donation</a></td>
-                        </tr>
-                        <tr>
-                            <td>Dhal(1kG)</td>
-                            <td>5</td>
-                            <td><a href="/donation/addDonation">Add Donation</a></td>
-                        </tr>
-                        <tr>
-                            <td>first Aid Kits</td>
-                            <td>8</td>
-                            <td><a href="/donation/addDonation">Add Donation</a></td>
-                        </tr>
-                        <tr>
-                            <td>Water Bottles</td>
-                            <td>20</td>
-                            <td><a href="/donation/addDonation">Add Donation</a></td>
-                        </tr>
+                        {{# each donations}}
+                            <tr>
+                                <td>{{this._id}}</td>
+                                <td>{{this.quantity}}</td>
+                                <td><a href="/donation/addDonation/{{this._id}}">Add Donation</a></td>
+                            </tr>
+                        {{/each}}
                         <tr>
                             <td>Others
                                 <br>
@@ -40,7 +31,6 @@
                             <td>------</td>
                             <td><a href="/donation/addItem">Add Item</a></td>
                         </tr>
-
                         </tbody>
                     </table>
                 </h6>
