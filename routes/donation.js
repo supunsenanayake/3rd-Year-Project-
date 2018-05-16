@@ -19,6 +19,8 @@ router.get('/', function(req, res, next) {
         const db = client.db(dbName);
         db.collection('donations').aggregate(
             [
+                {$match:{eventId : req.session.eventID}
+                },
                 { $group : { _id : "$item", quantity: { $sum: "$amount"} } }
             ])
             .toArray(function (err, result) {
@@ -49,7 +51,8 @@ router.post('/addItem', function (req, res, next) {
             donorName: req.body.donorName,
             mobile: req.body.mobile,
             item: req.body.itemName,
-            amount: req.body.amount
+            amount: req.body.amount,
+            eventId : req.session.eventID
         });
         donation.save(function (err, result) {
             req.flash('success', 'Successfully Add your Donation!');
@@ -82,7 +85,8 @@ router.post('/addDonation', function (req, res, next) {
             donorName: req.body.donorName,
             mobile: req.body.mobile,
             item: req.body.itemName,
-            amount: req.body.amount
+            amount: req.body.amount,
+            eventId : req.session.eventID
         });
         donation.save(function (err, result) {
             req.flash('success', 'Successfully Add your Donation!');

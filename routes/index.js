@@ -17,11 +17,8 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.get('/newsFeed/:id/:event', function(req, res, next) {
-    var str = req.params.id;
-    var eventId = str.toString();
-    var event = req.params.event;
-    News.find({eventId: eventId})
+router.get('/newsFeed', function(req, res, next) {
+    News.find({eventId: req.session.eventID})
         .exec(function (err, docs) {
             console.log(docs);
             var newsChunks = [];
@@ -29,18 +26,18 @@ router.get('/newsFeed/:id/:event', function(req, res, next) {
             for (var i = 0; i < docs.length; i += chunkSize) {
                 newsChunks.push(docs.slice(i, i + chunkSize));
             }
-            res.render('newsFeed', {news: newsChunks, event: event, eventId: eventId, layout: 'main'});
+            res.render('newsFeed', {news: newsChunks, event: req.session.eventTitle, eventId: req.session.eventID, layout: 'main'});
         });
+
 });
 
-
-router.get('/event', function(req, res, next) {
-    res.render('event');
+router.get('/newsFeed/:id/:event', function(req, res, next) {
+    req.session.eventTitle = req.params.event;
+    var str = req.params.id;
+    req.session.eventID = str.toString();
+    res.redirect('/newsFeed');
 });
 
-router.get('/event2', function(req, res, next) {
-    res.render('newsFeed', {layout: 'normal2'});
-});
 
 
 
