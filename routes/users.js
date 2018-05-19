@@ -12,6 +12,12 @@ router.get('/', isLoggedIn, function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/logout', isLoggedIn, function (req, res, next) {
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
+});
+
 router.use('/', notLoggedIn, function(req, res, next) {
     next();
 });

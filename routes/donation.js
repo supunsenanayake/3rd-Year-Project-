@@ -32,6 +32,10 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.use('/', isLoggedIn, function(req, res, next) {
+    next();
+});
+
 router.get('/addItem', function(req, res, next) {
     res.render('addItem', {csrfToken: req.csrfToken(), msgSuccess: false, messages: false, layout : 'main'});
 });
@@ -67,7 +71,8 @@ router.post('/addItem', function (req, res, next) {
 });
 
 router.get('/addDonation/:id', function(req, res, next) {
-    res.render('addDonation',{csrfToken: req.csrfToken(), itemName : req.params.id, layout : 'main'});
+    req.session.itemName = req.params.id;
+    res.render('addDonation',{csrfToken: req.csrfToken(), itemName : req.session.itemName, layout : 'main'});
 });
 
 
@@ -99,14 +104,7 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/');
-}
-
-function notLoggedIn(req, res, next) {
-    if (!req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/');
+    res.redirect('/users/signIn');
 }
 
 

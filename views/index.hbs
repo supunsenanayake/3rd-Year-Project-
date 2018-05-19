@@ -2,9 +2,63 @@
 <section class="banner-sec">
     <div class="container">
         <div class="row">
-        {{# each events }}
+            {{#if isAuthenticated}}
+                {{#if userRole}}
+        {{#each events }}
             <div class="col-md-3">
-            {{# each this}}
+            {{#each this}}
+                <div class="card"> <img class="img-fluid" src="{{this.imagePath}}" alt="">
+                    <div class="card-img-overlay"> <span class="badge badge-pill badge-danger">
+                        <script> if(count < 1){
+                            document.write("New")
+                        }else {
+                            document.write("Old")
+                        }</script>
+                    </span> </div>
+                    <div class="card-body">
+                        <div class="news-title">
+                            <h2 class=" title-small"><a href="/newsFeed/{{this._id}}/{{this.title}}">{{this.title}}</a></h2>
+                        </div>
+                        <p class="card-text"><small class="text-time"><em>{{this.date}}</em></small></p>
+                            <a class="btn btn-success" href="#" role="button" onclick="return confirm('Are You Sure ' +
+                         'You Want To Edit This Event..!');">Edit &raquo;</a>
+                            <a class="btn btn-danger" href="#" role="button"
+                               onclick="return confirm('Are You Sure ' +
+                         'You Want To Delete This Event..!');">Delete &raquo;</a>
+                    </div>
+                </div>
+                <script> count++;</script>
+            {{/each}}
+            </div>
+        {{/each}}
+        {{else}}
+                {{#each events }}
+                        <div class="col-md-3">
+                            {{# each this}}
+                                <div class="card"> <img class="img-fluid" src="{{this.imagePath}}" alt="">
+                                    <div class="card-img-overlay"> <span class="badge badge-pill badge-danger">
+                        <script> if(count < 1){
+                            document.write("New")
+                        }else {
+                            document.write("Old")
+                        }</script>
+                    </span> </div>
+                                    <div class="card-body">
+                                        <div class="news-title">
+                                            <h2 class=" title-small"><a href="/newsFeed/{{this._id}}/{{this.title}}">{{this.title}}</a></h2>
+                                        </div>
+                                        <p class="card-text"><small class="text-time"><em>{{this.date}}</em></small></p>
+                                    </div>
+                                </div>
+                                <script> count++;</script>
+                            {{/each}}
+                        </div>
+                {{/each}}
+            {{/if}}
+            {{else}}
+                {{#each events }}
+        <div class="col-md-3">
+            {{#each this}}
                 <div class="card"> <img class="img-fluid" src="{{this.imagePath}}" alt="">
                     <div class="card-img-overlay"> <span class="badge badge-pill badge-danger">
                         <script> if(count < 1){
@@ -22,8 +76,10 @@
                 </div>
                 <script> count++;</script>
             {{/each}}
-            </div>
-        {{/each}}
+        </div>
+{{/each}}
+{{/if}}
+
             <div class="col-md-6 top-slider">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->

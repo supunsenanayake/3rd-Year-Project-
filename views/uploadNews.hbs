@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
 
-            <form method="post" action="/uploadPost/upload">
+            <form method="post" action="#">
                 <div class="form-group">
                     <label for="formGroupPostTitle">Post Title</label>
                     <input type="text" class="form-control" id="formGroupPostTitle" placeholder="Title" name="title">
@@ -17,7 +17,9 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <button type="submit" class="btn btn-primary" name="submit" value="create">Upload</button>
-                    <button class="btn btn-danger" name="submit" value="false">Cancel</button>
+                    <a href="/newsFeed" class="btn btn-danger"
+                       onclick="return confirm('Are You Sure ' +
+                         'You want to cancel this Process..?');">Cancel</a>
                 </div>
             </form>
 

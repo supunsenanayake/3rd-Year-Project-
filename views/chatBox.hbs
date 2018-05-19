@@ -20,12 +20,13 @@
     font-size: 18px;
     padding: 10px 20px;
     color: #1f2121;
-">CHAT : Sri Lanka Southern Province has flood</h2>
+">CHAT : {{session.eventTitle}}</h2>
     <div id="chat-window">
         <div id="output"></div>
         <div id="feedback"></div>
     </div>
-    <input id="handle" type="text" placeholder="Handle" value="Vihanga"/>
+    <label for="formGroupPostDonor">{{user.firstName}} {{user.lastName}}</label>
+    <input id="handle" type="hidden" placeholder="Handle" value="{{user.firstName}} {{user.lastName}}"/>
     <input id="message" type="text" placeholder="Message" />
     <button id="send"
     style="
