@@ -2,12 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SAHANA Disaster Management System</title>
     <link rel="icon" href="/images/avatars.jpg">
     <link href="/stylesheets/home.css" rel="stylesheet" >
     <script src="/javascripts/background.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </head>
 <header>
     <!------ Include the above in your HEAD tag ---------->
@@ -19,7 +21,7 @@
                     <div id="Date"></div>
                 </div>
                 <div class="col-lg-3 offset-lg-5">
-                    <div class="social-icon"> <a target="_blank" href="#" class=" fa fa-facebook"></a> <a target="_blank" href="#" class=" fa fa-twitter"></a> <a target="_blank" href="#" class=" fa fa-google-plus"></a> <a target="_blank" href="#" class=" fa fa-linkedin"></a> <a target="_blank" href="#" class=" fa fa-youtube"></a> <a target="_blank" href="#" class=" fa fa-vimeo-square"></a> </div>
+                    <div class="social-icon"> <a href="/users/signIn" class="nav-link">Login</a> <a href="/users/signUp" class="nav-link">Register</a> </div>
                 </div>
             </div>
         </div>
@@ -37,17 +39,18 @@
 <body>
 
 <section class="top-nav">
-    <nav class="navbar navbar-expand-lg py-0">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="exCollapsingNavbar2">
-                <ul class="nav navbar-nav ">
-                    <li class="nav-item active"> <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a> </li>
-
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"> <a class="nav-link" href="/">Back To Events<span class="sr-only">(current)</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="/users/signIn">Login<span class="sr-only">(current)</span></a> </li>
+                    <li class="nav-item active"> <a class="nav-link" href="/users/signUp">Register<span class="sr-only">(current)</span></a> </li>
                 </ul>
-                <form class="ml-auto">
+                <form class="my-2 my-lg-0 ml-auto">
                     <div class="search">
                         <input type="text" class="form-control" maxlength="64" placeholder="Search" />
                         <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -65,7 +68,10 @@
 <section class="action-sec">
     <div class="container">
         <div class="action-box text-center"><h2>HELP EACH OTHER & BUILD SRI LANKA TOGETHER </h2>
-            <p>&copy; 2018 SAHANA Disaster Management System, All Right Reserved. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+            <p>&copy; &middot; <a href="#"> 2018 SAHANA Disaster Management System, All Right Reserved.</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </div>
+        <div class="col-lg-3 offset-lg-5">
+            <div class="social-icon"> <a target="_blank" href="#" class=" fa fa-facebook"></a> <a target="_blank" href="#" class=" fa fa-twitter"></a> <a target="_blank" href="#" class=" fa fa-google-plus"></a> <a target="_blank" href="#" class=" fa fa-linkedin"></a> <a target="_blank" href="#" class=" fa fa-youtube"></a> <a target="_blank" href="#" class=" fa fa-vimeo-square"></a> </div>
         </div>
     </div>
 </section>

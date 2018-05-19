@@ -9,6 +9,7 @@ var session= require('express-session');
 var validator = require('express-validator');
 var flash = require('connect-flash');
 var passport = require('passport');
+var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -38,7 +39,9 @@ app.use(cookieParser());
 app.use(session({
     secret: 'foo',
     saveUninitialized: false ,
-    resave: false,}));
+    resave: false,
+store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
