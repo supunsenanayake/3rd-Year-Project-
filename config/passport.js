@@ -3,14 +3,12 @@ var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy;
 
 
-passport.serializeUser(function (user, done) {
-    done(null, user.id);
+passport.serializeUser(function (user_detail, done) {
+    done(null, user_detail);
 });
 
-passport.deserializeUser(function (id, done) {
-    User.findById(id, function (err, user) {
-        done(err, user);
-    });
+passport.deserializeUser(function (user_detail, done) {
+        done(null, user_detail);
 });
 
 passport.use('local.signUp', new LocalStrategy({
@@ -37,7 +35,7 @@ passport.use('local.signUp', new LocalStrategy({
         });
         return done(null, false, req.flash('error', messages));
     }
-    User.findOne({'nic': req.body.nic}, function (err, user) {
+    User.findOne({'nic': (req.body.nic).toString() + "v"}, function (err, user) {
         if (err) {
             return done(err);
         }
