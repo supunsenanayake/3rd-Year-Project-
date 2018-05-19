@@ -15,8 +15,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var profile = require('./routes/profile');
 var chatBox = require('./routes/chatBox');
-//var newsFeed = require('./routes/newsFeed');
-var uploadPost = require('./routes/uploadPost');
+var news = require('./routes/news');
 var donation = require('./routes/donation');
 var mongoose = require('mongoose');
 
@@ -40,19 +39,30 @@ app.use(session({
     secret: 'foo',
     saveUninitialized: false ,
     resave: false,
-store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie : { maxAge : 180 * 60 * 1000}
 }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    res.locals.session = req.session;
+    if (req.isAuthenticated()){
+        res.locals.user = req.user;
+        if(req.user.role === 'Admin')
+            res.locals.userRole= true;
+    }
+    next();
+});
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/profile', profile);
 app.use('/chatBox', chatBox);
-//app.use('/newsFeed', newsFeed);
-app.use('/uploadPost', uploadPost);
+app.use('/news', news);
 app.use('/donation', donation);
 
 
