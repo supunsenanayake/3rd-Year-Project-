@@ -12,8 +12,8 @@ var userSchema = new Schema({
     district: {type: String, required: true},
     role: {type: String, required: true},
     mobile: {type: String, required: true},
-    phone: {type: String, required: true}
-
+    phone: {type: String, required: true},
+    profileImage: {type: String, required: true}
 });
 
 userSchema.methods.encryptPassword = function(password) {

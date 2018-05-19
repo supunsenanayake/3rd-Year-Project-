@@ -55,6 +55,7 @@ passport.use('local.signUp', new LocalStrategy({
         newUser.role = req.body.role;
         newUser.mobile ="+94" + (req.body.mobile).toString().slice(1);
         newUser.phone = (req.body.phone).toString();
+        newUser.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
         newUser.save(function(err, result) {
             if (err) {
                 return done(err);
