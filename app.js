@@ -13,7 +13,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var profile = require('./routes/profile');
+//var profile = require('./routes/profile');
 var chatBox = require('./routes/chatBox');
 var news = require('./routes/news');
 var donation = require('./routes/donation');
@@ -52,15 +52,26 @@ app.use(function(req, res, next) {
     res.locals.session = req.session;
     if (req.isAuthenticated()){
         res.locals.user = req.user;
-        if(req.user.role === 'Admin')
+        if(req.user.role === 'Admin'){
             res.locals.userRole= true;
+            res.locals.userRole2= true;
+            res.locals.userRole3= true;
+        } else if(req.user.role === 'Super Volunteer'){
+            res.locals.userRole= false;
+            res.locals.userRole2= true;
+            res.locals.userRole3= true;
+        } else if (req.user.role === 'Volunteer'){
+            res.locals.userRole= false;
+            res.locals.userRole2= false;
+            res.locals.userRole3= true;
+        }
     }
     next();
 });
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/profile', profile);
+//app.use('/profile', profile);
 app.use('/chatBox', chatBox);
 app.use('/news', news);
 app.use('/donation', donation);

@@ -54,9 +54,13 @@
                     <li class="nav-item active"> <a class="nav-link" href="/newsfeed">News Feed<span class="sr-only">(current)</span></a> </li>
                     <li class="nav-item"> <a class="nav-link" href="/donation/">Donation</a> </li>
                     {{#if isAuthenticated}}
-                        {{#if userRole}}
+                        {{#if userRole3}}
                     <li class="nav-item"> <a class="nav-link" href="/news/">Publish News</a></li>
+                        {{/if}}
+                        {{#if userRole2}}
                     <li class="nav-item"> <a class="nav-link" href="/chatBox/">Chat</a></li>
+                        {{/if}}
+                        {{#if userRole}}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Operations
