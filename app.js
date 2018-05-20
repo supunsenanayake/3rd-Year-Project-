@@ -13,7 +13,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-//var profile = require('./routes/profile');
+var profile = require('./routes/profile');
 var chatBox = require('./routes/chatBox');
 var news = require('./routes/news');
 var donation = require('./routes/donation');
@@ -71,7 +71,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
-//app.use('/profile', profile);
+app.use('/profile', profile);
 app.use('/chatBox', chatBox);
 app.use('/news', news);
 app.use('/donation', donation);

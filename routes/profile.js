@@ -30,4 +30,12 @@ router.post('/', function (req, res) {
 });
 
 
+router.get('/viewProfile', function(req, res, next) {
+    res.render('viewProfile', {layout: 'main'});
+
+
+});
+
+
+
 module.exports = router;
