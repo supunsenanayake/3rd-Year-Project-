@@ -230,12 +230,4 @@ function fileAuthentication (req) {
 }
 */
 
-router.get('/viewProfile', function(req, res, next) {
-    res.render('viewProfile', {layout: 'main'});
-
-
-});
-
-
-
 module.exports = router;

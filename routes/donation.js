@@ -72,7 +72,7 @@ router.post('/addItem', function (req, res, next) {
 
 router.get('/addDonation/:id', function(req, res, next) {
     req.session.itemName = req.params.id;
-    res.render('addDonation',{csrfToken: req.csrfToken(), layout : 'main'});
+    res.render('addDonation',{csrfToken: req.csrfToken(), itemName : req.session.itemName, layout : 'main'});
 });
 
 

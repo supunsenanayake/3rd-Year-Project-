@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="container">
-                <h3>Add Donations : {{session.eventTitle}}</h3>
+                <h1>Donations</h1>
                 <hr>
                 {{#if messages}}
                     {{# each messages }}
@@ -24,7 +24,7 @@
                         <input type="hidden" class="form-control" id="formGroupItem"  placeholder="New Item Name" name="itemName" value="{{itemName}}">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label for="formGroupPost">{{session.itemName}} (Amount)</label>
+                        <label for="formGroupPost">{{itemName}} (Amount)</label>
                         <input type="number" class="form-control" id="formGroupAmount" placeholder="Amount" name="amount">
                     </div>
                     <div class="form-group col-lg-4">

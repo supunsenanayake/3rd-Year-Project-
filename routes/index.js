@@ -26,7 +26,7 @@ router.get('/newsFeed', function(req, res, next) {
             for (var i = 0; i < docs.length; i += chunkSize) {
                 newsChunks.push(docs.slice(i, i + chunkSize));
             }
-            res.render('newsFeed', {news: newsChunks, layout: 'main'});
+            res.render('newsFeed', {news: newsChunks, event: req.session.eventTitle, eventId: req.session.eventID, layout: 'main'});
         });
 
 });
