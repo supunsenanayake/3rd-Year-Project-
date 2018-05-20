@@ -50,7 +50,7 @@ passport.use('local.signUp', new LocalStrategy({
         newUser.gender = req.body.gender;
         newUser.province = req.body.province;
         newUser.district = req.body.district;
-        newUser.role = req.body.role;
+        /*newUser.role = "Admin";  */ newUser.role = req.body.role;
         newUser.mobile ="+94" + (req.body.mobile).toString().slice(1);
         newUser.phone = (req.body.phone).toString();
         newUser.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
