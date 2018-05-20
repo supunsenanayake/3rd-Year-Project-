@@ -1,0 +1,33 @@
+<form method="post" enctype="multipart/form-data" action="/profile/">
+
+<center>
+    <h3 class="heading-small">Edit Your Information</h3>
+<table>
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">NIC</label></td><td>
+    <input type="text" class="form-control"  placeholder="Email" value="{{ user.nic }}" disabled>
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">Mobile</label></td><td>
+    <input type="tel" class="form-control"  placeholder="Email" value="{{user.mobile}}" disabled>
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">role</label></td><td>
+    <input type="text" class="form-control"  placeholder="Email" value="{{ user.role }}" disabled>
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">District</label></td><td>
+    <input type="text" class="form-control"  placeholder="Email" value="{{ user.district }}" disabled>
+</td></tr>
+
+
+</table>
+
+{{ user.firstName }}
+</center>
+
+<button type="submit" class="btn btn-default">Submit</button>
+</form>

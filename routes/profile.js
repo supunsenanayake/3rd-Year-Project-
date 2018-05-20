@@ -51,7 +51,7 @@ router.get('/editProfile', function(req, res, next) {
     if(req.isUnauthenticated()){
         res.redirect('/')
     }else {
-        res.render('editProfile', {layout: 'user'});
+        res.render('editProfile', {layout: 'main'});
     }
 
 });
