@@ -34,14 +34,14 @@ const dbName= 'sahana';
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
-  res.render('profile'); //, {layout :'user'} );
+  res.render('profile', {layout :'main'} );
 });
 
 router.get('/viewProfile', function(req, res, next) {
     if(req.isUnauthenticated()){
         res.redirect('/')
     }else {
-        res.render('profile', {layout: 'landing', usr:user});
+        res.render('profile', {layout: 'main', usr:user});
     }
 
 
