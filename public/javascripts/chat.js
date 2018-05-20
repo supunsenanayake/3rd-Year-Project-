@@ -1,5 +1,5 @@
 //make connection
-var socket = io.connect('http://192.168.1.2:4000');
+var socket = io.connect('http://192.168.1.3:4000');
 
 
 // Query DOM

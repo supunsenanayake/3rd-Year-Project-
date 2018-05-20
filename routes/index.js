@@ -6,10 +6,10 @@ var News = require('../models/news');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    Event.find(function (err, docs) {
+    Event.find().sort({_id : -1}).limit(4).exec(function (err, docs) {
         var eventChunks = [];
         var chunkSize = 2;
-        for (var i = 0; i < 4; i += chunkSize) {
+        for (var i = 0; i < docs.length; i += chunkSize) {
             eventChunks.push(docs.slice(i, i + chunkSize));
         }
         res.render('index', {events: eventChunks});
@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/newsFeed', function(req, res, next) {
-    News.find({eventId: req.session.eventID})
+    News.find({eventId: req.session.eventID}).sort({_id : -1})
         .exec(function (err, docs) {
             console.log(docs);
             var newsChunks = [];

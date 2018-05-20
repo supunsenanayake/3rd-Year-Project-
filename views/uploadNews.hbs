@@ -11,6 +11,11 @@
                         </div>
                     {{/each}}
                 {{/if}}
+                {{#if noErr}}
+                        <div class="alert alert-success">
+                            {{msgSuccess}}
+                        </div>
+                {{/if}}
             <form method="post" action="/news/publish" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="formGroupPostTitle">Post Title</label>
@@ -30,7 +35,6 @@
                        onclick="return confirm('Are You Sure ' +
                          'You want to cancel this Process..?');">Cancel</a>
                 </div>
-                    <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
             </form>
         </div>
         </div>
