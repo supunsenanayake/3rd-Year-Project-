@@ -38,82 +38,78 @@ const dbName= 'sahana';
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-
-  //res.send('respond with a resource');
-  res.render('profile', {layout :'main'} );
+    if(req.isUnauthenticated()){
+        res.redirect('/')
+    }else {
+        res.render('profile', {layout: 'main'});
+    }
 });
 
 router.get('/viewProfile', function(req, res, next) {
     if(req.isUnauthenticated()){
         res.redirect('/')
     }else {
-        res.render('profile', {layout: 'main', usr:user});
+        res.render('profile', {layout: 'main'});
     }
-
-
 });
 
-/*router.get('/editProfile', function(req, res, next) {
+router.get('/editProfile', function(req, res, next) {
     if(req.isUnauthenticated()){
         res.redirect('/')
     }else {
         res.render('editProfile', {layout: 'main'});
     }
-
 });
 
-/*
-router.post('/upgradeProfile', upload.single('profileImage'), function(req, res, next) {
-    if(attachFile) fileAuthentication (req);
-    req.checkBody('firstName','First Name field Empty').notEmpty();
-    req.checkBody('lastName','Last Name field Empty').notEmpty();
-    req.check('email', 'Invalid Email').isEmail();
+
+//router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
+router.post('/saveProfile', function(req, res, next) {
+
+    //if(attachFile) fileAuthentication (req);
+
+    //req.checkBody('firstName','First Name field Empty').notEmpty();
+    //req.checkBody('lastName','Last Name field Empty').notEmpty();
+    req.check('unic', 'nic not defined').notEmpty();
+    req.check('district', 'select your district').notEmpty();
     req.check('mobile', 'Mobile Number Length Invalid').isLength({min: 10, max: 15});
 
     var errors = req.validationErrors();
 
     if (errors) {
         req.session.errors = errors;
-        res.render('editProfile', {errors : req.session.errors});
+        console.log(errors);
+        res.render('editProfile', {errors : req.session.errors, layout:'main'});
     } else {
-        updateDetail = {
-            $set: {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                mobile: req.body.mobile,
+        mongo.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(dbName);
+            var myquery = { nic: req.body.unic }; //where clause
+            //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
+            var newvalues = { $set: { mobile: req.body.mobile, district: req.body.district } };
+            dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
+            if (err){ 
+                console.log(err);
+                throw err;
             }
-        };
-        req.session.errors = false;
-        if(req.user.email == req.body.email){
-            newEmail = req.user.email;
-            res.redirect('/users/updateUser');
-        }else{
-            newEmail = req.body.email;
-            mongo.connect(url, function (err, client) {
-                assert.equal(null, err);
-                const db = client.db(dbName);
-                db.collection('user').find({email: req.body.email}, {email: 1})
-                    .toArray(function (err, result) {
-                        assert.equal(null, err);
-                        if (result.length > 0) {
-                            console.log("Check unique Email");
-                            res.render('editProfile', {errors : req.session.errors, existNewEmail : true});
-                        } else {
-                            res.redirect('/users/updateUser');
-                        }
-                        client.close();
-                    });
+            console.log(res.result);
+            //req.session.user.mobile=req.body.mobile;
+            db.close();
+            console.log("1 document updated");
+            
             });
+          });
         }
 
 
-
-
+        console.log(req.session);
+        //req.session.user.mobile=req.body.mobile;
+        req.session.passport.user.mobile=req.body.mobile;
+        req.session.passport.user.district=req.body.district;
+        res.redirect('/profile/');
     }
-});
+);
 
-
+/*
 router.get('/updateUser', function (req, res, next) {
 
     mongo.connect(url, function(err, client) {
@@ -155,29 +151,31 @@ router.get('/updatePassword', function (req, res, next) {
     }
 
 });
+*/
 
-
+/*
 router.get('/updateSession', function (req, res, next) {
-    console.log(newEmail);
+    console.log(nic);
     mongo.connect(url, function (err,client) {
         assert.equal(null, err);
         const db = client.db(dbName);
-        db.collection('user').find(
-            {email: newEmail}
+        db.collection('users').find(
+            {nic: nic}
         ).toArray(function (err, result) {
             assert.equal(null, err);
                 const user__Detail = result[0];
                 console.log(user__Detail);
                 console.log("User Entered details Correct");
                 req.login(user__Detail, function (err) {
-                    res.redirect('/users/viewProfile');
+                    res.redirect('/profile/');
                 });
             client.close();
         });
     });
 });
+*/
 
-
+/*
 router.post('/changePassword', function (req, res, next) {
     var currentPassword = sha1(req.body.currentPassword);
     req.body.currentPassword = currentPassword;

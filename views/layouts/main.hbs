@@ -55,43 +55,48 @@
                     <li class="nav-item"> <a class="nav-link" href="/donation/">Donation</a> </li>
                     {{#if isAuthenticated}}
                         {{#if userRole3}}
-                    <li class="nav-item"> <a class="nav-link" href="/news/">Publish News</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="/news/">Publish News</a></li>
                         {{/if}}
+
                         {{#if userRole2}}
-                    <li class="nav-item"> <a class="nav-link" href="/chatBox/">Chat</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="/chatBox/">Chat</a></li>
                         {{/if}}
+
                         {{#if userRole}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Operations
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/event/">Create Event</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">View System Users</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Add System Users</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Handling Donations</a>
-                            <div class="dropdown-divider"></div>
-                        </div>
-                    </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Operations
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/event/">Create Event</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">View System Users</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Add System Users</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Handling Donations</a>
+                                        <div class="dropdown-divider"></div>
+                                </div>
+                            </li>
                         {{/if}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Profile
-                        </a>
+                            </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/profile/">View Profile</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Update Profile</a>
+                            <a class="dropdown-item" href="/profile/editProfile/">Update Profile</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Change Password</a>
                             <div class="dropdown-divider"></div>
                         </div>
-                    </li>
+                        </li>
                     {{/if}}
                 </ul>
                 <form class="my-2 my-lg-0 ml-auto">

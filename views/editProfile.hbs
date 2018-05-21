@@ -1,57 +1,129 @@
 <!--
     this file is "edit profile" page
 -->
+{{#if errors}}
+    {{#each messages }}
+        <div class="alert alert-danger">
+            <p>{{this}}</p>
+        </div>
+    {{/each}}
+{{/if}}
 
-<form method="post" enctype="multipart/form-data" action="/profile/">
+<form method="post" action="/profile/saveProfile/">
 
-<center>
-    <h3 class="heading-small">Edit Your Information</h3>
-<table>
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">NIC</label></td><td>
-    <input type="text" class="form-control"  placeholder="" value="{{ user.nic }}" disabled>
-</td></tr>
+<input type="text" name="unic" id="unic" value="{{ user.nic }}" hidden>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Gender</label></td><td>
-    <input type="text" class="form-control"  placeholder="Gender" value="{{ user.gender }}" disabled>
-</td></tr>
+    <center>
+        <h3 class="heading-small">Edit Your Information</h3>
+        <table>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">NIC</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="" value="{{ user.nic }}" disabled>
+                </td>
+            </tr>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">First Name</label></td><td>
-    <input type="text" class="form-control"  placeholder="First Name" value="{{ user.firstName }}" disabled>
-</td></tr>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">Gender</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Gender" value="{{ user.gender }}" disabled>
+                </td>
+            </tr>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Last Name</label></td><td>
-    <input type="text" class="form-control"  placeholder="Last Name" value="{{ user.lastName }}" disabled>
-</td></tr>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">First Name</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="First Name" value="{{ user.firstName }}" disabled>
+                </td>
+            </tr>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Mobile</label></td><td>
-    <input type="tel" class="form-control"  placeholder="Mobile No." value="{{user.mobile}}" >
-</td></tr>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">Last Name</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Last Name" value="{{ user.lastName }}" disabled>
+                </td>
+            </tr>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">role</label></td><td>
-    <input type="text" class="form-control"  placeholder="User type" value="{{ user.role }}" disabled>
-</td></tr>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">Mobile</label>
+                </td>
+                <td>
+                    <input type="tel" class="form-control" name="mobile" id="mobile1" placeholder="Mobile No." value="{{user.mobile}}">
+                </td>
+            </tr>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">District</label></td><td>
-    <input type="text" class="form-control"  placeholder="District" value="{{ user.district }}" >
-</td></tr>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">role</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="User type" value="{{ user.role }}" disabled>
+                </td>
+            </tr>
 
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Image</label></td><td>
-    <input type="text" class="form-control"  placeholder="" value="user image eka" disabled>
-</td></tr>
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">District</label>
+                </td>
+                <td>
+                    <!--input type="text" class="form-control" name="district" id="district" placeholder="District" value="{{ user.district }}"-->
+                    <select class="custom-select" id="district" name="district">
+                        <option value="{{user.district}}" selected>{{ user.district }}</option>
+                        <option value="Ampara" {{#if user.district}}{{/if}} >Ampara</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Badulla">Badulla</option>
+                        <option value="Batticaloa">Batticaloa</option>
+                        <option value="Colombo">Colombo</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Gampaha">Gampaha</option>
+                        <option value="Hambantota">Hambantota</option>
+                        <option value="Jaffna">Jaffna</option>
+                        <option value="Kalutara">Kalutara</option>
+                        <option value="Northern">Northern</option>
+                        <option value="Kandy">Kandy</option>
+                        <option value="Kegalle">Kegalle</option>
+                        <option value="Kilinochchi">Kilinochchi</option>
+                        <option value="Kurunegala">Kurunegala</option>
+                        <option value="Mannar">Mannar</option>
+                        <option value="Matale">Matale</option>
+                        <option value="Matara">Matara</option>
+                        <option value="Monaragala">Monaragala</option>
+                        <option value="Mullaitivu">Mullaitivu</option>
+                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                        <option value="Polonnaruwa">Polonnaruwa</option>
+                        <option value="Puttalam">Puttalam</option>
+                        <option value="Ratnapura">Ratnapura</option>
+                        <option value="Trincomalee">Trincomalee</option>
+                        <option value="Vavuniya">Vavuniya</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="form-group">
+                    <label for="exampleInputEmail1">Image</label>
+                </td>
+                <td>
+                    <input type="file" class="form-control" placeholder="" value="user image eka" disabled>
+                </td>
+            </tr>
 
 
-</table>
+        </table>
+        <input type="submit" class="btn btn-success" value="ok">Submit
+        <button type="button" class="btn btn-dark">Cancel</button>
 
-{{ user.firstName }}
-</center>
+        {{ user.firstName }}
+    </center>
 
-<button type="submit" class="btn btn-default">Submit</button>
+    
 </form>
