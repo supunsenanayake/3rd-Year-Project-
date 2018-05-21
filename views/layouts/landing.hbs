@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-lg-3 offset-lg-5">
                     {{#if isAuthenticated}}
-                        <div class="social-icon"> <a href="#" class="nav-link">{{user.firstName}}</a>
+                        <div class="social-icon"> <a href="/profile/" class="nav-link">{{user.firstName}}</a>
                         <a href="/users/logout" class="nav-link">LogOut</a> </div>
                     {{else}}
                         <div class="social-icon"> <a href="/users/signIn" class="nav-link">Login</a>
@@ -53,8 +53,42 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"> <a class="nav-link" href="/">Events<span class="sr-only">(current)</span></a> </li>
+{{#if isAuthenticated}}
+    {{#if userRole}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Operations
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/event/">Create Event</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">View System Users</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Add System Users</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Handling Donations</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+    {{/if}}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Profile
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/profile/">View Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Update Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Change Password</a>
+            <div class="dropdown-divider"></div>
+        </div>
+    </li>
+{{/if}}
                 </ul>
-                <form class="my-2 my-lg-0 ml-auto">
+        <form class="my-2 my-lg-0 ml-auto">
                     <div class="search">
                         <input type="text" class="form-control" maxlength="64" placeholder="Search" />
                         <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>

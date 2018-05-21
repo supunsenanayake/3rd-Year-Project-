@@ -89,7 +89,7 @@ router.post('/addDonation', function (req, res, next) {
         var donation = new Donation({
             donorName: req.body.donorName,
             mobile: req.body.mobile,
-            item: req.body.itemName,
+            item: req.session.itemName,
             amount: req.body.amount,
             eventId : req.session.eventID
         });
