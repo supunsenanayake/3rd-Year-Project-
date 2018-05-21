@@ -76,7 +76,7 @@
                 </td>
                 <td>
                     <!--input type="text" class="form-control" name="district" id="district" placeholder="District" value="{{ user.district }}"-->
-                    <select class="custom-select" id="district" name="district">
+                    <select class="custom-select" id="district" name="district" onchange="selectProvince(this.value);">
                         <option value="{{user.district}}" selected>{{ user.district }}</option>
                         <option value="Ampara" {{#if user.district}}{{/if}} >Ampara</option>
                         <option value="Anuradhapura">Anuradhapura</option>
@@ -98,13 +98,22 @@
                         <option value="Matara">Matara</option>
                         <option value="Monaragala">Monaragala</option>
                         <option value="Mullaitivu">Mullaitivu</option>
-                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                        <option value="NuwaraEliya">Nuwara Eliya</option>
                         <option value="Polonnaruwa">Polonnaruwa</option>
                         <option value="Puttalam">Puttalam</option>
                         <option value="Ratnapura">Ratnapura</option>
                         <option value="Trincomalee">Trincomalee</option>
                         <option value="Vavuniya">Vavuniya</option>
                     </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="form-group">
+                    <label for="">Province</label>
+                </td>
+                <td>
+                    <input type="text" id="province" name="province" class="form-control" placeholder="" disabled>
                 </td>
             </tr>
 
@@ -119,7 +128,7 @@
 
 
         </table>
-        <input type="submit" class="btn btn-success" value="ok">Submit
+        <input type="submit" class="btn btn-success" value="OK">
         <button type="button" class="btn btn-dark">Cancel</button>
 
         {{ user.firstName }}
@@ -127,3 +136,35 @@
 
     
 </form>
+
+<script>
+    function selectProvince(district){
+        var province;
+        if(district=="Monaragala" || district=="Badulla")
+            province="Uva";
+        else if(district=="Matara" || district=="Galle" || district=="Hambantota")
+            province="South";
+        else if(district=="Colombo" || district=="Gampaha" || district=="Kalutara")
+            province="Western";
+
+        else if(district=="Ampara" || district=="Batticaloa" || district=="Trincomalee")
+            province="Eastern";
+        else if(district=="Kandy" || district=="NuwaraEliya" || district=="Matale" )
+            province="Central";
+        else if(district=="Ratnapura" || district=="Kegalle" )
+            province="Sabaragamuwa";
+
+        else if(district=="Jaffna" || district=="Kilinochchi" || district=="Mannar")
+            province="North";
+        else if(district=="Anuradhapura" || district=="Polonnaruwa" )
+            province="North central";
+        else if(district=="Puttalam" || district=="Kurunegala" )
+            province="North western";
+
+        else
+            province="unknown"
+
+        //alert(province); //for testing
+        document.getElementById('province').value=province;
+    }
+</script>

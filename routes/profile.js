@@ -61,6 +61,14 @@ router.get('/editProfile', function(req, res, next) {
     }
 });
 
+router.get('/changePassword', function(req, res, next) {
+    if(req.isUnauthenticated()){
+        res.redirect('/')
+    }else {
+        res.render('changePassword', {layout: 'main'});
+    }
+});
+
 
 //router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
 router.post('/saveProfile', function(req, res, next) {
