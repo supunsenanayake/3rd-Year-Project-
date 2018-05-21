@@ -18,6 +18,7 @@ var chatBox = require('./routes/chatBox');
 var news = require('./routes/news');
 var donation = require('./routes/donation');
 var event = require('./routes/event');
+var operations = require('./routes/operations');
 var mongoose = require('mongoose');
 
 var app = express();
@@ -77,6 +78,7 @@ app.use('/chatBox', chatBox);
 app.use('/news', news);
 app.use('/donation', donation);
 app.use('/event', event);
+app.use('/operations', operations);
 
 
 // catch 404 and forward to error handler
