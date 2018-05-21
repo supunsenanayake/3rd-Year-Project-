@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-//var csrf = require('csurf');
-//var csrfProtection = csrf();
+
 var passport = require('passport');
 
 const multer = require('multer');
@@ -27,7 +26,7 @@ var News = require('../models/news');
 
 
 
-//router.use(csrfProtection);
+
 
 router.use('/', isLoggedIn, function(req, res, next) {
     next();
@@ -94,6 +93,96 @@ router.post('/publish', uploadNews.single('newsImage'), function(req, res, next)
         }
         }
 });
+
+
+router.get('/edit/:id', function(req, res, next) {
+    req.session.newsID = req.params.id;
+    req.session.attacheFile = false;
+    News.find({_id: req.session.newsID}).exec(function (err, docs) {
+        assert.equal(null, err);
+        res.render('editNews', {result : docs , messages : false, layout : 'main'});
+    });
+});
+
+
+router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, next) {
+    req.check('title', 'Give Title for Event in Title Filed ').notEmpty();
+    req.session.dat = new Date();
+    req.session.publishDate = req.session.dat.getFullYear() + "/" + (req.session.dat.getMonth()+1) + "/" +
+        req.session.dat.getDate() + "-" + req.session.dat.getHours() + ":" + req.session.dat.getMinutes() + ":"
+        + req.session.dat.getSeconds();
+
+
+    var errors = req.validationErrors();
+
+    if(errors){
+        req.session.errors = errors;
+        News.find({_id: req.session.newsID}).exec(function (err, docs) {
+            assert.equal(null, err);
+            res.render('editNews', {result : docs , messages : req.session.errors, layout : 'main'});
+        });
+    } else {
+        req.check('description', 'Write your news in Description Field').notEmpty();
+        var error = req.validationErrors();
+        if (req.session.attacheFile) {
+            if(error){
+                News.findByIdAndUpdate(req.session.newsID, { $set: {
+                    imagePath : '/images/'+ req.file.filename,
+                    title : req.body.title,
+                    ownerId : req.user._id,
+                    eventId : req.session.eventID,
+                    date : req.session.publishDate
+                }}, { new: true }, function (err, docs) {
+                    assert.equal(null, err);
+                    res.redirect('/newsFeed');
+                });
+            } else {
+
+                News.findByIdAndUpdate(req.session.newsID, {
+                    $set: {
+                        imagePath: '/images/' + req.file.filename,
+                        title: req.body.title,
+                        description: req.body.description,
+                        ownerId: req.user._id,
+                        eventId: req.session.eventID,
+                        date: req.session.publishDate
+                    }
+                }, {new: true}, function (err, docs) {
+                    assert.equal(null, err);
+                    res.redirect('/newsFeed');
+                });
+            }
+        } else {
+
+            if(error){
+                News.findByIdAndUpdate(req.session.newsID, { $set: {
+                    title : req.body.title,
+                    ownerId : req.user._id,
+                    eventId : req.session.eventID,
+                    date : req.session.publishDate
+                }}, { new: true }, function (err, docs) {
+                    assert.equal(null, err);
+                    res.redirect('/newsFeed');
+                });
+            } else {
+
+                News.findByIdAndUpdate(req.session.newsID, {
+                    $set: {
+                        title: req.body.title,
+                        description: req.body.description,
+                        ownerId: req.user._id,
+                        eventId: req.session.eventID,
+                        date: req.session.publishDate
+                    }
+                }, {new: true}, function (err, docs) {
+                    assert.equal(null, err);
+                    res.redirect('/newsFeed');
+                });
+            }
+        }
+    }
+});
+
 
 
 

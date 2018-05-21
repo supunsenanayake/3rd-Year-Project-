@@ -88,6 +88,57 @@ router.post('/publish', createEvent.single('eventImage'), function(req, res, nex
 });
 
 
+router.get('/edit/:id', function(req, res, next) {
+    req.session.eventID = req.params.id;
+    req.session.attacheFile = false;
+    Event.find({_id: req.session.eventID}).exec(function (err, docs) {
+        assert.equal(null, err);
+        res.render('editEvent', {result : docs , messages : false});
+    });
+});
+
+
+router.post('/updateEvent', createEvent.single('eventImage'), function(req, res, next) {
+    req.check('title', 'Give Title for Event in Title Filed ').notEmpty();
+    req.session.dat = new Date();
+    req.session.publishDate = req.session.dat.getFullYear() + "/" + (req.session.dat.getMonth()+1) + "/" +
+        req.session.dat.getDate() + "-" + req.session.dat.getHours() + ":" + req.session.dat.getMinutes() + ":"
+        + req.session.dat.getSeconds();
+
+
+    var errors = req.validationErrors();
+
+    if(errors){
+        req.session.errors = errors;
+        Event.find({_id: req.session.eventID}).exec(function (err, docs) {
+            assert.equal(null, err);
+            res.render('editEvent', {result : docs , messages : req.session.errors});
+        });
+    } else {
+        if (req.session.attacheFile) {
+
+            Event.findByIdAndUpdate(req.session.eventID, { $set: {
+                imagePath : '/images/'+ req.file.filename,
+                title : req.body.title,
+                ownerId : req.user._id,
+                date : req.session.publishDate
+            }}, { new: true }, function (err, docs) {
+                assert.equal(null, err);
+                res.redirect('/');
+            });
+        } else {
+
+            Event.findByIdAndUpdate(req.session.eventID, { $set: {
+                title : req.body.title,
+                ownerId : req.user._id,
+                date : req.session.publishDate
+            }}, { new: true }, function (err, docs) {
+                assert.equal(null, err);
+                res.redirect('/');
+            });
+        }
+    }
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
