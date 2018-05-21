@@ -140,6 +140,15 @@ router.post('/updateEvent', createEvent.single('eventImage'), function(req, res,
     }
 });
 
+
+router.get('/delete/:id', function(req, res, next) {
+    req.session.eventID = req.params.id;
+    Event.deleteOne({ _id : req.session.eventID }, function (err) {
+        assert.equal(null, err);
+        res.redirect('/');
+    });
+});
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();

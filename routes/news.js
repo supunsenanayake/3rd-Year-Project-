@@ -184,7 +184,13 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
 });
 
 
-
+router.get('/delete/:id', function(req, res, next) {
+    req.session.newsID = req.params.id;
+    News.deleteOne({ _id : req.session.newsID }, function (err) {
+        assert.equal(null, err);
+        res.redirect('/newsFeed');
+    });
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
