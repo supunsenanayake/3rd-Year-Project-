@@ -1,3 +1,7 @@
+<!--
+    this file is "edit profile" page
+-->
+
 <form method="post" enctype="multipart/form-data" action="/profile/">
 
 <center>
@@ -5,22 +9,42 @@
 <table>
 <tr><td class="form-group">
     <label for="exampleInputEmail1">NIC</label></td><td>
-    <input type="text" class="form-control"  placeholder="Email" value="{{ user.nic }}" disabled>
+    <input type="text" class="form-control"  placeholder="" value="{{ user.nic }}" disabled>
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">Gender</label></td><td>
+    <input type="text" class="form-control"  placeholder="Gender" value="{{ user.gender }}" disabled>
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">First Name</label></td><td>
+    <input type="text" class="form-control"  placeholder="First Name" value="{{ user.firstName }}" disabled>
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">Last Name</label></td><td>
+    <input type="text" class="form-control"  placeholder="Last Name" value="{{ user.lastName }}" disabled>
 </td></tr>
 
 <tr><td class="form-group">
     <label for="exampleInputEmail1">Mobile</label></td><td>
-    <input type="tel" class="form-control"  placeholder="Email" value="{{user.mobile}}" disabled>
+    <input type="tel" class="form-control"  placeholder="Mobile No." value="{{user.mobile}}" >
 </td></tr>
 
 <tr><td class="form-group">
     <label for="exampleInputEmail1">role</label></td><td>
-    <input type="text" class="form-control"  placeholder="Email" value="{{ user.role }}" disabled>
+    <input type="text" class="form-control"  placeholder="User type" value="{{ user.role }}" disabled>
 </td></tr>
 
 <tr><td class="form-group">
     <label for="exampleInputEmail1">District</label></td><td>
-    <input type="text" class="form-control"  placeholder="Email" value="{{ user.district }}" disabled>
+    <input type="text" class="form-control"  placeholder="District" value="{{ user.district }}" >
+</td></tr>
+
+<tr><td class="form-group">
+    <label for="exampleInputEmail1">Image</label></td><td>
+    <input type="text" class="form-control"  placeholder="" value="user image eka" disabled>
 </td></tr>
 
 
