@@ -3,6 +3,19 @@
 -->
 
 <form method="post" enctype="multipart/form-data" action="/profile/">
+<HR>
+
+    {{#if anymsg}}
+    <!-- executes only if profile updated-->
+    <script>alert("Your settings have been saved");</script>
+    {{/if}}
+
+    {{#if anymsg2}}
+    <!-- executes only if profile updated-->
+    <script>alert("Your password changed successfully");</script>
+    {{/if}}
+
+<hr>
 
 <center>
     <h3 class="heading-small">Your Information</h3>

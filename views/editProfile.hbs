@@ -1,15 +1,16 @@
 <!--
     this file is "edit profile" page
 -->
+
+
+
 {{#if errors}}
-    {{#each messages }}
-        <div class="alert alert-danger">
-            <p>{{this}}</p>
-        </div>
-    {{/each}}
+    <script>
+        
+    </script>
 {{/if}}
 
-<form method="post" action="/profile/saveProfile/">
+<form method="post" action="/profile/saveProfile/" onsubmit="return confirm('Are You Sure you Want To change your password?');">
 
 <input type="text" name="unic" id="unic" value="{{ user.nic }}" hidden>
 
@@ -129,7 +130,7 @@
 
         </table>
         <input type="submit" class="btn btn-success" value="OK">
-        <button type="button" class="btn btn-dark">Cancel</button>
+        <a href="/"><input type="button" class="btn btn-dark" value='Cancel'></a>
 
         {{ user.firstName }}
     </center>
@@ -165,6 +166,8 @@
             province="unknown"
 
         //alert(province); //for testing
-        document.getElementById('province').value=province;
+        document.getElementById('province').value=province;   
     }
+    
+    document.onload(selectProvince(document.getElementById("district").value));
 </script>

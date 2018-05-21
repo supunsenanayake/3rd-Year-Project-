@@ -6,6 +6,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var bcrypt = require('bcrypt-nodejs');
 
 /*const multer = require('multer');
 
@@ -69,7 +70,7 @@ router.get('/changePassword', function(req, res, next) {
     }
 });
 
-
+//saving the profile after editing
 //router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
 router.post('/saveProfile', function(req, res, next) {
 
@@ -102,20 +103,81 @@ router.post('/saveProfile', function(req, res, next) {
             console.log(res.result);
             //req.session.user.mobile=req.body.mobile;
             db.close();
-            console.log("1 document updated");
+            console.log("profile updated for "+req.session.passport.user.nic);
             
             });
           });
         }
 
-
+        //updating the session info
         console.log(req.session);
         //req.session.user.mobile=req.body.mobile;
         req.session.passport.user.mobile=req.body.mobile;
         req.session.passport.user.district=req.body.district;
-        res.redirect('/profile/');
+        //res.redirect('/profile/');
+        res.render('profile', { layout:'main', anymsg:'profile settings changed' });
     }
 );
+
+//changing the password. backend code
+router.post('/savePassword', function (req, res, next) {
+    //encryption algo eka hoya ganna bari una. eken encrypt karanna oni
+    //var currentPassword = encryptPassword(req.body.currentPassword); //get old pass hash. algo??
+
+    //compare the hash in DB and current password
+    //return true if password correct
+    var currentPassword= bcrypt.compareSync(req.body.currentPassword, req.session.passport.user.password);
+    console.log("old password match? "+currentPassword);
+
+    //new password hash
+    var newPassword = bcrypt.hashSync(req.body.pass1, bcrypt.genSaltSync(5), null);
+    //};
+
+//    var newPassword = (req.body.pass1); //get new pass hash. algo??
+//    req.check('currentPassword','Current Password Not Correct').equals(req.user.password);
+    //req.check('newPassword','Password At least should be 4 characters').isLength({min: 4});
+    //req.check('newPassword',' Not matching with Confirm New Password field').equals(req.body.confirmPassword);
+
+    var errors = req.validationErrors();
+    console.log(errors);
+
+    if(errors){
+        req.session.errors = errors;
+        res.render('/profile/changePassword/' , {errors : errors});
+    }else {
+        //var password = sha1(req.body.newPassword); //algo??
+        var password = req.session.passport.user.password;
+
+        mongo.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(dbName);
+            var myquery = { nic: req.session.passport.user.nic }; //where clause
+            //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
+            var newvalues = { $set: { password: newPassword } };
+            dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
+            if (err){ 
+                console.log(err);
+                throw err;
+            }
+            console.log(res.result);
+            //req.session.user.mobile=req.body.mobile;
+            db.close();
+            console.log("password changed for "+req.session.passport.user.nic);
+            
+            });
+          });
+        //res.redirect('/users/updateSession');
+    }
+
+    //updating the session info
+    console.log(req.session);
+    //req.session.user.mobile=req.body.mobile;
+    //req.session.passport.user.mobile=req.body.mobile;
+    req.session.passport.user.password=newPassword;
+    res.render('profile', { layout:'main', anymsg2:'profile settings changed' });
+    //res.redirect('/profile/');
+
+});
 
 /*
 router.get('/updateUser', function (req, res, next) {
