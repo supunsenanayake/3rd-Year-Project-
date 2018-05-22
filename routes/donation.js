@@ -41,9 +41,6 @@ router.get('/addItem', function(req, res, next) {
 });
 
 router.post('/addItem', function (req, res, next) {
-    req.check('donorName', 'Fill Donor Name').notEmpty();
-    req.check('mobile', 'Fill Mobile Number').notEmpty();
-    req.check('mobile', 'Invalid Mobile Number').isLength({min:10, max:10});
     req.check('itemName', 'Fill Item').notEmpty();
     req.check('amount', 'Fill Amount').notEmpty();
     var errors = req.validationErrors();
@@ -56,7 +53,8 @@ router.post('/addItem', function (req, res, next) {
             mobile: req.body.mobile,
             item: req.body.itemName,
             amount: req.body.amount,
-            eventId : req.session.eventID
+            eventId : req.session.eventID,
+            ownerId : req.user._id
         });
         donation.save(function (err, result) {
             req.flash('success', 'Successfully Add your Donation!');
@@ -70,16 +68,18 @@ router.post('/addItem', function (req, res, next) {
     }
 });
 
+
+router.get('/addDonation', function(req, res, next) {
+    res.render('addDonation',{csrfToken: req.csrfToken(), layout : 'main'});
+});
+
 router.get('/addDonation/:id', function(req, res, next) {
     req.session.itemName = req.params.id;
-    res.render('addDonation',{csrfToken: req.csrfToken(), layout : 'main'});
+    res.redirect('/donation/addDonation');
 });
 
 
 router.post('/addDonation', function (req, res, next) {
-    req.check('donorName', 'Fill Donor Name').notEmpty();
-    req.check('mobile', 'Fill Mobile Number').notEmpty();
-    req.check('mobile', 'Invalid Mobile Number').isLength({min:10, max:10});
     req.check('amount', 'Fill Amount').notEmpty();
     var errors = req.validationErrors();
     if (errors) {
@@ -91,7 +91,8 @@ router.post('/addDonation', function (req, res, next) {
             mobile: req.body.mobile,
             item: req.session.itemName,
             amount: req.body.amount,
-            eventId : req.session.eventID
+            eventId : req.session.eventID,
+            ownerId : req.user._id
         });
         donation.save(function (err, result) {
             req.flash('success', 'Successfully Add your Donation!');
@@ -99,6 +100,27 @@ router.post('/addDonation', function (req, res, next) {
         });
     }
 });
+
+router.get('/orderedDonations', function(req, res, next) {
+    mongo.connect(url, function (err, client) {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        db.collection('donations').aggregate(
+            [
+                {$match:{eventId : req.session.eventID, ownerId : req.session.profileId}
+                },
+                { $group : { _id : "$item", quantity: { $sum: "$amount"}} }
+            ])
+            .toArray(function (err, result) {
+                assert.equal(null, err);
+                res.render('profileDonations', {donations: result, layout : 'main'});
+                client.close();
+            });
+    });
+
+});
+
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

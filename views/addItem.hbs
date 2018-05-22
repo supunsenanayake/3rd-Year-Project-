@@ -18,12 +18,12 @@
                 {{/if}}
                 <form action="/donation/addItem" method="post">
                     <div class="form-group col-lg-4">
-                        <label for="formGroupPostDonor">Donor Name</label>
-                        <input type="text" class="form-control" id="formGroupdonor" placeholder="Name" name="donorName">
+                        <label for="formGroupPostDonor">Donor Name : {{ user.firstName }} {{ user.lastName }}</label>
+                        <input type="hidden" class="form-control" id="formGroupdonor" placeholder="Name" name="donorName" value="{{ user.firstName }} {{ user.lastName }}">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label for="formGroupMobile">Mobile Number</label>
-                        <input type="number" class="form-control" id="formGroupMobile" placeholder="valid mobile number" name="mobile">
+                        <label for="formGroupMobile">Mobile Number : {{user.mobile}}</label>
+                        <input type="hidden" class="form-control" id="formGroupMobile" placeholder="valid mobile number" name="mobile" value="{{user.mobile}}">
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="formGroupPost">Item Name</label>
