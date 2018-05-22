@@ -1,15 +1,16 @@
 <!--
     this file is "edit profile" page
 -->
+
+
+
 {{#if errors}}
-    {{#each messages }}
-        <div class="alert alert-danger">
-            <p>{{this}}</p>
-        </div>
-    {{/each}}
+    <script>
+        
+    </script>
 {{/if}}
 
-<form method="post" action="/profile/saveProfile/">
+<form method="post" action="/profile/saveProfile/" onsubmit="return confirm('Are you sure you want yo save your changes?');" enctype="multipart/form-data">
 
 <input type="text" name="unic" id="unic" value="{{ user.nic }}" hidden>
 
@@ -119,17 +120,18 @@
 
             <tr>
                 <td class="form-group">
-                    <label for="exampleInputEmail1">Image</label>
+                    <label for="">Image</label>
                 </td>
                 <td>
-                    <input type="file" class="form-control" placeholder="" value="user image eka" disabled>
+                    <input type="file" class="form-control" placeholder="" name="file" > 
+                    <img src="/images/profilepics/{{user.nic}}" style="width: 30px; height: 30px;">
                 </td>
             </tr>
 
 
         </table>
         <input type="submit" class="btn btn-success" value="OK">
-        <button type="button" class="btn btn-dark">Cancel</button>
+        <a href="/"><input type="button" class="btn btn-dark" value='Cancel'></a>
 
         {{ user.firstName }}
     </center>
@@ -165,6 +167,8 @@
             province="unknown"
 
         //alert(province); //for testing
-        document.getElementById('province').value=province;
+        document.getElementById('province').value=province;   
     }
+    
+    document.onload(selectProvince(document.getElementById("district").value));
 </script>
