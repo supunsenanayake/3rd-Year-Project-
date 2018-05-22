@@ -49,7 +49,11 @@ router.post('/', function(req, res, next) {
         newUser.role = req.body.role;
         newUser.mobile ="+94" + (req.body.mobile).toString().slice(1);
         newUser.phone = (req.body.phone).toString();
-        newUser.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
+        if(req.body.gender === 'Male'){
+            newUser.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
+        } else {
+            newUser.profileImage = "/images/lady.jpg"
+        }
         newUser.save(function(err, result) {
             assert.equal(null, err);
             req.flash('success', 'Successfully Add New System User!');
@@ -57,6 +61,32 @@ router.post('/', function(req, res, next) {
         });
     }
 });
+
+router.get('/viewSystemUsers', function(req, res, next) {
+    User.find().exec(function (err, docs) {
+        assert.equal(null, err);
+        res.render('viewSystemUsers', {result : docs, layout : 'main'});
+    });
+
+});
+
+
+router.get('/userProfile', function(req, res, next) {
+    User.find({_id : req.session.profileId}).exec(function (err, docs) {
+        assert.equal(null, err);
+        req.session.donorName = docs[0].firstName + docs[0].lastName;
+        req.session.mobile = docs[0].mobile;
+        req.session.profileImage = docs[0].profileImage;
+        res.render('userProfile', {result : docs, layout : 'main'});
+    });
+
+});
+
+router.get('/userProfile/:id', function(req, res, next) {
+    req.session.profileId = req.params.id;
+    res.redirect('/operations/userProfile');
+});
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

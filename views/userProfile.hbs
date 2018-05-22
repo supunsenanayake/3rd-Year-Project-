@@ -1,0 +1,58 @@
+<script src="/javascripts/new.js"></script>
+<section class="section-01">
+    <div class="container">
+        {{#each result}}
+        <h4><strong>Profile</strong> : {{this.firstName}} {{this.lastName}}</h4>
+        <div class="row">
+            <hr>
+            <div class="col-sm-3"><!--left col-->
+
+
+                <div class="text-center">
+                    <img src="{{this.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <h6>Profile Picture</h6>
+                </div>
+            </div>
+                </hr>
+                <br>
+
+
+
+                <ul class="list-group">
+                    <table class="table table-user-information" align="center">
+                        <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{this.firstName}} {{this.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Role</td>
+                            <td>{{this.role}}</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>{{this.gender}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>{{this.province}} / {{this.district}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact</td>
+                            <td>{{this.mobile}} / {{this.phone}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </ul>
+
+
+
+            <hr>
+        </div>
+
+        <a class="btn btn-warnings" href="/donation/orderedDonations" role="button">See Ordered Donations</a>
+{{/each}}
+    </div>
+
+</section>
+
