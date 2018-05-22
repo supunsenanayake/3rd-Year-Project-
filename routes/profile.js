@@ -3,36 +3,27 @@
  * 
  */
 
+
+
+// File input field name is simply 'file'
+
+
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
 
-/*const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination : function(req,file,cb){
-        cb(null,'public/images/');
-    },
-    filename : function (req,file,cb) {
-        cb(null,file.fieldname + '-' + Date.now() + '.jpg');
-    attachFile = true;
-    }
-
-});
-
-attachFile = false;
-updateAllDetail = false;
-
-const upload = multer({storage : storage});*/
-
 var expressValidator = require('express-validator');
 var passport= require('passport');
-
-
 var mongo = require('mongodb').MongoClient;
 var assert = require('assert');
 //var sha1 = require('sha1');
+//var bodyParser = require('body-parser');
+var multer  = require('multer');
+var fs = require("fs");
+
+var path = require('path');
+var appDir = path.dirname(require.main.filename); //www
 
 var url = 'mongodb://localhost:27017';
 const dbName= 'sahana';
@@ -70,9 +61,29 @@ router.get('/changePassword', function(req, res, next) {
     }
 });
 
+var upload = multer({ dest: __dirname+'/tempUIs/'});
 //saving the profile after editing
 //router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
-router.post('/saveProfile', function(req, res, next) {
+router.post('/saveProfile', upload.single('file') ,function(req, res, next) {
+    
+    //if only image uploaded
+    if(req.file){
+        console.log(path.extname(req.file.filename));
+        console.log("req.file==true");
+        var file = appDir+'/../public/images/profilepics/' + req.session.passport.user.nic;
+        fs.rename(req.file.path, file, function(err) {
+            if (err) {
+                console.log(err);
+                //res.send(500);
+            }else {
+                /*res.json({
+                    message: 'File uploaded successfully',
+                    filename: req.file.filename
+                });*/
+                console.log('file uploaded');
+            }
+        });
+    }
 
     //if(attachFile) fileAuthentication (req);
 
@@ -121,9 +132,6 @@ router.post('/saveProfile', function(req, res, next) {
 
 //changing the password. backend code
 router.post('/savePassword', function (req, res, next) {
-    //encryption algo eka hoya ganna bari una. eken encrypt karanna oni
-    //var currentPassword = encryptPassword(req.body.currentPassword); //get old pass hash. algo??
-
     //compare the hash in DB and current password
     //return true if password correct
     var currentPassword= bcrypt.compareSync(req.body.currentPassword, req.session.passport.user.password);
@@ -131,12 +139,6 @@ router.post('/savePassword', function (req, res, next) {
 
     //new password hash
     var newPassword = bcrypt.hashSync(req.body.pass1, bcrypt.genSaltSync(5), null);
-    //};
-
-//    var newPassword = (req.body.pass1); //get new pass hash. algo??
-//    req.check('currentPassword','Current Password Not Correct').equals(req.user.password);
-    //req.check('newPassword','Password At least should be 4 characters').isLength({min: 4});
-    //req.check('newPassword',' Not matching with Confirm New Password field').equals(req.body.confirmPassword);
 
     var errors = req.validationErrors();
     console.log(errors);
@@ -180,106 +182,6 @@ router.post('/savePassword', function (req, res, next) {
 });
 
 /*
-router.get('/updateUser', function (req, res, next) {
-
-    mongo.connect(url, function(err, client) {
-        assert.equal(null, err);
-        var dbo = client.db(dbName);
-        if(updateAllDetail){
-            dbo.collection("user").updateMany(
-                {  email: req.user.email},updateAllDetail
-                , function(err, rest) {
-                    assert.equal(null, err);
-                    console.log(rest.result.nModified + " document(s) updated");
-                    client.close();
-                    updateAllDetail = false;
-                    res.redirect('/users/updateSession');
-                });
-        } else if (updateDetail){
-            dbo.collection("user").updateMany(
-                {  email: req.user.email},updateDetail
-                , function(err, rest) {
-                    assert.equal(null, err);
-                    console.log(rest.result.nModified + " document(s) updated");
-                    client.close();
-                    res.redirect('/users/updateSession');
-                });
-        }
-
-    });
-
-
-
-});
-
-
-router.get('/updatePassword', function (req, res, next) {
-    if(req.isUnauthenticated()){
-        res.redirect('/')
-    }else {
-        res.render('updatePassword', {layout: 'user'});
-    }
-
-});
-*/
-
-/*
-router.get('/updateSession', function (req, res, next) {
-    console.log(nic);
-    mongo.connect(url, function (err,client) {
-        assert.equal(null, err);
-        const db = client.db(dbName);
-        db.collection('users').find(
-            {nic: nic}
-        ).toArray(function (err, result) {
-            assert.equal(null, err);
-                const user__Detail = result[0];
-                console.log(user__Detail);
-                console.log("User Entered details Correct");
-                req.login(user__Detail, function (err) {
-                    res.redirect('/profile/');
-                });
-            client.close();
-        });
-    });
-});
-*/
-
-/*
-router.post('/changePassword', function (req, res, next) {
-    var currentPassword = sha1(req.body.currentPassword);
-    req.body.currentPassword = currentPassword;
-    req.check('currentPassword','Current Password Not Correct').equals(req.user.password);
-    req.check('newPassword','Password At least should be 4 characters').isLength({min: 4});
-    req.check('newPassword',' Not matching with Confirm New Password field').equals(req.body.confirmPassword);
-
-    var errors = req.validationErrors();
-
-    if(errors){
-        req.session.errors = errors;
-        res.render('updatePassword' , {errors : errors});
-    }else {
-        var password = sha1(req.body.newPassword);
-        mongo.connect(url, function(err, client) {
-            assert.equal(null, err);
-            var dbo = client.db(dbName);
-            dbo.collection("user").updateMany(
-                {  email: req.user.email},
-                { $set: {
-                    password : password
-                } }, function(err, rest) {
-                    assert.equal(null, err);
-                    console.log(rest.result.nModified + " document(s) updated");
-                    client.close();
-                });
-        });
-
-        res.redirect('/users/updateSession');
-
-    }
-
-});
-
 passport.serializeUser(function(user_detail, done) {
     done(null, user_detail);
 });
@@ -302,13 +204,6 @@ function fileAuthentication (req) {
         attachFile = false;
 
 }
-*/
-/*
-router.get('/viewProfile', function(req, res, next) {
-    res.render('viewProfile', {layout: 'main'});
-
-
-});
 */
 
 
