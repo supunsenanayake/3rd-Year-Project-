@@ -52,7 +52,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     res.locals.isAuthenticated = req.isAuthenticated();
     res.locals.session = req.session;
-    //res.locals.mobileDigital = "0" + req.user.mobile.slice(3); //error ekak apu nisa comment kara
 
     if (req.isAuthenticated()){
         res.locals.user = req.user;
@@ -69,6 +68,7 @@ app.use(function(req, res, next) {
             res.locals.userRole2= false;
             res.locals.userRole3= true;
         }
+        res.locals.mobileDigital = "0" + req.user.mobile.slice(3);
     }
     next();
 });
