@@ -7,19 +7,23 @@
             <hr>
             <div class="col-sm-3"><!--left col-->
 
-
+                <form method="post" action="/profile/saveprofile" enctype="multipart/form-data">
                 <div class="text-center">
                     <img src="{{user.profileImage}}" class="avatar img-circle img-thumbnail" id="profile-image1" alt="avatar">
                     <h6>Upload a different photo...</h6>
-                    <input id="profile-image-upload"  type="file" class="text-center center-block file-upload" o style="display: none">
+                    <input id="profile-image-upload"  type="file" class="text-center center-block file-upload" o style="display: none" name="profileImage">
                     <div style="color:#999;" >click image to change profile image</div>
             </div>
             </div>
             <br>
             <ul class="list-group">
-                <form method="post" action="profile/saveprofile" enctype="multipart/form-data">
-
-
+                {{#if messages}}
+                    {{# each messages }}
+                    <div class="alert alert-danger">
+                        {{this.msg}}
+                    </div>
+                    {{/each}}
+                {{/if}}
                     <div class="form-group">
                         <label for="exampleInputEmail1">NIC</label>
                         <input type="text" class="form-control"  placeholder="19/20XXXXXXXXXv" name="nic" value="{{user.nic}}">
@@ -34,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Mobile</label>
-                    <input type="text" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" value="{{user.mobile}}">
+                    <input type="number" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" value="{{mobileDigital}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tel-No</label>
@@ -118,9 +122,10 @@
                     <!--testing output-->
 
                     <!--button type="submit" class="btn btn-default">Submit</button-->
-                </form>
+
 
             </ul>
+            </form>
 
 
 

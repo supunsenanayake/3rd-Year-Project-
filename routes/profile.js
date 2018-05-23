@@ -20,10 +20,25 @@ var assert = require('assert');
 //var sha1 = require('sha1');
 //var bodyParser = require('body-parser');
 var multer  = require('multer');
+
+const storage = multer.diskStorage({
+    destination : function(req,file,cb){
+        cb(null,'public/images/profilePics/');
+    },
+    filename : function (req,file,cb) {
+        cb(null,file.fieldname + '-' + Date.now() + '.jpg');
+        req.session.attacheProfilePic = true;
+    }
+
+});
+
+const updateUser = multer({storage : storage});
+
+
 var fs = require("fs");
 
 var path = require('path');
-var appDir = path.dirname(require.main.filename); //www
+//var appDir = path.dirname(require.main.filename); //www
 
 var url = 'mongodb://localhost:27017';
 const dbName= 'sahana';
@@ -48,6 +63,7 @@ router.get('/viewProfile', function(req, res, next) {
 });
 
 router.get('/editProfile', function(req, res, next) {
+    req.session.attacheProfilePic = false;
     if(req.isUnauthenticated()){
         res.redirect('/')
     }else {
@@ -63,122 +79,93 @@ router.get('/changePassword', function(req, res, next) {
     }
 });
 
-var upload = multer({ dest: __dirname+'/tempUIs/'});
 //saving the profile after editing
 //router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
-router.post('/saveProfile', upload.single('file') ,function(req, res, next) {
+router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res, next) {
 
-    //if only image uploaded
-    if (req.file) {
-        console.log(path.extname(req.file.filename));
-        console.log("req.file==true");
-        var file = appDir + '/../public/images/profilepics/' + req.session.passport.user.nic;
-        fs.rename(req.file.path, file, function (err) {
-            if (err) {
-                console.log(err);
-                //res.send(500);
-            } else {
-                /*res.json({
-                    message: 'File uploaded successfully',
-                    filename: req.file.filename
-                });*/
-                console.log('file uploaded');
-            }
-        });
-    }
-
-
-    //if only image uploaded
-    if (req.file) {
-        console.log(path.extname(req.file.filename));
-        console.log("req.file==true");
-        var file = appDir + '/../public/images/profilepics/' + req.session.passport.user.nic;
-        fs.rename(req.file.path, file, function (err) {
-            if (err) {
-                console.log(err);
-                //res.send(500);
-            } else {
-                /*res.json({
-                    message: 'File uploaded successfully',
-                    filename: req.file.filename
-                });*/
-                console.log('file uploaded');
-            }
-        });
-    }
-
-
-    //if(attachFile) fileAuthentication (req);
-
-    //req.checkBody('firstName','First Name field Empty').notEmpty();
-    //req.checkBody('lastName','Last Name field Empty').notEmpty();
-    req.check('unic', 'nic not defined').notEmpty();
-    req.check('district', 'select your district').notEmpty();
-    req.check('mobile', 'Mobile Number Length Invalid').isLength({min: 10, max: 15});
+    req.check('nic', 'Invalid NIC Number').notEmpty().isLength({min:12, max: 12});
+    req.check('mobile', 'Invalid Mobile No').notEmpty().isLength({min:10, max:10});
+    req.check('phone', 'Invalid Tel-No').notEmpty().isLength({min:10, max:10});
+    req.check('province', 'Choose the Province Field').notEmpty();
+    req.check('district', 'Choose the District Field').notEmpty();
+    req.check('firstName', 'Fill the First Name Field').notEmpty();
+    req.check('lastName', 'Fill the Last Name Field').notEmpty();
+    req.check('gender', 'Choose the Gender Field').notEmpty();
+    req.check('role', 'Choose the Role Field').notEmpty();
 
     var errors = req.validationErrors();
 
-
     if (errors) {
         req.session.errors = errors;
-        console.log(errors);
-        res.render('editProfile', {errors: req.session.errors});
+        res.render('editProfile', {messages : req.session.errors, layout : 'main'});
     } else {
-        mongo.connect(url, function (err, db) {
-            if (err) throw err;
-            var dbo = db.db(dbName);
-            var myquery = {nic: req.body.unic}; //where clause
-            //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
-            var newvalues = {$set: {mobile: req.body.mobile, district: req.body.district}};
-            dbo.collection("users").updateOne(myquery, newvalues, function (err, res) {
-                    if (err) {
-                        console.log(err);
-                        throw err;
-                    }
-                    console.log(res.result);
-                    //req.session.user.mobile=req.body.mobile;
-                    db.close();
-                    console.log("profile updated for " + req.session.passport.user.nic);
 
+        req.session.mobileLKR = "+94" + (req.body.mobile).toString().slice(1);
 
-                    if (errors) {
-                        req.session.errors = errors;
-                        console.log(errors);
-                        res.render('editProfile', {errors: req.session.errors, layout: 'main'});
-                    } else {
-                        mongo.connect(url, function (err, db) {
-                            if (err) throw err;
-                            var dbo = db.db(dbName);
-                            var myquery = {nic: req.body.unic}; //where clause
-                            //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
-                            var newvalues = {$set: {mobile: req.body.mobile, district: req.body.district}};
-                            dbo.collection("users").updateOne(myquery, newvalues, function (err, res) {
-                                if (err) {
-                                    console.log(err);
-                                    throw err;
-                                }
-                                console.log(res.result);
-                                //req.session.user.mobile=req.body.mobile;
-                                db.close();
-                                console.log("profile updated for " + req.session.passport.user.nic);
+        if (req.session.attacheProfilePic) {
+            console.log("I AM IN");
 
-
-                            });
-                        });
-                    }
-
-                    //updating the session info
-                    console.log(req.session);
-                    //req.session.user.mobile=req.body.mobile;
-                    req.session.passport.user.mobile = req.body.mobile;
-                    req.session.passport.user.district = req.body.district;
-                    //res.redirect('/profile/');
-                    res.render('profile', {layout: 'main', anymsg: 'profile settings changed'});
+            User.findByIdAndUpdate(req.user._id, {
+                $set: {
+                    nic : req.body.nic,
+                    firstName : req.body.firstName,
+                    lastName : req.body.lastName,
+                    gender : req.body.gender,
+                    province : req.body.province,
+                    district : req.body.district,
+                    role : req.body.role,
+                    mobile : req.session.mobileLKR,
+                    phone : req.body.phone,
+                    profileImage: '/images/profilePics/'+ req.file.filename
                 }
-            );
-        });
+            }, {new: true}, function (err, docs) {
+                assert.equal(null, err);
+                req.session.passport.user.nic = req.body.nic;
+                req.session.passport.user.firstName = req.body.firstName;
+                req.session.passport.user.lastName = req.body.lastName;
+                req.session.passport.user.gender = req.body.gender;
+                req.session.passport.user.province = req.body.province;
+                req.session.passport.user.district = req.body.district;
+                req.session.passport.user.role = req.body.role;
+                req.session.passport.user.mobile = req.session.mobileLKR;
+                req.session.passport.user.phone = req.body.phone;
+                req.session.passport.user.profileImage = '/images/profilePics/'+ req.file.filename;
+                res.redirect('/profile/');
+            });
+        } else {
+
+            User.findByIdAndUpdate(req.user._id, {
+                $set: {
+                    nic : req.body.nic,
+                    firstName : req.body.firstName,
+                    lastName : req.body.lastName,
+                    gender : req.body.gender,
+                    province : req.body.province,
+                    district : req.body.district,
+                    role : req.body.role,
+                    mobile : req.session.mobileLKR,
+                    phone : req.body.phone
+                }
+            }, {new: true}, function (err, docs) {
+                assert.equal(null, err);
+                req.session.passport.user.nic = req.body.nic;
+                req.session.passport.user.firstName = req.body.firstName;
+                req.session.passport.user.lastName = req.body.lastName;
+                req.session.passport.user.gender = req.body.gender;
+                req.session.passport.user.province = req.body.province;
+                req.session.passport.user.district = req.body.district;
+                req.session.passport.user.role = req.body.role;
+                req.session.passport.user.mobile = req.session.mobileLKR;
+                req.session.passport.user.phone = req.body.phone;
+                res.redirect('/profile/');
+            });
+
+        }
+
     }
 });
+
+
 
 //changing the password. backend code
             router.post('/savePassword', function (req, res, next) {
@@ -195,7 +182,7 @@ router.post('/saveProfile', upload.single('file') ,function(req, res, next) {
 
                 if (!currentPassword) { //if entered current password is NOT correct
                     //req.session.errors = errors;
-                    res.render('changePassword', {messages: "Error: Current password not correct"});
+                    res.render('changePassword', {messages: "Current Password Not correct", layout : 'main'});
                 } else {
                     //var password = sha1(req.body.newPassword); //algo??
                     //var password = req.session.passport.user.password;
@@ -206,22 +193,18 @@ router.post('/saveProfile', upload.single('file') ,function(req, res, next) {
                         var myquery = {nic: req.session.passport.user.nic}; //where clause
                         var newvalues = {$set: {password: newPassword}};
                         dbo.collection("users").updateOne(myquery, newvalues, function (err, res) {
-                            if (err) {
-                                console.log(err);
-                                throw err;
-                            }
+                            assert.equal(null, err);
                             console.log(res.result);
                             //req.session.user.mobile=req.body.mobile;
                             db.close();
-                            console.log("password changed for " + req.session.passport.user.nic);
 
                         });
+                        console.log("password changed for " + req.session.passport.user.nic);
+                        req.session.passport.user.password = newPassword;
+                        res.render('profile', {layout: 'main', anymsg2: 'profile settings changed'});
                     });
 
                     //updating the session info
-                    console.log(req.session);
-                    req.session.passport.user.password = newPassword;
-                    res.render('profile', {layout: 'main', anymsg2: 'profile settings changed'});
                     //res.redirect('/profile/');
                 }
             });
