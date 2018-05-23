@@ -1,73 +1,56 @@
-<!--
-    this file is "view profile" page
--->
-
-<form method="post" enctype="multipart/form-data" action="/profile/">
-<HR>
-
-    {{#if anymsg}}
-    <!-- executes only if profile updated-->
-    <script>alert("Your settings have been saved");</script>
-    {{/if}}
-
-    {{#if anymsg2}}
-    <!-- executes only if profile updated-->
-    <script>alert("Your password changed successfully");</script>
-    {{/if}}
-
-<hr>
-
-<center>
-    <h3 class="heading-small">Your Information</h3>
-<table>
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">NIC</label></td><td>
-    <input type="text" class="form-control"  placeholder="Email" value="{{ user.nic }}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Gender</label></td><td>
-    <input type="text" class="form-control"  placeholder="Email" value="{{ user.gender }}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">First Name</label></td><td>
-    <input type="text" class="form-control"  placeholder="" value="{{ user.firstName }}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Last Name</label></td><td>
-    <input type="text" class="form-control"  placeholder="" value="{{ user.lastName }}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Mobile</label></td><td>
-    <input type="tel" class="form-control"  placeholder="" value="{{user.mobile}}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">role</label></td><td>
-    <input type="text" class="form-control"  placeholder="" value="{{ user.role }}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">District</label></td><td>
-    <input type="text" class="form-control"  placeholder="" value="{{ user.district }}" disabled>
-</td></tr>
-
-<tr><td class="form-group">
-    <label for="exampleInputEmail1">Image</label></td><td>
-    <img src="/images/profilepics/{{user.nic}}" style="width: 30px; height: 30px;">
-</td></tr>
+<section class="section-01">
+    <div class="container">
+            <h4><strong>Profile</strong> : {{user.firstName}} {{user.lastName}}</h4>
+            <div class="row">
+                <hr>
+                <div class="col-sm-3"><!--left col-->
 
 
-</table>
+                    <div class="text-center">
+                        <img src="{{user.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                        <h6>Profile Picture</h6>
+                    </div>
+                </div>
+                </hr>
+                <br>
 
-{{ user.firstName }}
-</center>
-
-<!--button type="submit" class="btn btn-default">Submit</button-->
-</form>
 
 
+                <ul class="list-group">
+                    <table class="table table-user-information" align="center">
+                        <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{user.firstName}} {{user.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Role</td>
+                            <td>{{user.role}}</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>{{user.gender}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>{{user.province}} / {{user.district}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact</td>
+                            <td>{{user.mobile}} / {{user.phone}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </ul>
+
+
+
+                <hr>
+            </div>
+            {{#if session.eventID}}
+            <a class="btn btn-warnings" href="/donation/myDonations" role="button">MY Donations</a>
+                {{/if}}
+    </div>
+
+</section>
 

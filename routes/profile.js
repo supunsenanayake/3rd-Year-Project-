@@ -1,6 +1,6 @@
 /**
  * profile related controls
- * 
+ *
  */
 
 
@@ -65,59 +65,59 @@ var upload = multer({ dest: __dirname+'/tempUIs/'});
 //saving the profile after editing
 //router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
 router.post('/saveProfile', upload.single('file') ,function(req, res, next) {
-    
-    //if only image uploaded
-    if(req.file){
-        console.log(path.extname(req.file.filename));
-        console.log("req.file==true");
-        var file = appDir+'/../public/images/profilepics/' + req.session.passport.user.nic;
-        fs.rename(req.file.path, file, function(err) {
-            if (err) {
-                console.log(err);
-                //res.send(500);
-            }else {
-                /*res.json({
-                    message: 'File uploaded successfully',
-                    filename: req.file.filename
-                });*/
-                console.log('file uploaded');
-            }
-        });
-    }
 
-    //if(attachFile) fileAuthentication (req);
-
-    //req.checkBody('firstName','First Name field Empty').notEmpty();
-    //req.checkBody('lastName','Last Name field Empty').notEmpty();
-    req.check('unic', 'nic not defined').notEmpty();
-    req.check('district', 'select your district').notEmpty();
-    req.check('mobile', 'Mobile Number Length Invalid').isLength({min: 10, max: 15});
-
-    var errors = req.validationErrors();
-
-    if (errors) {
-        req.session.errors = errors;
-        console.log(errors);
-        res.render('editProfile', {errors : req.session.errors, layout:'main'});
-    } else {
-        mongo.connect(url, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db(dbName);
-            var myquery = { nic: req.body.unic }; //where clause
-            //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
-            var newvalues = { $set: { mobile: req.body.mobile, district: req.body.district } };
-            dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
-            if (err){ 
-                console.log(err);
-                throw err;
-            }
-            console.log(res.result);
-            //req.session.user.mobile=req.body.mobile;
-            db.close();
-            console.log("profile updated for "+req.session.passport.user.nic);
-            
+        //if only image uploaded
+        if(req.file){
+            console.log(path.extname(req.file.filename));
+            console.log("req.file==true");
+            var file = appDir+'/../public/images/profilepics/' + req.session.passport.user.nic;
+            fs.rename(req.file.path, file, function(err) {
+                if (err) {
+                    console.log(err);
+                    //res.send(500);
+                }else {
+                    /*res.json({
+                        message: 'File uploaded successfully',
+                        filename: req.file.filename
+                    });*/
+                    console.log('file uploaded');
+                }
             });
-          });
+        }
+
+        //if(attachFile) fileAuthentication (req);
+
+        //req.checkBody('firstName','First Name field Empty').notEmpty();
+        //req.checkBody('lastName','Last Name field Empty').notEmpty();
+        req.check('unic', 'nic not defined').notEmpty();
+        req.check('district', 'select your district').notEmpty();
+        req.check('mobile', 'Mobile Number Length Invalid').isLength({min: 10, max: 15});
+
+        var errors = req.validationErrors();
+
+        if (errors) {
+            req.session.errors = errors;
+            console.log(errors);
+            res.render('editProfile', {errors : req.session.errors, layout:'main'});
+        } else {
+            mongo.connect(url, function(err, db) {
+                if (err) throw err;
+                var dbo = db.db(dbName);
+                var myquery = { nic: req.body.unic }; //where clause
+                //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
+                var newvalues = { $set: { mobile: req.body.mobile, district: req.body.district } };
+                dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
+                    if (err){
+                        console.log(err);
+                        throw err;
+                    }
+                    console.log(res.result);
+                    //req.session.user.mobile=req.body.mobile;
+                    db.close();
+                    console.log("profile updated for "+req.session.passport.user.nic);
+
+                });
+            });
         }
 
         //updating the session info
@@ -157,17 +157,17 @@ router.post('/savePassword', function (req, res, next) {
             //var newvalues = { $set: {name: "Mickey", address: "Canyon 123" } };
             var newvalues = { $set: { password: newPassword } };
             dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
-            if (err){ 
-                console.log(err);
-                throw err;
-            }
-            console.log(res.result);
-            //req.session.user.mobile=req.body.mobile;
-            db.close();
-            console.log("password changed for "+req.session.passport.user.nic);
-            
+                if (err){
+                    console.log(err);
+                    throw err;
+                }
+                console.log(res.result);
+                //req.session.user.mobile=req.body.mobile;
+                db.close();
+                console.log("password changed for "+req.session.passport.user.nic);
+
             });
-          });
+        });
         //res.redirect('/users/updateSession');
     }
 
@@ -185,12 +185,9 @@ router.post('/savePassword', function (req, res, next) {
 passport.serializeUser(function(user_detail, done) {
     done(null, user_detail);
 });
-
 passport.deserializeUser(function(user_detail, done) {
     done(null, user_detail);
 });
-
-
 function fileAuthentication (req) {
         updateAllDetail = {
             $set: {
@@ -202,7 +199,6 @@ function fileAuthentication (req) {
             }
         };
         attachFile = false;
-
 }
 */
 

@@ -1,174 +1,144 @@
-<!--
-    this file is "edit profile" page
--->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/javascripts/new.js"></script>
+<section class="section-01">
+    <div class="container">
+        <h4>Update Profile</h4>
+        <div class="row">
+            <hr>
+            <div class="col-sm-3"><!--left col-->
 
 
+                <div class="text-center">
+                    <img src="{{user.profileImage}}" class="avatar img-circle img-thumbnail" id="profile-image1" alt="avatar">
+                    <h6>Upload a different photo...</h6>
+                    <input id="profile-image-upload"  type="file" class="text-center center-block file-upload" o style="display: none">
+                    <div style="color:#999;" >click image to change profile image</div>
+            </div>
+            </div>
+            <br>
+            <ul class="list-group">
+                <form method="post" action="#" enctype="multipart/form-data">
 
-{{#if errors}}
-    <script>
-        
-    </script>
-{{/if}}
 
-<form method="post" action="/profile/saveProfile/" onsubmit="return confirm('Are you sure you want yo save your changes?');" enctype="multipart/form-data">
-
-<input type="text" name="unic" id="unic" value="{{ user.nic }}" hidden>
-
-    <center>
-        <h3 class="heading-small">Edit Your Information</h3>
-        <table>
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">NIC</label>
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="" value="{{ user.nic }}" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">Gender</label>
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="Gender" value="{{ user.gender }}" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">First Name</label>
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="First Name" value="{{ user.firstName }}" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">Last Name</label>
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="Last Name" value="{{ user.lastName }}" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">Mobile</label>
-                </td>
-                <td>
-                    <input type="tel" class="form-control" name="mobile" id="mobile1" placeholder="Mobile No." value="{{user.mobile}}">
-                </td>
-            </tr>
-
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">role</label>
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="User type" value="{{ user.role }}" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="form-group">
-                    <label for="exampleInputEmail1">District</label>
-                </td>
-                <td>
-                    <!--input type="text" class="form-control" name="district" id="district" placeholder="District" value="{{ user.district }}"-->
-                    <select class="custom-select" id="district" name="district" onchange="selectProvince(this.value);">
-                        <option value="{{user.district}}" selected>{{ user.district }}</option>
-                        <option value="Ampara" {{#if user.district}}{{/if}} >Ampara</option>
-                        <option value="Anuradhapura">Anuradhapura</option>
-                        <option value="Badulla">Badulla</option>
-                        <option value="Batticaloa">Batticaloa</option>
-                        <option value="Colombo">Colombo</option>
-                        <option value="Galle">Galle</option>
-                        <option value="Gampaha">Gampaha</option>
-                        <option value="Hambantota">Hambantota</option>
-                        <option value="Jaffna">Jaffna</option>
-                        <option value="Kalutara">Kalutara</option>
-                        <option value="Northern">Northern</option>
-                        <option value="Kandy">Kandy</option>
-                        <option value="Kegalle">Kegalle</option>
-                        <option value="Kilinochchi">Kilinochchi</option>
-                        <option value="Kurunegala">Kurunegala</option>
-                        <option value="Mannar">Mannar</option>
-                        <option value="Matale">Matale</option>
-                        <option value="Matara">Matara</option>
-                        <option value="Monaragala">Monaragala</option>
-                        <option value="Mullaitivu">Mullaitivu</option>
-                        <option value="NuwaraEliya">Nuwara Eliya</option>
-                        <option value="Polonnaruwa">Polonnaruwa</option>
-                        <option value="Puttalam">Puttalam</option>
-                        <option value="Ratnapura">Ratnapura</option>
-                        <option value="Trincomalee">Trincomalee</option>
-                        <option value="Vavuniya">Vavuniya</option>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">NIC</label>
+                        <input type="text" class="form-control"  placeholder="19/20XXXXXXXXXv" name="nic" value="{{user.nic}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">First Name</label>
+                        <input type="text" class="form-control"  name="firstName" placeholder="First Name"  value="{{user.firstName}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Last Name</label>
+                        <input type="text" class="form-control"  name="lastName" placeholder="Last Name" value="{{user.lastName}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Mobile</label>
+                    <input type="number" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" value="{{mobileDigital}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tel-No</label>
+                        <input type="number" class="form-control" id="formGroupMobile" placeholder="0XXXXXXXXX" name="phone" value="{{user.phone}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Gender</label>
+                    <select class="custom-select" id="inputGroupSelect01" name="gender">
+                        <option selected value="{{user.gender}}">{{user.gender}}</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
-                </td>
-            </tr>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Requesting To Change Role</label>
+                        <select class="custom-select" id="inputGroupSelect01" name="role">
+                            <option selected value="{{user.role}}">{{user.role}}</option>
+                            {{#if userRole}}
+                                <option value="Admin">Admin</option>
+                            {{/if}}
+                            {{#if userRole2}}
+                                <option value="Super Volunteer">Super Volunteer</option>
+                            {{/if}}
+                            <option value="Volunteer">Volunteer</option>
+                            <option value="Donor">Donor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Province</label>
+                        <select class="custom-select" id="inputGroupSelect01" name="province">
+                            <option selected value="{{user.province}}">{{user.province}}</option>
+                            <option value="Central">Central</option>
+                            <option value="Eastern">Eastern</option>
+                            <option value="Northern">Northern</option>
+                            <option value="North Central">North Central</option>
+                            <option value="North Western">North Western</option>
+                            <option value="Sabaragamuwa">Sabaragamuwa</option>
+                            <option value="Southern">Southern</option>
+                            <option value="Uva">Uva</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">District</label>
+                        <select class="custom-select" id="inputGroupSelect01" name="district">
+                            <option selected value="{{user.district}}">{{user.district}}</option>
+                            <option value="Ampara">Ampara</option>
+                            <option value="Anuradhapura">Anuradhapura</option>
+                            <option value="Badulla">Badulla</option>
+                            <option value="Batticaloa">Batticaloa</option>
+                            <option value="Colombo">Colombo</option>
+                            <option value="Galle">Galle</option>
+                            <option value="Gampaha">Gampaha</option>
+                            <option value="Hambantota">Hambantota</option>
+                            <option value="Jaffna">Jaffna</option>
+                            <option value="Kalutara">Kalutara</option>
+                            <option value="Northern">Northern</option>
+                            <option value="Kandy">Kandy</option>
+                            <option value="Kegalle">Kegalle</option>
+                            <option value="Kilinochchi">Kilinochchi</option>
+                            <option value="Kurunegala">Kurunegala</option>
+                            <option value="Mannar">Mannar</option>
+                            <option value="Matale">Matale</option>
+                            <option value="Matara">Matara</option>
+                            <option value="Monaragala">Monaragala</option>
+                            <option value="Mullaitivu">Mullaitivu</option>
+                            <option value="NuwaraEliya">Nuwara Eliya</option>
+                            <option value="Polonnaruwa">Polonnaruwa</option>
+                            <option value="Puttalam">Puttalam</option>
+                            <option value="Ratnapura">Ratnapura</option>
+                            <option value="Trincomalee">Trincomalee</option>
+                            <option value="Vavuniya">Vavuniya</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-4">
+                        <button type="submit" class="btn btn-primary" name="submit" value="create">Change Password</button>
+                        <a href="/" class="btn btn-danger"
+                           onclick="return confirm('Are You Sure you Want To Cancel This Process..?')">Cancel</a>
+                    </div>
 
-            <tr>
-                <td class="form-group">
-                    <label for="">Province</label>
-                </td>
-                <td>
-                    <input type="text" id="province" name="province" class="form-control" placeholder="" disabled>
-                </td>
-            </tr>
 
-            <tr>
-                <td class="form-group">
-                    <label for="">Image</label>
-                </td>
-                <td>
-                    <input type="file" class="form-control" placeholder="" name="file" > 
-                    <img src="/images/profilepics/{{user.nic}}" style="width: 30px; height: 30px;">
-                </td>
-            </tr>
+                    <!--testing output-->
+
+                    <!--button type="submit" class="btn btn-default">Submit</button-->
+                </form>
+
+            </ul>
 
 
-        </table>
-        <input type="submit" class="btn btn-success" value="OK">
-        <a href="/"><input type="button" class="btn btn-dark" value='Cancel'></a>
 
-        {{ user.firstName }}
-    </center>
 
-    
-</form>
 
-<script>
-    function selectProvince(district){
-        var province;
-        if(district=="Monaragala" || district=="Badulla")
-            province="Uva";
-        else if(district=="Matara" || district=="Galle" || district=="Hambantota")
-            province="South";
-        else if(district=="Colombo" || district=="Gampaha" || district=="Kalutara")
-            province="Western";
 
-        else if(district=="Ampara" || district=="Batticaloa" || district=="Trincomalee")
-            province="Eastern";
-        else if(district=="Kandy" || district=="NuwaraEliya" || district=="Matale" )
-            province="Central";
-        else if(district=="Ratnapura" || district=="Kegalle" )
-            province="Sabaragamuwa";
 
-        else if(district=="Jaffna" || district=="Kilinochchi" || district=="Mannar")
-            province="North";
-        else if(district=="Anuradhapura" || district=="Polonnaruwa" )
-            province="North central";
-        else if(district=="Puttalam" || district=="Kurunegala" )
-            province="North western";
 
-        else
-            province="unknown"
+            <hr>
+    </div>
+        <script>
+            $(function() {
+                $('#profile-image1').on('click', function() {
+                    $('#profile-image-upload').click();
+                });
+            });
+        </script>
+    </div>
 
-        //alert(province); //for testing
-        document.getElementById('province').value=province;   
-    }
-    
-    document.onload(selectProvince(document.getElementById("district").value));
-</script>
+</section>
+

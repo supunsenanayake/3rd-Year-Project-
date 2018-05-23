@@ -121,6 +121,14 @@ router.get('/orderedDonations', function(req, res, next) {
 });
 
 
+router.get('/myDonations', function(req, res, next) {
+    req.session.donorName = req.user.firstName + " " + req.user.lastName;
+    req.session.mobile = req.user.mobile;
+    req.session.profileImage = req.user.profileImage;
+    req.session.profileId = req.user._id;
+    res.redirect('/donation/orderedDonations');
+});
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

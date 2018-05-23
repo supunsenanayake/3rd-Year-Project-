@@ -49,9 +49,10 @@
 
             <hr>
         </div>
-
+        {{/each}}
+            {{#if session.eventID}}
         <a class="btn btn-warnings" href="/donation/orderedDonations" role="button">See Ordered Donations</a>
-{{/each}}
+            {{/if}}
     </div>
 
 </section>
