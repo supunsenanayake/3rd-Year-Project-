@@ -88,8 +88,7 @@ router.post('/publish', createEvent.single('eventImage'), function(req, res, nex
 });
 
 
-router.get('/edit/:id', function(req, res, next) {
-    req.session.eventID = req.params.id;
+router.get('/edit', function(req, res, next) {
     req.session.attacheFile = false;
     Event.find({_id: req.session.eventID}).exec(function (err, docs) {
         assert.equal(null, err);
@@ -97,6 +96,10 @@ router.get('/edit/:id', function(req, res, next) {
     });
 });
 
+router.get('/edit/:id', function(req, res, next) {
+    req.session.eventID = req.params.id;
+    res.redirect('/event/edit');
+});
 
 router.post('/updateEvent', createEvent.single('eventImage'), function(req, res, next) {
     req.check('title', 'Give Title for Event in Title Filed ').notEmpty();

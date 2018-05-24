@@ -95,8 +95,7 @@ router.post('/publish', uploadNews.single('newsImage'), function(req, res, next)
 });
 
 
-router.get('/edit/:id', function(req, res, next) {
-    req.session.newsID = req.params.id;
+router.get('/edit', function(req, res, next) {
     req.session.attacheFile = false;
     News.find({_id: req.session.newsID}).exec(function (err, docs) {
         assert.equal(null, err);
@@ -104,6 +103,10 @@ router.get('/edit/:id', function(req, res, next) {
     });
 });
 
+router.get('/edit/:id', function(req, res, next) {
+    req.session.newsID = req.params.id;
+    res.redirect('/news/edit');
+});
 
 router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, next) {
     req.check('title', 'Give Title for Event in Title Filed ').notEmpty();
