@@ -13,18 +13,17 @@
                 {{/if}}
                 {{# each result}}
                 <form method="post" action="/news/updateNews" enctype="multipart/form-data">
-                    <div class="form-group">
+                    <div class="form-group col-lg-4">
                         <label for="formGroupPostTitle">Post Title</label>
                         <input type="text" class="form-control" id="formGroupPostTitle" placeholder="Title" name="title" value="{{this.title}}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-lg-4">
                         <label for="formGroupExampleInput2">News Description</label>
-                        (Type below When Need to Update News Description)
-                        <textarea class="form-control" rows="3" name="description" placeholder="Type News Here"></textarea>
+                        <textarea class="form-control" rows="3" name="description" placeholder="Type Here When Need to Update News Description"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-lg-4">
                         <label for="formGroupExampleInput2">Upload Image</label><br>
-                        (Click to Change News picture)
+                        (Click to Change News Picture)
                         <input type="file"  id="formGroupImage" name="newsImage">
                     </div>
                     <div class="form-group col-xs-4">

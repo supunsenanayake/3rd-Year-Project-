@@ -13,13 +13,13 @@
                 {{/if}}
                 <form method="post" action="/event/updateEvent" enctype="multipart/form-data">
                 {{# each result}}
-                    <div class="form-group">
+                    <div class="form-group col-lg-4">
                         <label for="formGroupPostTitle">Disaster Title</label>
                         <input type="text" class="form-control" id="formGroupPostTitle" placeholder="Title" name="title" value="{{this.title}}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-lg-4">
                         <label for="formGroupExampleInput2">Upload Image</label><br>
-                        (Click to Change Event picture)
+                        (Click to Change Event Picture)
                         <input type="file"  id="formGroupImage" name="eventImage">
                     </div>
                     <div class="form-group col-xs-4">
