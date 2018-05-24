@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer') ){
         return next();
     }
     res.redirect('/');

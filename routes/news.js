@@ -94,6 +94,9 @@ router.post('/publish', uploadNews.single('newsImage'), function(req, res, next)
         }
 });
 
+router.use('/', isUserIn, function(req, res, next) {
+    next();
+});
 
 router.get('/edit', function(req, res, next) {
     req.session.attacheFile = false;
@@ -196,13 +199,18 @@ router.get('/delete/:id', function(req, res, next) {
 });
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer' || req.user.role === 'Volunteer')) {
         return next();
     }
     res.redirect('/');
 }
 
-
+function isUserIn(req, res, next) {
+    if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer')) {
+        return next();
+    }
+    res.redirect('/');
+}
 
 
 module.exports = router;

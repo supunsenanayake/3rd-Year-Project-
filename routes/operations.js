@@ -89,7 +89,7 @@ router.get('/userProfile/:id', function(req, res, next) {
 
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && (req.user.role === 'Admin')) {
         return next();
     }
     res.redirect('/');
