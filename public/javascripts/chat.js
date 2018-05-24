@@ -1,5 +1,5 @@
 //make connection
-var socket = io.connect('http://ec2-18-221-166-17.us-east-2.compute.amazonaws.com:8080');
+var socket = io.connect('http://ec2-18-221-166-17.us-east-2.compute.amazonaws.com');
 
 
 // Query DOM
