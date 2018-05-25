@@ -1,3 +1,60 @@
+    <script type="text/javascript">
+    function checkNIC(idnum){
+        if(idnum.length!=11){
+            alert("invalid NIC length");
+            return false;
+        }
+        else{
+            var numberslist = /^[0-9]+$/;
+            if(!idnum.match(numberslist)){
+            //if(true){
+                alert("NIC should have only numbers");
+                return false;
+            }
+            else{ //alert("k");
+                if(idnum.substring(0,2)!="19" && idnum.substring(0,2)!="20"){
+                    alert("NIC num should start with 19xxxxxxxxx or 20xxxxxxxxxxx only");
+                    return false;
+                }
+                else{
+                    //alert("X");
+                    return true;
+                } /***/
+            }
+        }
+    }
+    
+    function validateSignup(){
+        var nic= document.getElementById("formGroupNICNumber").value; //alert(nic);
+        var tel= document.getElementById("formGroupTelePhone").value;
+        var mob= document.getElementById("formGroupMobile").value;
+        var numberslist = /^[0-9]+$/;
+
+        if(checkNIC(nic)==true){
+            if(tel.substring(0,1)=="0" && mob.substring(0,2)=="07" && tel.length==10 && mob.length==10){
+                //alert("t2");
+                if(tel.match(numberslist) && mob.match(numberslist)){
+                    return true;
+                }
+                else{
+                    alert("Telephone/Mobile should contain only numbers");
+                    return false;
+                }
+            }
+            else{
+                alert("Invalid telephone/mobile number");
+                return false;
+            }
+        }
+        else{
+            //alert("F1");
+            return false;
+        }
+    }
+
+    
+</script>
+
 <section class="banner-sec">
     <div class="container">
         <div class="row">
@@ -12,7 +69,7 @@
                     {{/each}}
                 {{/if}}
                 <hr>
-                <form action="/users/signUp" method="post">
+                <form action="/users/signUp" method="post" onsubmit="return validateSignup()" >
                     <div class="input-group col-lg-4">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">First Name</span>
@@ -37,7 +94,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">NIC</span>
                         </div>
-                        <input type="number" class="form-control" id="formGroupNICNumber" placeholder="19/20XXXXXXXXX" name="nic">
+                        <input type="text" class="form-control" id="formGroupNICNumber" placeholder="19/20XXXXXXXXX" name="nic">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">v</span>
                         </div>
@@ -67,7 +124,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Mobile</span>
                         </div>
-                        <input type="number" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile">
+                        <input type="tel" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" required>
                         <div class="input-group-prepend">
                             <span class="fi-phone"></span>
                             <span class="input-group-text" id="basic-addon1"><i class="fa fa-mobile"></i></span>
@@ -78,7 +135,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Tel-No</span>
                         </div>
-                        <input type="number" class="form-control" id="formGroupTelePhone" placeholder="0XXXXXXXXX" name="phone">
+                        <input type="tel" class="form-control" id="formGroupTelePhone" placeholder="0XXXXXXXXX" name="phone" required>
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
                         </div>
@@ -102,7 +159,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Role</span>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="role">
+                        <select class="custom-select" id="inputGroupSelect02" name="role">
                             <option selected>Choose...</option>
                             <option value="Donor">Donor</option>
                             <option value="Volunteer">Volunteer</option>
@@ -114,9 +171,9 @@
                     <hr>
                     <div class="input-group col-lg-4">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Province</span>
+                            <span class="input-group-text" id="basic-addon2">Province</span>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="province">
+                        <select class="custom-select" id="inputGroupSelect03" name="province">
                             <option selected>Choose...</option>
                             <option value="Central">Central</option>
                             <option value="Eastern">Eastern</option>
@@ -128,15 +185,15 @@
                             <option value="Uva">Uva</option>
                         </select>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-globe"></i></span>
+                            <span class="input-group-text" id="basic-addon3"><i class="fa fa-globe"></i></span>
                         </div>
                     </div>
                     <hr>
                     <div class="input-group col-lg-4">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">District</span>
+                            <span class="input-group-text" id="basic-addon4">District</span>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="district">
+                        <select class="custom-select" id="inputGroupSelect04" name="district">
                             <option selected>Choose...</option>
                             <option value="Ampara">Ampara</option>
                             <option value="Anuradhapura">Anuradhapura</option>
@@ -170,13 +227,13 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-4">
-                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
+                        <input type="hidden" class="form-control" id="formGroupCsrf1"  name="_csrf" value="{{csrfToken}}">
                     </div>
                     <div class="form-group col-lg-4">
-                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="username" value="username">
+                        <input type="hidden" class="form-control" id="formGroupCsrf2"  name="username" value="username">
                     </div>
                     <div class="form-group col-lg-4">
-                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="_password" value="password">
+                        <input type="hidden" class="form-control" id="formGroupCsrf3"  name="_password" value="password">
                     </div>
                     <div class="form-group col-xs-4">
                         <button type="submit" class="btn btn-primary" name="submit" value="create"
