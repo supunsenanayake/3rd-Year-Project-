@@ -83,9 +83,6 @@ router.get('/changePassword', function(req, res, next) {
 //router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
 router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res, next) {
 
-    req.check('nic', 'Invalid NIC Number').notEmpty().isLength({min:12, max: 12});
-    req.check('mobile', 'Invalid Mobile No').notEmpty().isLength({min:10, max:10});
-    req.check('phone', 'Invalid Tel-No').notEmpty().isLength({min:10, max:10});
     req.check('province', 'Choose the Province Field').notEmpty();
     req.check('district', 'Choose the District Field').notEmpty();
     req.check('firstName', 'Fill the First Name Field').notEmpty();
@@ -100,14 +97,14 @@ router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res
         res.render('editProfile', {messages : req.session.errors, layout : 'main'});
     } else {
 
-        req.session.mobileLKR = "+94" + (req.body.mobile).toString().slice(1);
+        req.session.mobileLKR = "+94" + (req.body.mobile).slice(1);
+        req.session.nicLKR = (req.body.nic) + "v";
 
         if (req.session.attacheProfilePic) {
-            console.log("I AM IN");
 
             User.findByIdAndUpdate(req.user._id, {
                 $set: {
-                    nic : req.body.nic,
+                    nic : req.session.nicLKR,
                     firstName : req.body.firstName,
                     lastName : req.body.lastName,
                     gender : req.body.gender,
@@ -120,7 +117,7 @@ router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res
                 }
             }, {new: true}, function (err, docs) {
                 assert.equal(null, err);
-                req.session.passport.user.nic = req.body.nic;
+                req.session.passport.user.nic = req.session.nicLKR;
                 req.session.passport.user.firstName = req.body.firstName;
                 req.session.passport.user.lastName = req.body.lastName;
                 req.session.passport.user.gender = req.body.gender;
@@ -136,7 +133,7 @@ router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res
 
             User.findByIdAndUpdate(req.user._id, {
                 $set: {
-                    nic : req.body.nic,
+                    nic : req.session.nicLKR,
                     firstName : req.body.firstName,
                     lastName : req.body.lastName,
                     gender : req.body.gender,
@@ -148,7 +145,7 @@ router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res
                 }
             }, {new: true}, function (err, docs) {
                 assert.equal(null, err);
-                req.session.passport.user.nic = req.body.nic;
+                req.session.passport.user.nic = req.session.nicLKR;
                 req.session.passport.user.firstName = req.body.firstName;
                 req.session.passport.user.lastName = req.body.lastName;
                 req.session.passport.user.gender = req.body.gender;

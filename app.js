@@ -69,6 +69,7 @@ app.use(function(req, res, next) {
             res.locals.userRole3= true;
         }
         res.locals.mobileDigital = "0" + req.user.mobile.slice(3);
+        res.locals.nicDigital = req.user.nic.slice(0,11);
     }
     next();
 });

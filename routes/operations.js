@@ -20,10 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    req.checkBody('nic', 'Invalid NIC Number').notEmpty().isLength({min:11, max: 11});
     req.checkBody('password', 'Password word at least have 4 characters').notEmpty().isLength({min:4});
-    req.checkBody('mobile', 'Invalid Mobile No').notEmpty().isLength({min:10, max:10});
-    req.checkBody('phone', 'Invalid Tel-No').notEmpty().isLength({min:10, max:10});
     req.checkBody('province', 'Choose the Province Field').notEmpty();
     req.checkBody('district', 'Choose the District Field').notEmpty();
     req.checkBody('password', 'Password Not Match').notEmpty().equals(req.body.confirmPassword);
@@ -39,7 +36,7 @@ router.post('/', function(req, res, next) {
         res.render('createUser', { csrfToken: req.csrfToken(), noErr : false, msgSuccess : false, messages : req.session.errors, layout : 'main'});
     } else {
         var newUser = new User();
-        newUser.nic = (req.body.nic).toString() + "v";
+        newUser.nic = (req.body.nic) + "v";
         newUser.password = newUser.encryptPassword(req.body.password);
         newUser.firstName = req.body.firstName;
         newUser.lastName = req.body.lastName;
@@ -47,8 +44,8 @@ router.post('/', function(req, res, next) {
         newUser.province = req.body.province;
         newUser.district = req.body.district;
         newUser.role = req.body.role;
-        newUser.mobile ="+94" + (req.body.mobile).toString().slice(1);
-        newUser.phone = (req.body.phone).toString();
+        newUser.mobile ="+94" + (req.body.mobile).slice(1);
+        newUser.phone = (req.body.phone);
         if(req.body.gender === 'Male'){
             newUser.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
         } else {

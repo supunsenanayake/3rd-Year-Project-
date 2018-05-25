@@ -7,7 +7,7 @@
             <hr>
             <div class="col-sm-3"><!--left col-->
 
-                <form method="post" action="/profile/saveprofile" enctype="multipart/form-data">
+                <form method="post" action="/profile/saveprofile" enctype="multipart/form-data" onsubmit="return validateUpdateUser()">
                 <div class="text-center">
                     <img src="{{user.profileImage}}" class="avatar img-circle img-thumbnail" id="profile-image1" alt="avatar">
                     <h6>Upload a different photo...</h6>
@@ -25,8 +25,8 @@
                     {{/each}}
                 {{/if}}
                     <div class="form-group">
-                        <label for="exampleInputEmail1">NIC</label>
-                        <input type="text" class="form-control"  placeholder="19/20XXXXXXXXXv" name="nic" value="{{user.nic}}">
+                        <label for="exampleInputEmail1">NIC (v)</label>
+                        <input type="text" class="form-control"  placeholder="19/20XXXXXXXXXv" id="formGroupNICNumber" name="nic" value="{{nicDigital}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">First Name</label>
@@ -38,11 +38,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Mobile</label>
-                    <input type="number" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" value="{{mobileDigital}}">
+                    <input type="text" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" value="{{mobileDigital}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tel-No</label>
-                        <input type="number" class="form-control" id="formGroupMobile" placeholder="0XXXXXXXXX" name="phone" value="{{user.phone}}">
+                        <input type="text" class="form-control" id="formGroupTelePhone" placeholder="0XXXXXXXXX" name="phone" value="{{user.phone}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Gender</label>
@@ -147,3 +147,61 @@
 
 </section>
 
+
+
+<script type="text/javascript">
+    function checkNIC(idnum){
+        if(idnum.length!==11){
+            alert("invalid NIC length");
+            return false;
+        }
+        else{
+            var numberslist = /^[0-9]+$/;
+            if(!idnum.match(numberslist)){
+                //if(true){
+                alert("NIC should have only numbers");
+                return false;
+            }
+            else{ //alert("k");
+                if(idnum.substring(0,2)!=="19" && idnum.substring(0,2)!=="20"){
+                    alert("NIC num should start with 19xxxxxxxxx or 20xxxxxxxxxxx only");
+                    return false;
+                }
+                else{
+                    //alert("X");
+                    return true;
+                } /***/
+            }
+        }
+    }
+
+    function validateUpdateUser(){
+        var nic= document.getElementById("formGroupNICNumber").value; //alert(nic);
+        var tel= document.getElementById("formGroupTelePhone").value;
+        var mob= document.getElementById("formGroupMobile").value;
+        var numberslist = /^[0-9]+$/;
+
+        if(checkNIC(nic)){
+            if(tel.substring(0,1)==="0" && mob.substring(0,2)==="07" && tel.length===10 && mob.length===10){
+                //alert("t2");
+                if(tel.match(numberslist) && mob.match(numberslist)){
+                    return true;
+                }
+                else{
+                    alert("Telephone/Mobile should contain only numbers");
+                    return false;
+                }
+            }
+            else{
+                alert("Invalid telephone/mobile number");
+                return false;
+            }
+        }
+        else{
+            //alert("F1");
+            return false;
+        }
+    }
+
+
+</script>

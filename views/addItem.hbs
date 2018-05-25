@@ -1,3 +1,18 @@
+
+<script>
+    function validateDonation(){
+        var amount=document.getElementById("formGroupAmount").value;
+        if(amount<=0){
+            alert("Enter a Positive number");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+
+
 <section class="banner-sec">
     <div class="container">
         <div class="row">
@@ -16,7 +31,7 @@
                         {{msgSuccess}}
                     </div>
                 {{/if}}
-                <form action="/donation/addItem" method="post">
+                <form action="/donation/addItem" method="post" onsubmit="return validateDonation()">
                     <div class="form-group col-lg-4">
                         <label for="formGroupPostDonor">Donor Name : {{ user.firstName }} {{ user.lastName }}</label>
                         <input type="hidden" class="form-control" id="formGroupdonor" placeholder="Name" name="donorName" value="{{ user.firstName }} {{ user.lastName }}">

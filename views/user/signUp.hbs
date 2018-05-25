@@ -1,6 +1,6 @@
     <script type="text/javascript">
     function checkNIC(idnum){
-        if(idnum.length!=11){
+        if(idnum.length!==11){
             alert("invalid NIC length");
             return false;
         }
@@ -12,7 +12,7 @@
                 return false;
             }
             else{ //alert("k");
-                if(idnum.substring(0,2)!="19" && idnum.substring(0,2)!="20"){
+                if(idnum.substring(0,2)!=="19" && idnum.substring(0,2)!=="20"){
                     alert("NIC num should start with 19xxxxxxxxx or 20xxxxxxxxxxx only");
                     return false;
                 }
@@ -30,8 +30,8 @@
         var mob= document.getElementById("formGroupMobile").value;
         var numberslist = /^[0-9]+$/;
 
-        if(checkNIC(nic)==true){
-            if(tel.substring(0,1)=="0" && mob.substring(0,2)=="07" && tel.length==10 && mob.length==10){
+        if(checkNIC(nic)){
+            if(tel.substring(0,1)==="0" && mob.substring(0,2)==="07" && tel.length===10 && mob.length===10){
                 //alert("t2");
                 if(tel.match(numberslist) && mob.match(numberslist)){
                     return true;
