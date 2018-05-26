@@ -3,6 +3,7 @@
     <div class="row">
         <div class="container">
             <h3>System Users</h3>
+            <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -20,12 +21,13 @@
                         <td>{{this.role}}</td>
                         <td>
                             <a href="/operations/userProfile/{{this._id}}" class="btn btn-success">View Profile</a>
-                            <a href="#" class="btn btn-danger">Block User</a>
+                            <a href="#" class="btn btn-danger">Block User &nbsp</a>
                         </td>
                     </tr>
                 {{/each}}
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>
