@@ -53,7 +53,20 @@
                     <li class="nav-item"> <a class="nav-link" href="/">back to events</a> </li>
                     {{#if session.eventID}}
                     <li class="nav-item"> <a class="nav-link" href="/newsfeed">News Feed<span class="sr-only">(current)</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="/donation/">Donation</a> </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Donations
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/donation/">Ordered Donations</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/donation/storedDonations">Stored Donations</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Distributed Donations</a>
+                                <div class="dropdown-divider"></div>
+                            </div>
+                        </li>
                     {{/if}}
                     {{#if isAuthenticated}}
                         {{#if session.eventID}}
@@ -63,6 +76,7 @@
 
                         {{#if userRole2}}
                             <li class="nav-item"> <a class="nav-link" href="/chatBox/">Chat</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="/handlingDonations/">Handling Donations</a> </li>
                         {{/if}}
                         {{/if}}
                         {{#if userRole}}
@@ -78,10 +92,6 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="/operations/viewSystemUsers">View System Users</a>
                                         <div class="dropdown-divider"></div>
-                                        {{#if session.eventID}}
-                                        <a class="dropdown-item" href="/handlingDonations/">Handling Donations</a>
-                                        <div class="dropdown-divider"></div>
-                                        {{/if}}
                                 </div>
                             </li>
                         {{/if}}
@@ -103,12 +113,6 @@
                         </li>
                     {{/if}}
                 </ul>
-                <form class="my-2 my-lg-0 ml-auto">
-                    <div class="search">
-                        <input type="text" class="form-control" maxlength="64" placeholder="Search" />
-                        <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
-                    </div>
-                </form>
             </div>
         </div>
     </nav>

@@ -1,3 +1,4 @@
+<script> var count = 1;</script>
 <section class="banner-sec">
     {{#if msgSuccess}}
         <div id="charge-error" class="alert alert-success">
@@ -7,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="container">
-                <h3>Donation : {{session.eventTitle}}</h3>
+                <h4>Ordered Donations : {{session.eventTitle}}</h4>
                 <hr>
             <div class=" col-md-9 col-lg-9 ">
                 <div class="table-responsive">
@@ -15,18 +16,22 @@
                     <table class="table table-user-information" align="center">
                         <tbody>
                         <tr style="font-size: 130%">
+                            <td>#</td>
                             <td>List</td>
                             <td>Amount</td>
                             <td>Action</td>
                         </tr>
                         {{# each donations}}
                             <tr>
+                                <td><script>document.write(count)</script></td>
                                 <td>{{this._id}}</td>
                                 <td>{{this.quantity}}</td>
                                 <td><a href="/donation/addDonation/{{this._id}}">Add Donation</a></td>
                             </tr>
+                            <script>count ++;</script>
                         {{/each}}
                         <tr>
+                            <td><script>document.write(count)</script></td>
                             <td>Others
                                 <br>
                                 <br>(Click "Add Item" to add new item)</td>

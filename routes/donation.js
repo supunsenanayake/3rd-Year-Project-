@@ -19,7 +19,8 @@ router.get('/', function(req, res, next) {
         const db = client.db(dbName);
         db.collection('donations').aggregate(
             [
-                {$match:{eventId : req.session.eventID}
+                {$match:{eventId : req.session.eventID,
+                status : { $in: [ "Pending", "Call Once", "Call Twice", "Confirm" ] } }
                 },
                 { $group : { _id : "$item", quantity: { $sum: "$amount"} } }
             ])
@@ -30,6 +31,28 @@ router.get('/', function(req, res, next) {
                 client.close();
             });
     });
+});
+
+router.get('/storedDonations', function(req, res, next) {
+
+    mongo.connect(url, function (err, client) {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        db.collection('donations').aggregate(
+            [
+                {$match:{eventId : req.session.eventID,
+                    status : "Success" }
+                },
+                { $group : { _id : "$item", quantity: { $sum: "$amount"} } }
+            ])
+            .toArray(function (err, result) {
+                assert.equal(null, err);
+                res.render('donation', {donations: result, msgSuccess: req.flash('success')[0], layout : 'main'});
+                req.flash('success')[0] = false;
+                client.close();
+            });
+    });
+
 });
 
 router.use('/', isLoggedIn, function(req, res, next) {
