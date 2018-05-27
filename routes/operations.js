@@ -85,6 +85,16 @@ router.get('/userProfile/:id', function(req, res, next) {
 });
 
 
+router.get('/userEditRole', function(req, res, next) {
+    
+});
+
+
+router.get('/userEditRole/:id', function(req, res, next) {
+    req.session.profileId = req.params.id;
+    res.redirect('/operations/userEditRole');
+});
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && (req.user.role === 'Admin')) {
         return next();

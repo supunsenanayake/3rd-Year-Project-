@@ -169,6 +169,60 @@ router.get('/myDonations', function(req, res, next) {
 });
 
 
+router.get('/userOrderedDonations', function(req, res, next) {
+
+    mongo.connect(url, function (err, client) {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        db.collection('donations').aggregate(
+            [
+                {$match:{eventId : req.session.eventID,
+                    ownerId : req.session.profileId,
+                    status : { $in: [ "Pending", "Call Once", "Call Twice", "Confirm" ] } }
+                },
+                { $group : { _id : "$item", quantity: { $sum: "$amount"},
+                    "profileImage": {"$first": "$profileImage"},
+                    "mobile": {"$first": "$mobile" },
+                    "donorName": {"$first": "$donorName" }
+                } }
+            ])
+            .toArray(function (err, result) {
+                assert.equal(null, err);
+                res.render('profileDonations', {donations: result, layout : 'main'});
+                client.close();
+            });
+    });
+
+});
+
+
+router.get('/userOfferedDonations', function(req, res, next) {
+
+    mongo.connect(url, function (err, client) {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        db.collection('donations').aggregate(
+            [
+                {$match:{eventId : req.session.eventID,
+                    ownerId : req.session.profileId,
+                    status : "Success" }
+                },
+                { $group : { _id : "$item", quantity: { $sum: "$amount"},
+                    "profileImage": {"$first": "$profileImage"},
+                    "mobile": {"$first": "$mobile" },
+                    "donorName": {"$first": "$donorName" }
+                        }}
+            ])
+            .toArray(function (err, result) {
+                assert.equal(null, err);
+                res.render('profileDonations', {donations: result, layout : 'main'});
+                client.close();
+            });
+    });
+
+});
+
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
