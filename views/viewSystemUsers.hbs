@@ -17,17 +17,18 @@
                 </thead>
                 <tbody>
                 {{# each result}}
+                    {{#each this}}
                     <tr>
                         <td><script>document.write(count)</script></td>
                         <td>{{this.firstName}}</td>
                         <td>{{this.lastName}}</td>
                         <td>{{this.role}}</td>
                         <td>
-                            <a href="/operations/userProfile/{{this._id}}" class="btn btn-success">View Profile</a>
-                            <a href="/operations/userEditRole/{{this._id}}" class="btn btn-danger">Edit Role &nbsp&nbsp&nbsp&nbsp</a>
+                            <a href="/operations/userProfile/{{this._id}}" class="btn btn-default">View Profile &raquo;</a>
                         </td>
                     </tr>
                     <script>count ++;</script>
+                {{/each}}
                 {{/each}}
                 </tbody>
             </table>

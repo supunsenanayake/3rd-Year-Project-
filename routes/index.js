@@ -20,7 +20,6 @@ router.get('/', function(req, res, next) {
 router.get('/newsFeed', function(req, res, next) {
     News.find({eventId: req.session.eventID}).sort({_id : -1})
         .exec(function (err, docs) {
-            console.log(docs);
             var newsChunks = [];
             var chunkSize = 2;
             for (var i = 0; i < docs.length; i += chunkSize) {

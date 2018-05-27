@@ -84,7 +84,7 @@ router.post('/updateStatus', function(req, res, next) {
 
     }}, { multi: true }, function (err, docs) {
         assert.equal(null, err);
-        res.redirect('/handlingDonations/');
+        res.redirect('/handlingDonations/searchDonors');
     });
 
 });

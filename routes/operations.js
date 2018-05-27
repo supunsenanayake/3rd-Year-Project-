@@ -62,7 +62,11 @@ router.post('/', function(req, res, next) {
 router.get('/viewSystemUsers', function(req, res, next) {
     User.find().exec(function (err, docs) {
         assert.equal(null, err);
-        res.render('viewSystemUsers', {result : docs, layout : 'main'});
+        var usersChunks = [];
+        for (var i = 1; i < docs.length; i ++) {
+            usersChunks.push(docs.slice(i, i + 1));
+        }
+        res.render('viewSystemUsers', {result : usersChunks, layout : 'main'});
     });
 
 });
@@ -74,7 +78,7 @@ router.get('/userProfile', function(req, res, next) {
         req.session.donorName = docs[0].firstName + docs[0].lastName;
         req.session.mobile = docs[0].mobile;
         req.session.profileImage = docs[0].profileImage;
-        res.render('userProfile', {result : docs, layout : 'main'});
+        res.render('userProfile', {csrfToken: req.csrfToken(), result : docs, layout : 'main'});
     });
 
 });
@@ -85,15 +89,27 @@ router.get('/userProfile/:id', function(req, res, next) {
 });
 
 
-router.get('/userEditRole', function(req, res, next) {
-    
+router.post('/userEditRole', function(req, res, next) {
+
+    if(req.body._id === req.user._id){
+        res.redirect('/operations/viewSystemUsers');
+    } else {
+        User.findByIdAndUpdate(req.session.profileId, {
+            $set: {
+                role : req.body.role
+            }
+        }, {new: true}, function (err, docs) {
+            assert.equal(null, err);
+            res.redirect('/operations/viewSystemUsers');
+        });
+    }
+
+
+
+
 });
 
 
-router.get('/userEditRole/:id', function(req, res, next) {
-    req.session.profileId = req.params.id;
-    res.redirect('/operations/userEditRole');
-});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && (req.user.role === 'Admin')) {
