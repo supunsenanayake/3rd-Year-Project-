@@ -1,0 +1,80 @@
+<section class="banner-sec">
+    <div class="text-center">
+        <h4>Donors : {{session.eventTitle}}</h4>
+    </div>
+    <hr>
+    <form action="/handlingDonations/search" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="text-center">
+                        <label for="exampleInputStatus"><strong>Province</strong></label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="province">
+                        <option selected>Choose...</option>
+                        <option value="Central">Central</option>
+                        <option value="Eastern">Eastern</option>
+                        <option value="Northern">Northern</option>
+                        <option value="North Central">North Central</option>
+                        <option value="North Western">North Western</option>
+                        <option value="Sabaragamuwa">Sabaragamuwa</option>
+                        <option value="Southern">Southern</option>
+                        <option value="Uva">Uva</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <div class="text-center">
+                        <label for="exampleInputStatus"><strong>District</strong></label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="district">
+                        <option selected>Choose...</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Badulla">Badulla</option>
+                        <option value="Batticaloa">Batticaloa</option>
+                        <option value="Colombo">Colombo</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Gampaha">Gampaha</option>
+                        <option value="Hambantota">Hambantota</option>
+                        <option value="Jaffna">Jaffna</option>
+                        <option value="Kalutara">Kalutara</option>
+                        <option value="Northern">Northern</option>
+                        <option value="Kandy">Kandy</option>
+                        <option value="Kegalle">Kegalle</option>
+                        <option value="Kilinochchi">Kilinochchi</option>
+                        <option value="Kurunegala">Kurunegala</option>
+                        <option value="Mannar">Mannar</option>
+                        <option value="Matale">Matale</option>
+                        <option value="Matara">Matara</option>
+                        <option value="Monaragala">Monaragala</option>
+                        <option value="Mullaitivu">Mullaitivu</option>
+                        <option value="NuwaraEliya">Nuwara Eliya</option>
+                        <option value="Polonnaruwa">Polonnaruwa</option>
+                        <option value="Puttalam">Puttalam</option>
+                        <option value="Ratnapura">Ratnapura</option>
+                        <option value="Trincomalee">Trincomalee</option>
+                        <option value="Vavuniya">Vavuniya</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <div class="text-center">
+                        <label for="exampleInputStatus"><strong>Status</strong></label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="status">
+                        <option selected>Choose...</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Call Once">Call Once</option>
+                        <option value="Call Twice">Call Twice</option>
+                        <option value="Confirm">Confirm</option>
+                        <option value="Success">Success</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <br>
+                    <button type="submit" class="btn btn-warning" name="submit" value="create">Search Now &raquo;</button>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </form>
+</section>

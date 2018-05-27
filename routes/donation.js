@@ -51,10 +51,16 @@ router.post('/addItem', function (req, res, next) {
         var donation = new Donation({
             donorName: req.body.donorName,
             mobile: req.body.mobile,
+            phone : req.user.phone,
             item: req.body.itemName,
             amount: req.body.amount,
             eventId : req.session.eventID,
-            ownerId : req.user._id
+            ownerId : req.user._id,
+            province : req.user.province,
+            district : req.user.district,
+            profileImage : req.user.profileImage,
+            status : "Pending",
+            colour : "default"
         });
         donation.save(function (err, result) {
             req.flash('success', 'Successfully Add your Donation!');
@@ -89,10 +95,16 @@ router.post('/addDonation', function (req, res, next) {
         var donation = new Donation({
             donorName: req.body.donorName,
             mobile: req.body.mobile,
+            phone : req.user.phone,
             item: req.session.itemName,
             amount: req.body.amount,
             eventId : req.session.eventID,
-            ownerId : req.user._id
+            ownerId : req.user._id,
+            province : req.user.province,
+            district : req.user.district,
+            profileImage : req.user.profileImage,
+            status : "Pending",
+            colour : "default"
         });
         donation.save(function (err, result) {
             req.flash('success', 'Successfully Add your Donation!');
@@ -109,7 +121,11 @@ router.get('/orderedDonations', function(req, res, next) {
             [
                 {$match:{eventId : req.session.eventID, ownerId : req.session.profileId}
                 },
-                { $group : { _id : "$item", quantity: { $sum: "$amount"}} }
+                { $group : { _id : "$item", quantity: { $sum: "$amount"},
+                    "profileImage": { "$first": "$profileImage" },
+                    "donorName": { "$first": "$donorName" },
+                    "mobile": { "$first": "$mobile" }
+                } }
             ])
             .toArray(function (err, result) {
                 assert.equal(null, err);

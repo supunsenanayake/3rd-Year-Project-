@@ -1,18 +1,24 @@
-<script src="/javascripts/new.js"></script>
+
 <section class="section-01">
+    <div class="text-center">
+    <h3>Donation : {{session.eventTitle}}</h3>
+    </div>
     <div class="container">
-            <h3>Donation : {{session.eventTitle}}</h3>
-            <h4><strong>Donor Name</strong> : {{session.donorName}}
-                | <strong>Contact Number</strong> : {{session.mobile}}</h4>
             <div class="row">
                 <hr>
                 <div class="col-sm-2"><!--left col-->
 
-
+                    {{#if donations}}
                     <div class="text-center">
-                        <img src="{{session.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar">
-                        <h6>Profile Picture</h6>
+                        <img src="{{donations.0.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                        <h6>{{donations.0.donorName}}</h6>
                     </div>
+                    {{else}}
+                        <div class="text-center">
+                            <img src="{{session.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                            <h6>{{session.donorName}}</h6>
+                        </div>
+                    {{/if}}
                 </div>
                 </hr>
                 <br>
@@ -26,7 +32,7 @@
                             <td>Donation List</td>
                             <td>Amount</td>
                         </tr>
-                        {{# each donations}}
+                        {{#each donations}}
                             <tr>
                                 <td>{{this._id}}</td>
                                 <td>{{this.quantity}}</td>
@@ -34,6 +40,12 @@
                         {{/each}}
                         </tbody>
                     </table>
+                    <hr>
+                    {{#if donations}}
+                    <h6><strong>Contact Number</strong> : {{donations.0.mobile}}</h6>
+                    {{else}}
+                        <h6><strong>Contact Number</strong> : {{session.mobile}}</h6>
+                        {{/if}}
                 </ul>
                 <hr>
             </div>
