@@ -1,5 +1,5 @@
 //make connection
-var socket = io.connect('http://ec2-18-221-166-17.us-east-2.compute.amazonaws.com');
+var socket = io.connect('http://192.168.1.2/');
 
 
 // Query DOM
@@ -7,13 +7,10 @@ var message = document.getElementById('message'),
     handle = document.getElementById('handle'),
     btn = document.getElementById('send'),
     output = document.getElementById('output'),
-    feedback = document.getElementById('feedback'),
-    profilePic = document.getElementById('profilePic');
+    feedback = document.getElementById('feedback');
+    var profilePic = document.getElementById('profilePic');
 
-var getProfileImage = document.createElement("img");
-getProfileImage.src = profilePic;
-getProfileImage.width = 25;
-getProfileImage.height = 25;
+
 
 
 
@@ -21,7 +18,8 @@ getProfileImage.height = 25;
 btn.addEventListener('click', function(){
     socket.emit('chat', {
         message: message.value,
-        handle: handle.value
+        handle: handle.value,
+        profilePic: profilePic.value
     });
     message.value = "";
 });
@@ -37,9 +35,8 @@ message.addEventListener('keypress', function () {
 // Listen for events
 socket.on('chat', function(data){
     feedback.innerHTML = "";
-    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
+    output.innerHTML += '<p>'+ '<img src="'+data.profilePic+'" class="rounded" alt="..." height="30px" width="30px">'+' <strong> ' + data.handle + ': </strong>' + data.message +'</p>';
 });
 
 socket.on('typing', function (data) {
-    feedback.innerHTML = '<p><em>' + data.handle + ' is typing a message</em></p>'
-});
+});    feedback.innerHTML = '<p><em>' + data.handle + ' is typing a message</em></p>';

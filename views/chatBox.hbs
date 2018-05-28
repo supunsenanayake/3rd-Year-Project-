@@ -17,6 +17,7 @@
 <section class="banner-sec">
     <div class="container">
 <div id="mario-chat" style="margin-top: 0px">
+    <div class="container">
 
     <div class="text-center"><h2 style="
     font-size: 18px;
@@ -24,8 +25,12 @@
     color: #1f2121;
 ">CHAT : {{session.eventTitle}}</h2></div>
     <div id="chat-window">
+        <div class="container" style="max-width: 970px;">
+        <div class="row">
         <div id="output"></div>
         <div id="feedback"></div>
+        </div>
+        </div>
     </div>
     <label for="formGroupPostDonor"><img src="{{user.profileImage}}" class="rounded" alt="..." height="30px" width="30px">  {{user.firstName}} {{user.lastName}}</label>
     <input id="handle" type="hidden" placeholder="Handle" value="{{user.firstName}} {{user.lastName}}"/>
@@ -39,8 +44,8 @@
     border: 0;
     padding: 12px 0;
     width: 100%;
-    border-radius: 0 0 2px 2px;"
-    >Send</button>
+    border-radius: 0 0 2px 2px;">Send</button>
+</div>
 </div>
     </div>
 </section>
