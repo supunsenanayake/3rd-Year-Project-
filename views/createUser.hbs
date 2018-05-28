@@ -24,7 +24,7 @@
         }
     }
 
-    function validateCreateUser(){
+    function validateSignup(){
         var nic= document.getElementById("formGroupNICNumber").value; //alert(nic);
         var tel= document.getElementById("formGroupTelePhone").value;
         var mob= document.getElementById("formGroupMobile").value;
@@ -54,202 +54,142 @@
 
 
 </script>
-
-
 <section class="banner-sec">
-    <div class="container">
-        <div class="row">
-            <div class="container">
-                <h2>Create System User</h2>
-                <hr>
-                {{#if messages}}
-                    {{# each messages }}
-                        <div class="alert alert-danger">
-                            {{this.msg}}
-                        </div>
-                    {{/each}}
-                {{/if}}
-                {{#if noErr}}
-                    <div class="alert alert-success">
-                        {{msgSuccess}}
-                    </div>
-                {{/if}}
-                <form action="/operations/" method="post" onsubmit="return validateCreateUser()">
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">First Name</span>
-                        </div>
-                        <input type="text" class="form-control" id="formGroupFirstName" placeholder="First Name" name="firstName">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Last Name</span>
-                        </div>
-                        <input type="text" class="form-control" id="formGroupLastName" placeholder="Last Name" name="lastName">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">NIC</span>
-                        </div>
-                        <input type="text" class="form-control" id="formGroupNICNumber" placeholder="19/20XXXXXXXXX" name="nic">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">v</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Password</span>
-                        </div>
-                        <input type="password" class="form-control" id="formGroupPassword" placeholder="Password" name="password">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Password</span>
-                        </div>
-                        <input type="password" class="form-control" id="formGroupConfirmPassword" placeholder="Password" name="confirmPassword">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-repeat"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Mobile</span>
-                        </div>
-                        <input type="text" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile">
-                        <div class="input-group-prepend">
-                            <span class="fi-phone"></span>
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-mobile"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Tel-No</span>
-                        </div>
-                        <input type="text" class="form-control" id="formGroupTelePhone" placeholder="0XXXXXXXXX" name="phone">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Gender</span>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="gender">
-                            <option selected>Choose...</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-male"></i>/<i class="fa fa-female"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Role</span>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="role">
-                            <option selected>Choose...</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Super Volunteer">Super Volunteer</option>
-                            <option value="Volunteer">Volunteer</option>
-                            <option value="Donor">Donor</option>
-                        </select>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-users"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Province</span>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="province">
-                            <option selected>Choose...</option>
-                            <option value="Central">Central</option>
-                            <option value="Eastern">Eastern</option>
-                            <option value="Northern">Northern</option>
-                            <option value="North Central">North Central</option>
-                            <option value="North Western">North Western</option>
-                            <option value="Sabaragamuwa">Sabaragamuwa</option>
-                            <option value="Southern">Southern</option>
-                            <option value="Uva">Uva</option>
-                        </select>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-globe"></i></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="input-group col-lg-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">District</span>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect01" name="district">
-                            <option selected>Choose...</option>
-                            <option value="Ampara">Ampara</option>
-                            <option value="Anuradhapura">Anuradhapura</option>
-                            <option value="Badulla">Badulla</option>
-                            <option value="Batticaloa">Batticaloa</option>
-                            <option value="Colombo">Colombo</option>
-                            <option value="Galle">Galle</option>
-                            <option value="Gampaha">Gampaha</option>
-                            <option value="Hambantota">Hambantota</option>
-                            <option value="Jaffna">Jaffna</option>
-                            <option value="Kalutara">Kalutara</option>
-                            <option value="Northern">Northern</option>
-                            <option value="Kandy">Kandy</option>
-                            <option value="Kegalle">Kegalle</option>
-                            <option value="Kilinochchi">Kilinochchi</option>
-                            <option value="Kurunegala">Kurunegala</option>
-                            <option value="Mannar">Mannar</option>
-                            <option value="Matale">Matale</option>
-                            <option value="Matara">Matara</option>
-                            <option value="Monaragala">Monaragala</option>
-                            <option value="Mullaitivu">Mullaitivu</option>
-                            <option value="NuwaraEliya">Nuwara Eliya</option>
-                            <option value="Polonnaruwa">Polonnaruwa</option>
-                            <option value="Puttalam">Puttalam</option>
-                            <option value="Ratnapura">Ratnapura</option>
-                            <option value="Trincomalee">Trincomalee</option>
-                            <option value="Vavuniya">Vavuniya</option>
-                        </select>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-globe"></i></span>
-                        </div>
-                    </div>
-                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
-
-                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="username" value="username">
-                    <div class="form-group col-xs-4">
-                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="_password" value="password">
-                    </div>
-                    <div class="form-group col-xs-4">
-                        &nbsp&nbsp&nbsp<button type="submit" class="btn btn-primary" name="submit" value="create"
-                                onclick="return confirm('Are You Sure ' +
-                         'You Want To Register Your Profile..!');">Register</button>
-                        <a href="/" class="btn btn-danger"
-                           onclick="return confirm('Are You Sure ' +
-                         'You want to cancel this Process..?');">Cancel</a>
-                    </div>
-                </form>
-            </div>
-
-        </div>
+    <div class="text-center">
+        <h1>Add System User</h1>
     </div>
+    {{#if messages}}
+        {{# each messages }}
+            <div class="alert alert-danger">
+                {{this.msg}}
+            </div>
+        {{/each}}
+    {{/if}}
+    {{#if noErr}}
+        <div class="alert alert-success">
+            {{msgSuccess}}
+        </div>
+    {{/if}}
+    <hr>
+    <form action="/operations/" method="post" onsubmit="return validateSignup()" >
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="text-center"><label for="formGroupNICNumber"><strong>NIC Number (v)</strong></label></div>
+                    <input type="text" class="form-control" id="formGroupNICNumber" placeholder="19/20XXXXXXXXX" name="nic">
+                </div>
+                <div class="col-sm">
+                    <div class="text-center"><label for="formGroupFirstName"><strong>First Name</strong></label></div>
+                    <input type="text" class="form-control" id="formGroupFirstName" placeholder="First Name" name="firstName">
+                </div>
+                <div class="col-sm">
+                    <div class="text-center"><label for="formGroupLastName"><strong>Last Name</strong></label></div>
+                    <input type="text" class="form-control" id="formGroupLastName" placeholder="Last Name" name="lastName">
+                </div>
+                <div class="col-sm">
+                    <div class="text-center"><label for="formGroupGender"><strong>Gender</strong></label></div>
+                    <select class="form-control" id="inputGroupSelect01" name="gender">
+                        <option selected>Choose...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="form-group col-lg-3">
+                    <div class="text-center">
+                        <label for="exampleInputProvince"><strong>Province</strong></label>
+                    </div>
+                    <select class="form-control" id="inputGroupSelect01" name="province">
+                        <option selected>Choose...</option>
+                        <option value="Central">Central</option>
+                        <option value="Eastern">Eastern</option>
+                        <option value="Northern">Northern</option>
+                        <option value="North Central">North Central</option>
+                        <option value="North Western">North Western</option>
+                        <option value="Sabaragamuwa">Sabaragamuwa</option>
+                        <option value="Southern">Southern</option>
+                        <option value="Uva">Uva</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-3">
+                    <div class="text-center">
+                        <label for="exampleInputDistrict"><strong>District</strong></label>
+                    </div>
+                    <select class="form-control" id="inputGroupSelect01" name="district">
+                        <option selected>Choose...</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Badulla">Badulla</option>
+                        <option value="Batticaloa">Batticaloa</option>
+                        <option value="Colombo">Colombo</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Gampaha">Gampaha</option>
+                        <option value="Hambantota">Hambantota</option>
+                        <option value="Jaffna">Jaffna</option>
+                        <option value="Kalutara">Kalutara</option>
+                        <option value="Northern">Northern</option>
+                        <option value="Kandy">Kandy</option>
+                        <option value="Kegalle">Kegalle</option>
+                        <option value="Kilinochchi">Kilinochchi</option>
+                        <option value="Kurunegala">Kurunegala</option>
+                        <option value="Mannar">Mannar</option>
+                        <option value="Matale">Matale</option>
+                        <option value="Matara">Matara</option>
+                        <option value="Monaragala">Monaragala</option>
+                        <option value="Mullaitivu">Mullaitivu</option>
+                        <option value="NuwaraEliya">Nuwara Eliya</option>
+                        <option value="Polonnaruwa">Polonnaruwa</option>
+                        <option value="Puttalam">Puttalam</option>
+                        <option value="Ratnapura">Ratnapura</option>
+                        <option value="Trincomalee">Trincomalee</option>
+                        <option value="Vavuniya">Vavuniya</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-lg-3">
+                    <div class="text-center"><label for="formGroupPassword"><strong>Password</strong></label></div>
+                    <input type="password" class="form-control" id="formGroupPassword" placeholder="Password" name="password">
+                </div>
+                <div class="form-group col-lg-3">
+                    <div class="text-center"><label for="formGroupConfirmPassword"><strong>Confirm Password</strong></label></div>
+                    <input type="password" class="form-control" id="formGroupConfirmPassword" placeholder="Password" name="confirmPassword">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="form-group col-lg-3">
+                    <div class="text-center"><label for="formGroupMobile"><strong>Mobile-No</strong></label></div>
+                    <input type="tel" class="form-control" id="formGroupMobile" placeholder="07XXXXXXXX" name="mobile" required>
+                </div>
+                <div class="form-group col-lg-3">
+                    <div class="text-center"><label for="formGroupTelePhone"><strong>Tel-No</strong></label></div>
+                    <input type="tel" class="form-control" id="formGroupTelePhone" placeholder="0XXXXXXXXX" name="phone" required>
+                </div>
+                <div class="form-group col-lg-3">
+                    <div class="text-center">
+                        <label for="exampleInputStatus"><strong>Role</strong></label>
+                    </div>
+                    <select class="form-control" id="inputGroupRole" name="role">
+                        <option selected>Choose...</option>
+                        <option value="Donor">Donor</option>
+                        <option value="Volunteer">Volunteer</option>
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" class="form-control" id="formGroupCsrf1"  name="_csrf" value="{{csrfToken}}">
+            <input type="hidden" class="form-control" id="formGroupUsername"  name="username" value="username">
+            <input type="hidden" class="form-control" id="formGroup_password"  name="_password" value="password">
+            <hr>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" name="submit" value="create"
+                        onclick="return confirm('Are You Sure ' +
+                         'You Want To Register Your Profile..!');">Register</button>
+                <a href="/" class="btn btn-danger"
+                   onclick="return confirm('Are You Sure ' +
+                         'You want to cancel this Process..?');">Cancel</a>
+            </div>
+        </div>
+    </form>
 </section>

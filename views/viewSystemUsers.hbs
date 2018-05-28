@@ -3,14 +3,16 @@
 <div class="container">
     <div class="row">
         <div class="container">
-            <h3>System Users</h3>
+            <div class="text-center"><h3>System Users</h3></div>
+            <br>
             <div class="table-responsive">
-            <table class="table table-bordered">
+                <div class="text-center">
+            <table class="table table-user-information" align="center">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Profile Picture</th>
+                    <th>Name</th>
                     <th>Role</th>
                     <th>Action</th>
                 </tr>
@@ -20,8 +22,8 @@
                     {{#each this}}
                     <tr>
                         <td><script>document.write(count)</script></td>
-                        <td>{{this.firstName}}</td>
-                        <td>{{this.lastName}}</td>
+                        <td><img src="{{this.profileImage}}" class="rounded" alt="..." height="30px" width="30px"> </td>
+                        <td>{{this.firstName}} {{this.lastName}}</td>
                         <td>{{this.role}}</td>
                         <td>
                             <a href="/operations/userProfile/{{this._id}}" class="btn btn-default">View Profile &raquo;</a>
@@ -32,6 +34,7 @@
                 {{/each}}
                 </tbody>
             </table>
+                </div>
             </div>
         </div>
     </div>
