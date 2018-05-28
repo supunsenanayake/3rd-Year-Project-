@@ -22,7 +22,8 @@
                 </div>
                 <div class="col-lg-3 offset-lg-5">
                     {{#if isAuthenticated}}
-                        <div class="social-icon"> <a href="/profile/" class="nav-link">{{user.firstName}}</a> <a href="/users/logout" class="nav-link">LogOut</a> </div>
+                        <div class="social-icon"> <a href="/profile/" class="nav-link">
+                            <img src="{{user.profileImage}}" class="rounded" alt="..." height="30px" width="30px"> {{user.firstName}}</a> <a href="/users/logout" class="nav-link">LogOut</a> </div>
                     {{else}}
                         <div class="social-icon"> <a href="/users/signIn" class="nav-link">Login</a> <a href="/users/signUp" class="nav-link">Register</a> </div>
                     {{/if}}

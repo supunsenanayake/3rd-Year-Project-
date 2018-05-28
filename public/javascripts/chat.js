@@ -7,7 +7,14 @@ var message = document.getElementById('message'),
     handle = document.getElementById('handle'),
     btn = document.getElementById('send'),
     output = document.getElementById('output'),
-    feedback = document.getElementById('feedback');
+    feedback = document.getElementById('feedback'),
+    profilePic = document.getElementById('profilePic');
+
+var getProfileImage = document.createElement("img");
+getProfileImage.src = profilePic;
+getProfileImage.width = 25;
+getProfileImage.height = 25;
+
 
 
 // Emit events
