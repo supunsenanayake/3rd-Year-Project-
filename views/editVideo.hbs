@@ -1,0 +1,33 @@
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <h3>Upload Video : {{session.eventTitle}}</h3>
+                <hr>
+                {{#if messages}}
+                    {{# each messages }}
+                        <div class="alert alert-danger">
+                            {{this.msg}}
+                        </div>
+                    {{/each}}
+                {{/if}}
+                <form method="post" action="/video/edit">
+                    <div class="form-group col-lg-6">
+                        <label for="formGroupExampleInput2">Edit Video Link (Embedded Link)</label>
+                        <input type="text" class="form-control" id="formGroupVideoLink" placeholder="https://www.youtube.com/embed/....." name="videoLink">
+                    </div>
+                    <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
+                    <div class="form-group col-xs-4">
+                        &nbsp&nbsp&nbsp<button type="submit" class="btn btn-primary" name="submit" value="create" onclick="return confirm('Are You Sure ' +
+                         'You want to Update This Video Link..?');">Update Now</button>
+                        <a href="/video/publish" class="btn btn-danger"
+                           onclick="return confirm('Are You Sure ' +
+                         'You want to cancel this Process..?');">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
