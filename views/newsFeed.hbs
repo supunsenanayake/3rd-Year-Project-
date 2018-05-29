@@ -71,16 +71,42 @@
 
                 <div class="video-sec">
                     <h4 class="heading-small">YouTube Videos</h4>
+                     {{#if userRole}}
+                    {{#if session.videos}}
+                        {{#each session.videos}}
                     <div class="video-block">
+                    {{#each this}}
                         <div class="embed-responsive embed-responsive-4by3">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/1fY6U0wS3ds" allowfullscreen></iframe>
+                            <iframe width="560" height="315" src="{{this.videoLink}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
+                        <p class="card-text"><small class="text-time"><em> Published By : <a href="/profile/" class="nav-link">
+                            <img src="{{this.ownerProfileImage}}" class="rounded" alt="..." height="30px" width="30px">
+                            {{this.ownerName}}</a>{{this.date}}</em></small></p>
+                        <a class="btn btn-success" href="/video/edit/{{this._id}}" role="button" onclick="return confirm('Are You Sure ' +
+                         'You Want To Edit This Video Link..!');">Edit &raquo;</a>
+                        <a class="btn btn-danger" href="/video/delete/{{this._id}}" role="button"
+                           onclick="return confirm('Are You Sure ' +
+                         'You Want To Delete This Video..!');">Delete &raquo;</a>
+                    {{/each}}
                     </div>
-                    <div class="video-block">
-                        <div class="embed-responsive embed-responsive-4by3">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/n4H1Qj16Q40" allowfullscreen></iframe>
-                        </div>
-                    </div>
+                            {{/each}}
+                     {{/if}}
+                    {{else}}
+                         {{#if session.videos}}
+                             {{#each session.videos}}
+                                     <div class="video-block">
+                                         {{#each this}}
+                                             <div class="embed-responsive embed-responsive-4by3">
+                                                 <iframe width="560" height="315" src="{{this.videoLink}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                             </div>
+                                             <p class="card-text"><small class="text-time"><em> Published By : <a href="/profile/" class="nav-link">
+                                                 <img src="{{this.ownerProfileImage}}" class="rounded" alt="..." height="30px" width="30px">
+                                                 {{this.ownerName}}</a>{{this.date}}</em></small></p>
+                                         {{/each}}
+                                     </div>
+                             {{/each}}
+                         {{/if}}
+                    {{/if}}
                 </div>
             </aside>
         </div>
@@ -103,6 +129,5 @@
         </li>
     </ul>
     </nav>
-
 </section>
 

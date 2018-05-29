@@ -34,7 +34,7 @@ router.get('/newsFeed/:id/:event', function(req, res, next) {
     req.session.eventTitle = req.params.event;
     var str = req.params.id;
     req.session.eventID = str.toString();
-    res.redirect('/newsFeed');
+    res.redirect('/video/publish');
 });
 
 

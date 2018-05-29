@@ -108,7 +108,10 @@ router.post('/userEditRole', function(req, res, next) {
             res.redirect('/operations/viewSystemUsers');
         });
     }
+});
 
+
+router.get('/addVideo', function(req, res, next) {
 
 
 

@@ -20,6 +20,7 @@ var donation = require('./routes/donation');
 var event = require('./routes/event');
 var operations = require('./routes/operations');
 var handlingDonations = require('./routes/handlingDonations');
+var video = require('./routes/video');
 var mongoose = require('mongoose');
 
 var app = express();
@@ -84,6 +85,7 @@ app.use('/donation', donation);
 app.use('/event', event);
 app.use('/operations', operations);
 app.use('/handlingDonations', handlingDonations);
+app.use('/video', video);
 
 
 // catch 404 and forward to error handler

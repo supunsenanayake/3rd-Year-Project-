@@ -140,7 +140,7 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                     date : req.session.publishDate
                 }}, { new: true }, function (err, docs) {
                     assert.equal(null, err);
-                    res.redirect('/newsFeed');
+                    res.redirect('/video/publish');
                 });
             } else {
 
@@ -155,7 +155,7 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                     }
                 }, {new: true}, function (err, docs) {
                     assert.equal(null, err);
-                    res.redirect('/newsFeed');
+                    res.redirect('/video/publish');
                 });
             }
         } else {
@@ -168,7 +168,7 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                     date : req.session.publishDate
                 }}, { new: true }, function (err, docs) {
                     assert.equal(null, err);
-                    res.redirect('/newsFeed');
+                    res.redirect('/video/publish');
                 });
             } else {
 
@@ -182,7 +182,7 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                     }
                 }, {new: true}, function (err, docs) {
                     assert.equal(null, err);
-                    res.redirect('/newsFeed');
+                    res.redirect('/video/publish');
                 });
             }
         }
@@ -194,7 +194,7 @@ router.get('/delete/:id', function(req, res, next) {
     req.session.newsID = req.params.id;
     News.deleteOne({ _id : req.session.newsID }, function (err) {
         assert.equal(null, err);
-        res.redirect('/newsFeed');
+        res.redirect('/video/publish');
     });
 });
 
