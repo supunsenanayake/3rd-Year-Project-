@@ -57,6 +57,8 @@ router.post('/publish', createEvent.single('eventImage'), function(req, res, nex
             event.title = req.body.title;
             event.ownerId = req.user._id;
             event.date = req.session.publishDate;
+            news.ownerName = req.user.firstName + " " + req.user.lastName;
+            news.ownerProfileImage = req.user.profileImage;
 
             event.save(function (err, result) {
                 req.flash('success', 'Successfully Created New Instance!');
@@ -73,6 +75,8 @@ router.post('/publish', createEvent.single('eventImage'), function(req, res, nex
             event.title = req.body.title;
             event.ownerId = req.user._id;
             event.date = req.session.publishDate;
+            news.ownerName = req.user.firstName + " " + req.user.lastName;
+            news.ownerProfileImage = req.user.profileImage;
 
             event.save(function (err, result) {
                 req.flash('success', 'Successfully Created New Instance!');
@@ -124,7 +128,9 @@ router.post('/updateEvent', createEvent.single('eventImage'), function(req, res,
                 imagePath : '/images/'+ req.file.filename,
                 title : req.body.title,
                 ownerId : req.user._id,
-                date : req.session.publishDate
+                date : req.session.publishDate,
+                ownerName : req.user.firstName + " " + req.user.lastName,
+                ownerProfileImage : req.user.profileImage
             }}, { new: true }, function (err, docs) {
                 assert.equal(null, err);
                 res.redirect('/');
@@ -134,7 +140,9 @@ router.post('/updateEvent', createEvent.single('eventImage'), function(req, res,
             Event.findByIdAndUpdate(req.session.eventID, { $set: {
                 title : req.body.title,
                 ownerId : req.user._id,
-                date : req.session.publishDate
+                date : req.session.publishDate,
+                ownerName : req.user.firstName + " " + req.user.lastName,
+                ownerProfileImage : req.user.profileImage
             }}, { new: true }, function (err, docs) {
                 assert.equal(null, err);
                 res.redirect('/');
