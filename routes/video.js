@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var csrf = require('csurf');
-var csrfProtection = csrf();
 
 
-router.use(csrfProtection);
 var Video = require('../models/video');
 
 var assert = require('assert');
@@ -31,7 +28,7 @@ router.use('/', isLoggedIn, function(req, res, next) {
 
 
 router.get('/', function(req, res, next) {
-    res.render('addVideo', {csrfToken: req.csrfToken(), layout : 'main'});
+    res.render('addVideo', {layout : 'main'});
 });
 
 router.post('/', function(req, res, next) {
@@ -43,7 +40,7 @@ router.post('/', function(req, res, next) {
     var errors = req.validationErrors();
     if (errors) {
         req.session.errors = errors;
-        res.render('addVideo', {csrfToken: req.csrfToken(), messages: req.session.errors, layout: 'main'});
+        res.render('addVideo', {messages: req.session.errors, layout: 'main'});
     } else {
         var video = new Video({
             videoLink: req.body.videoLink,
@@ -62,9 +59,9 @@ router.post('/', function(req, res, next) {
 
 
 router.get('/edit', function(req, res, next) {
-    Video.find({_id: req.session.videoID}).exec(function (err, docs) {
+    Video.find({_id: req.session.videoId}).exec(function (err, docs) {
         assert.equal(null, err);
-        res.render('editVideo', {result : docs , csrfToken: req.csrfToken(), layout : 'main'});
+        res.render('editVideo', {result : docs , layout : 'main'});
     });
 });
 
@@ -88,8 +85,9 @@ router.post('/edit', function(req, res, next) {
         req.session.errors = errors;
         Video.find({_id: req.session.videoId}).exec(function (err, docs) {
             assert.equal(null, err);
-            res.render('editVideo', {result : docs , messages : req.session.errors, layout : 'main'});
+            res.render('editVideo', {result : docs, messages : req.session.errors, layout : 'main'});
         });
+
     } else{
         Video.findByIdAndUpdate(req.session.videoId, { $set: {
 
