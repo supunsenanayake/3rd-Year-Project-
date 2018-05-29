@@ -63,7 +63,7 @@ router.get('/viewSystemUsers', function(req, res, next) {
     User.find().exec(function (err, docs) {
         assert.equal(null, err);
         var usersChunks = [];
-        for (var i = 1; i < docs.length; i ++) {
+        for (var i = 0; i < docs.length; i ++) {
             usersChunks.push(docs.slice(i, i + 1));
         }
         res.render('viewSystemUsers', {result : usersChunks, layout : 'main'});
@@ -85,6 +85,11 @@ router.get('/userProfile', function(req, res, next) {
 
 router.get('/userProfile/:id', function(req, res, next) {
     req.session.profileId = req.params.id;
+    if(req.session.profileId === '5b002ff576cefe2710870c1d'){
+        req.session.visible = false;
+    } else {
+        req.session.visible = true;
+    }
     res.redirect('/operations/userProfile');
 });
 

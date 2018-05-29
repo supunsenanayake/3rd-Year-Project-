@@ -93,6 +93,11 @@ router.post('/search', function(req, res, next) {
     req.session.status = req.body.status;
     req.session.province = req.body.province;
     req.session.district = req.body.district;
+    if(req.session.status === 'Call Twice'){
+        req.session.visibleAction = true;
+    } else {
+        req.session.visibleAction = false;
+    }
     res.redirect('/handlingDonations/searchDonors');
 });
 

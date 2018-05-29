@@ -89,7 +89,22 @@
                                     <td>Donor Name</td>
                                     <td>Action</td>
                                     <td>Status</td>
+                                    {{#if session.visibleAction}}<td>Decision</td>{{/if}}
                                 </tr>
+                                {{#if session.visibleAction}}
+                                {{#each donors}}
+                                    <tr>
+                                        <td><div class="alert"><script>document.write(count)</script></div></td>
+                                        <td><div class="alert"><img src="{{this.profileImage}}" class="rounded" alt="..." height="30px" width="30px">    {{this.donorName}}</div></td>
+                                        <td><div class="alert"><a href="/handlingDonations/viewDonations/{{this._id}}/{{this.status}}" role="button">View Donations</a></div></td>
+                                        <td><div class="alert alert-{{this.colour}}">
+                                            {{this.status}}
+                                        </div></td>
+                                        <td><div class="alert"><a href="#" role="button" class="btn btn-danger">Delete Donation</a></div></td>
+                                    </tr>
+                                    <script>count ++;</script>
+                                {{/each}}
+                                {{else}}
                                 {{#each donors}}
                                     <tr>
                                         <td><div class="alert"><script>document.write(count)</script></div></td>
@@ -101,6 +116,7 @@
                                     </tr>
                                     <script>count ++;</script>
                                 {{/each}}
+                                {{/if}}
                                 </tbody>
                             </table>
                         </h6>
