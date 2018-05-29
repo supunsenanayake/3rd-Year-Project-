@@ -28,13 +28,24 @@
         var nic= document.getElementById("formGroupNICNumber").value; //alert(nic);
         var tel= document.getElementById("formGroupTelePhone").value;
         var mob= document.getElementById("formGroupMobile").value;
+
+        var tmpdata=document.getElementById("district");
+        var district= tmpdata.options[tmpdata.selectedIndex].value; //alert(district);
+        var tmpdata=document.getElementById("province");
+        var province= tmpdata.options[tmpdata.selectedIndex].value;
         var numberslist = /^[0-9]+$/;
 
         if(checkNIC(nic)){
             if(tel.substring(0,1)==="0" && mob.substring(0,2)==="07" && tel.length===10 && mob.length===10){
                 //alert("t2");
                 if(tel.match(numberslist) && mob.match(numberslist)){
-                    return true;
+                    if(district=="choose" || province=="choose"){
+                        alert("please select your district and province");
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
                 }
                 else{
                     alert("Telephone/Mobile should contain only numbers");
@@ -51,9 +62,8 @@
             return false;
         }
     }
-
-
 </script>
+
 <section class="banner-sec">
     <div class="text-center">
         <h1>Add System User</h1>
@@ -100,7 +110,8 @@
                     <div class="text-center">
                         <label for="exampleInputProvince"><strong>Province</strong></label>
                     </div>
-                    <select class="form-control" id="inputGroupSelect01" name="province">
+                    <select class="form-control" id="province" name="province">
+                        <option value="choose" selected>Choose</option>
                         <option value="Central">Central</option>
                         <option value="Eastern">Eastern</option>
                         <option value="Northern">Northern</option>
@@ -115,7 +126,8 @@
                     <div class="text-center">
                         <label for="exampleInputDistrict"><strong>District</strong></label>
                     </div>
-                    <select class="form-control" id="inputGroupSelect01" name="district">
+                    <select class="form-control" id="district" name="district">
+                        <option value="choose" selected>Choose</option>
                         <option value="Ampara">Ampara</option>
                         <option value="Anuradhapura">Anuradhapura</option>
                         <option value="Badulla">Badulla</option>
@@ -169,10 +181,10 @@
                         <label for="exampleInputStatus"><strong>Role</strong></label>
                     </div>
                     <select class="form-control" id="inputGroupRole" name="role">
-                        <option value="Admin">Admin</option>
-                        <option value="Super Volunteer">Super Volunteer</option>
-                        <option value="Volunteer">Volunteer</option>
                         <option value="Donor">Donor</option>
+                        <option value="Volunteer">Volunteer</option>
+                        <option value="Super Volunteer">Super Volunteer</option>
+                        <option value="Admin">Admin</option>
                     </select>
                 </div>
             </div>
@@ -183,10 +195,11 @@
             <div class="text-center">
                 <button type="submit" class="btn btn-primary" name="submit" value="create"
                         onclick="return confirm('Are You Sure ' +
-                         'You Want To Register Your Profile..!');">Register</button>
+                         'You Want To Register This User..!');">Create User</button>
                 <a href="/" class="btn btn-danger"
                    onclick="return confirm('Are You Sure ' +
                          'You want to cancel this Process..?');">Cancel</a>
+                <hr>
             </div>
         </div>
     </form>
