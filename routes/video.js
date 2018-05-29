@@ -87,7 +87,6 @@ router.post('/edit', function(req, res, next) {
             assert.equal(null, err);
             res.render('editVideo', {result : docs, messages : req.session.errors, layout : 'main'});
         });
-
     } else{
         Video.findByIdAndUpdate(req.session.videoId, { $set: {
 

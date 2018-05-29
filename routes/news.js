@@ -62,6 +62,8 @@ router.post('/publish', uploadNews.single('newsImage'), function(req, res, next)
                 news.ownerId = req.user._id;
                 news.eventId = req.session.eventID;
                 news.date = req.session.publishDate;
+                news.ownerName = req.user.firstName + " " + req.user.lastName;
+                news.ownerProfileImage = req.user.profileImage;
 
             news.save(function (err, result) {
                 req.flash('success', 'Successfully Upload the News!');
@@ -80,6 +82,8 @@ router.post('/publish', uploadNews.single('newsImage'), function(req, res, next)
             news.ownerId = req.user._id;
             news.eventId = req.session.eventID;
             news.date = req.session.publishDate;
+            news.ownerName = req.user.firstName + " " + req.user.lastName;
+            news.ownerProfileImage = req.user.profileImage;
 
             news.save(function (err, result) {
                 req.flash('success', 'Successfully Upload the News!!');
@@ -137,7 +141,9 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                     title : req.body.title,
                     ownerId : req.user._id,
                     eventId : req.session.eventID,
-                    date : req.session.publishDate
+                    date : req.session.publishDate,
+                    ownerName : req.user.firstName + " " + req.user.lastName,
+                    ownerProfileImage : req.user.profileImage
                 }}, { new: true }, function (err, docs) {
                     assert.equal(null, err);
                     res.redirect('/video/publish');
@@ -151,7 +157,9 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                         description: req.body.description,
                         ownerId: req.user._id,
                         eventId: req.session.eventID,
-                        date: req.session.publishDate
+                        date: req.session.publishDate,
+                        ownerName : req.user.firstName + " " + req.user.lastName,
+                        ownerProfileImage : req.user.profileImage
                     }
                 }, {new: true}, function (err, docs) {
                     assert.equal(null, err);
@@ -165,7 +173,9 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                     title : req.body.title,
                     ownerId : req.user._id,
                     eventId : req.session.eventID,
-                    date : req.session.publishDate
+                    date : req.session.publishDate,
+                    ownerName : req.user.firstName + " " + req.user.lastName,
+                    ownerProfileImage : req.user.profileImage
                 }}, { new: true }, function (err, docs) {
                     assert.equal(null, err);
                     res.redirect('/video/publish');
@@ -178,7 +188,9 @@ router.post('/updateNews', uploadNews.single('newsImage'), function(req, res, ne
                         description: req.body.description,
                         ownerId: req.user._id,
                         eventId: req.session.eventID,
-                        date: req.session.publishDate
+                        date: req.session.publishDate,
+                        ownerName : req.user.firstName + " " + req.user.lastName,
+                        ownerProfileImage : req.user.profileImage
                     }
                 }, {new: true}, function (err, docs) {
                     assert.equal(null, err);

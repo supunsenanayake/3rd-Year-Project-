@@ -7,7 +7,9 @@ var schema = new Schema({
     description : {type:String, required: true},
     ownerId : {type: String, required: true},
     eventId : {type:String, required: true},
-    date : {type:String, required: true}
+    date : {type:String, required: true},
+    ownerName : {type:String, required: true},
+    ownerProfileImage : {type:String, required: true}
 });
 
 module.exports = mongoose.model('News', schema);
