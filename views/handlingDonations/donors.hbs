@@ -100,7 +100,9 @@
                                         <td><div class="alert alert-{{this.colour}}">
                                             {{this.status}}
                                         </div></td>
-                                        <td><div class="alert"><a href="#" role="button" class="btn btn-danger">Delete Donation</a></div></td>
+                                        <td><div class="alert"><a href="/handlingDonations/deleteDonations/{{this._id}}/{{this.status}}" role="button" class="btn btn-danger" onclick="return confirm('Are You Sure ' +
+                         'You want to Delete this ..?');">Delete Donation</a></div></td>
+                         'You want to Delete this Donation Order..?');">Delete Donation</a></div></td>
                                     </tr>
                                     <script>count ++;</script>
                                 {{/each}}

@@ -135,6 +135,26 @@ router.get('/searchDonors', function(req, res, next) {
 });
 
 
+router.get('/deleteDonations', function(req, res, next) {
+
+    Donation.deleteMany({ ownerId : req.session.profileId, status : req.session.status },
+        function (err) {
+        assert.equal(null, err);
+        res.redirect('/handlingDonations/searchDonors');
+    });
+
+});
+
+
+router.get('/deleteDonations/:id/:status', function(req, res, next) {
+
+    req.session.profileId = req.params.id;
+    req.session.status = req.params.status;
+    res.redirect('/handlingDonations/deleteDonations');
+
+});
+
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer')) {
         return next();
