@@ -4,6 +4,13 @@
     <div class="row">
         <div class="container">
             <div class="text-center"><h3>System Users</h3></div>
+            {{#if errMsg}}
+                <div class="text-center">
+                    <div class="alert alert-danger">
+                        <p>{{errMsg}}</p>
+                    </div>
+                </div>
+            {{/if}}
             <br>
             <div class="table-responsive">
                 <div class="text-center">

@@ -66,7 +66,8 @@ router.get('/viewSystemUsers', function(req, res, next) {
         for (var i = 0; i < docs.length; i ++) {
             usersChunks.push(docs.slice(i, i + 1));
         }
-        res.render('viewSystemUsers', {result : usersChunks, layout : 'main'});
+        res.render('viewSystemUsers', {result : usersChunks, errMsg : req.session.err, layout : 'main'});
+        req.session.err = false;
     });
 
 });
@@ -97,6 +98,7 @@ router.get('/userProfile/:id', function(req, res, next) {
 router.post('/userEditRole', function(req, res, next) {
 
     if(req.body._id === req.user._id){
+        req.session.err = "You Cannot Change Your Role by Yourself";
         res.redirect('/operations/viewSystemUsers');
     } else {
         User.findByIdAndUpdate(req.session.profileId, {
