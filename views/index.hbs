@@ -19,7 +19,7 @@
                         <div class="news-title">
                             <h2 class=" title-small"><a href="/newsFeed/{{this._id}}/{{this.title}}">{{this.title}}</a></h2>
                         </div>
-                        <p class="card-text"><small class="text-time"><em> Event Created By : <a href="/profile/" class="nav-link">
+                        <p class="card-text"><small class="text-time"><em> Event Created By : <a href="/profile/userProfile/{{this.ownerId}}" class="nav-link">
                             <img src="{{this.ownerProfileImage}}" class="rounded" alt="..." height="30px" width="30px">
                             {{this.ownerName}}</a>{{this.date}}</em></small></p>
                             <a class="btn btn-success" href="/event/edit/{{this._id}}" role="button" onclick="return confirm('Are You Sure ' +

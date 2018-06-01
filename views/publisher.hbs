@@ -1,0 +1,53 @@
+<section class="banner-sec">
+    <div class="container">
+        <div class="text-center">
+            <h4><strong>Publisher</strong> : {{result.0.firstName}} {{result.0.lastName}}</h4>
+        </div>
+        <hr>
+        <div class="row">
+            <hr>
+            <div class="col-sm-3"><!--left col-->
+
+
+                <div class="text-center">
+                    <img src="{{result.0.profileImage}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <h6>Profile Picture</h6>
+                </div>
+            </div>
+            </hr>
+            <br>
+
+
+
+            <ul class="list-group">
+                <table class="table table-user-information" align="center">
+                    <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{result.0.firstName}} {{result.0.lastName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Role</td>
+                        <td>{{result.0.role}}</td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>{{result.0.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>{{result.0.province}} / {{result.0.district}}</td>
+                    </tr>
+                    <tr>
+                        <td>Contact</td>
+                        <td>{{result.0.mobile}} / {{result.0.phone}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </ul>
+            <hr>
+        </div>
+    </div>
+
+</section>
+

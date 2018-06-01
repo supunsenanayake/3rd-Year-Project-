@@ -47,40 +47,37 @@ var User = require('../models/user');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    if(req.isUnauthenticated()){
-        res.redirect('/')
-    }else {
-        res.render('profile', {layout: 'main'});
-    }
+
+    res.render('profile', {layout: 'main'});
+
 });
 
+
+router.use('/', isLoggedIn, function(req, res, next) {
+    next();
+});
+
+
 router.get('/viewProfile', function(req, res, next) {
-    if(req.isUnauthenticated()){
-        res.redirect('/')
-    }else {
-        res.render('profile', {layout: 'main'});
-    }
+
+    res.render('profile', {layout: 'main'});
+
 });
 
 router.get('/editProfile', function(req, res, next) {
+
     req.session.attacheProfilePic = false;
-    if(req.isUnauthenticated()){
-        res.redirect('/')
-    }else {
-        res.render('editProfile', {layout: 'main'});
-    }
+    res.render('editProfile', {layout: 'main'});
+
 });
 
 router.get('/changePassword', function(req, res, next) {
-    if(req.isUnauthenticated()){
-        res.redirect('/')
-    }else {
-        res.render('changePassword', {layout: 'main'});
-    }
+
+    res.render('changePassword', {layout: 'main'});
+
 });
 
-//saving the profile after editing
-//router.post('/saveProfile', upload.single('profileImage'), function(req, res, next) {
+
 router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res, next) {
 
     req.check('province', 'Choose the Province Field').notEmpty();
@@ -165,7 +162,7 @@ router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res
 
 
 //changing the password. backend code
-            router.post('/savePassword', function (req, res, next) {
+router.post('/savePassword', function (req, res, next) {
                 //compare the hash in DB and current password
                 //return true if password correct
                 var currentPassword = bcrypt.compareSync(req.body.currentPassword, req.session.passport.user.password);
@@ -200,36 +197,35 @@ router.post('/saveProfile', updateUser.single('profileImage') ,function(req, res
                         req.session.passport.user.password = newPassword;
                         res.render('profile', {layout: 'main', anymsg2: 'profile settings changed'});
                     });
-
-                    //updating the session info
-                    //res.redirect('/profile/');
                 }
             });
 
-            /*
-            passport.serializeUser(function(user_detail, done) {
-                done(null, user_detail);
-            });
 
-            passport.deserializeUser(function(user_detail, done) {
-                done(null, user_detail);
-            });
+router.get('/userProfile', function (req, res, next) {
+
+    User.find({_id: req.session.profileId}).exec(function (err, docs) {
+        assert.equal(null, err);
+        res.render('publisher', {result : docs , layout : 'main'});
+    });
+
+});
 
 
-            function fileAuthentication (req) {
-                    updateAllDetail = {
-                        $set: {
-                            firstName: req.body.firstName,
-                            lastName: req.body.lastName,
-                            email: req.body.email,
-                            mobile: req.body.mobile,
-                            profileImage: '/images/' + req.file.filename
-                        }
-                    };
-                    attachFile = false;
+router.get('/userProfile/:id', function (req, res, next) {
 
-            }
-            */
+    req.session.profileId = req.params.id;
+    res.redirect('/profile/userProfile');
+
+});
+
+
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/');
+}
 
 
 module.exports = router;
