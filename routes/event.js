@@ -57,8 +57,8 @@ router.post('/publish', createEvent.single('eventImage'), function(req, res, nex
             event.title = req.body.title;
             event.ownerId = req.user._id;
             event.date = req.session.publishDate;
-            news.ownerName = req.user.firstName + " " + req.user.lastName;
-            news.ownerProfileImage = req.user.profileImage;
+            event.ownerName = req.user.firstName + " " + req.user.lastName;
+            event.ownerProfileImage = req.user.profileImage;
 
             event.save(function (err, result) {
                 req.flash('success', 'Successfully Created New Instance!');
@@ -75,8 +75,8 @@ router.post('/publish', createEvent.single('eventImage'), function(req, res, nex
             event.title = req.body.title;
             event.ownerId = req.user._id;
             event.date = req.session.publishDate;
-            news.ownerName = req.user.firstName + " " + req.user.lastName;
-            news.ownerProfileImage = req.user.profileImage;
+            event.ownerName = req.user.firstName + " " + req.user.lastName;
+            event.ownerProfileImage = req.user.profileImage;
 
             event.save(function (err, result) {
                 req.flash('success', 'Successfully Created New Instance!');
