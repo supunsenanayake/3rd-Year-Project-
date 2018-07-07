@@ -66,15 +66,15 @@ Note :
        1). Publish News
        2). Publish Videos
 
-   Common Functions -
-          1). Login / Register
-          2). View Profile
-          3). Update Profile
-          4). Rest Password
-          5). Add Donations
-          6). View Events, News and Videos
-          7). View the event / news publisher's details and the time news / event created
-          8). View Him/her Ordered , Stored , Distributed Donations.
+          Common Functions -
+              1). Login / Register
+              2). View Profile
+              3). Update Profile
+              4). Rest Password
+              5). Add Donations
+              6). View Events, News and Videos
+              7). View the event / news publisher's details and the time news / event created
+              8). View Him/her Ordered , Stored , Distributed Donations.
 
           Technologies Used -
               1). Full stack web development - Node.js with Express Application Generator
