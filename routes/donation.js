@@ -59,6 +59,8 @@ router.get('/storedDonations', function(req, res, next) {
             ])
             .toArray(function (err, result) {
                 assert.equal(null, err);
+                result[0].quantity = result[0].quantity *2;
+                console.log(result.length);
                 res.render('storedDonation', {donations: result, msgSuccess: req.flash('success')[0], layout : 'main'});
                 req.flash('success')[0] = false;
                 client.close();
@@ -262,6 +264,15 @@ router.get('/userOfferedDonations', function(req, res, next) {
             });
     });
 
+});
+
+router.get('/distributedDonations/:donationType', function(req, res, next) {
+    req.session.donationType = req.params.donationType;
+    res.redirect('/donation/distributedDonations');
+});
+
+router.get('/distributedDonations', function(req, res, next) {
+    res.render('distributedDonation', {layout : 'main'});
 });
 
 
