@@ -13,13 +13,14 @@ var url = 'mongodb://localhost:27017';
 
 const dbName= 'sahana';
 
+
 router.get('/', function(req, res, next) {
     mongo.connect(url, function (err, client) {
         assert.equal(null, err);
         const db = client.db(dbName);
         db.collection('donations').aggregate(
             [
-                {$match:{eventId : req.session.eventID,
+                {$match:{eventId : req.session.eventID, donationType : req.session.donationType,
                 status : { $in: [ "Pending", "Call Once", "Call Twice", "Confirm" ] } }
                 },
                 { $group : { _id : "$item", quantity: { $sum: "$amount"} } }
@@ -33,6 +34,17 @@ router.get('/', function(req, res, next) {
     });
 });
 
+
+router.get('/donors/:donationType', function(req, res, next) {
+    req.session.donationType = req.params.donationType;
+    res.redirect('/donation/');
+});
+
+router.get('/storedDonations/:donationType', function(req, res, next) {
+    req.session.donationType = req.params.donationType;
+    res.redirect('/donation/storedDonations');
+});
+
 router.get('/storedDonations', function(req, res, next) {
 
     mongo.connect(url, function (err, client) {
@@ -40,14 +52,14 @@ router.get('/storedDonations', function(req, res, next) {
         const db = client.db(dbName);
         db.collection('donations').aggregate(
             [
-                {$match:{eventId : req.session.eventID,
+                {$match:{eventId : req.session.eventID, donationType : req.session.donationType,
                     status : "Success" }
                 },
                 { $group : { _id : "$item", quantity: { $sum: "$amount"} } }
             ])
             .toArray(function (err, result) {
                 assert.equal(null, err);
-                res.render('donation', {donations: result, msgSuccess: req.flash('success')[0], layout : 'main'});
+                res.render('storedDonation', {donations: result, msgSuccess: req.flash('success')[0], layout : 'main'});
                 req.flash('success')[0] = false;
                 client.close();
             });
@@ -60,40 +72,69 @@ router.use('/', isLoggedIn, function(req, res, next) {
 });
 
 router.get('/addItem', function(req, res, next) {
-    res.render('addItem', {csrfToken: req.csrfToken(), msgSuccess: false, messages: false, layout : 'main'});
+    if(req.session.donationType === 'Food(Non-Perishable Only)'){
+        res.render('addItem', {csrfToken: req.csrfToken(), msgSuccess: false, messages: false, layout : 'main'});
+    }else if (req.session.donationType === 'Baby Items'){
+        res.render('addItemBaby', {csrfToken: req.csrfToken(), msgSuccess: false, messages: false, layout : 'main'});
+    }else if (req.session.donationType === 'Medical Supplies'){
+        res.render('addItemMedical', {csrfToken: req.csrfToken(), msgSuccess: false, messages: false, layout : 'main'});
+    } else {
+        res.render('addItemOther', {csrfToken: req.csrfToken(), msgSuccess: false, messages: false, layout : 'main'});
+    }
+
 });
 
 router.post('/addItem', function (req, res, next) {
-    req.check('itemName', 'Fill Item').notEmpty();
-    req.check('amount', 'Fill Amount').notEmpty();
-    var errors = req.validationErrors();
-    if (errors) {
-        req.session.errors = errors;
-        res.render('addItem', {csrfToken: req.csrfToken(), msgSuccess: false, messages: req.session.errors, layout : 'main'});
-    }else {
-        var donation = new Donation({
-            donorName: req.body.donorName,
-            mobile: req.body.mobile,
-            phone : req.user.phone,
-            item: req.body.itemName,
-            amount: req.body.amount,
-            eventId : req.session.eventID,
-            ownerId : req.user._id,
-            province : req.user.province,
-            district : req.user.district,
-            profileImage : req.user.profileImage,
-            status : "Pending",
-            colour : "default"
-        });
-        donation.save(function (err, result) {
-            req.flash('success', 'Successfully Add your Donation!');
-            res.render('addItem', {
-                csrfToken: req.csrfToken(),
-                msgSuccess: req.flash('success')[0],
-                messages: false,
-                layout: 'main'
+    console.log(req.body);
+    req.session.entries = parseInt(req.body.entries);
+    var donations = [];
+    req.session.validDonations = 0;
+    for (var i = 0; i < req.session.entries; i++){
+        if(req.body['itemName['+i+']'] !== '' && req.body['amount['+i+']'] !== ''
+        && parseInt(req.body['amount['+i+']']) > 0){
+            donations[req.session.validDonations] = new Donation({
+                donorName: req.body.donorName,
+                mobile: req.body.mobile,
+                phone : req.user.phone,
+                item: req.body['itemName['+i+']'],
+                amount: req.body['amount['+i+']'],
+                donationType : req.session.donationType,
+                eventId : req.session.eventID,
+                ownerId : req.user._id,
+                province : req.user.province,
+                district : req.user.district,
+                profileImage : req.user.profileImage,
+                status : "Pending",
+                colour : "default"
             });
+            req.session.validDonations ++;
+        }
+    }
+    if(donations.length === 0){
+        req.flash('danger', 'Oops...Invalid Donations...');
+        res.render('addItem', {
+            csrfToken: req.csrfToken(),
+            msgSuccess: false,
+            messages: req.flash('danger')[0],
+            layout: 'main'
         });
+    } else {
+        req.session.done = 0;
+        for (var j = 0; j < donations.length; j++) {
+            donations[j].save(function (err, result) {
+                req.session.done++;
+                if (req.session.done === donations.length) {
+                    req.flash('success', 'Successfully Add Only Valid Donations!');
+                    res.render('addItem', {
+                        csrfToken: req.csrfToken(),
+                        msgSuccess: req.flash('success')[0],
+                        messages: false,
+                        layout: 'main'
+                    });
+                }
+            });
+
+        }
     }
 });
 
@@ -121,6 +162,7 @@ router.post('/addDonation', function (req, res, next) {
             phone : req.user.phone,
             item: req.session.itemName,
             amount: req.body.amount,
+            donationType : req.session.donationType,
             eventId : req.session.eventID,
             ownerId : req.user._id,
             province : req.user.province,

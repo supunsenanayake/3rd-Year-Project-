@@ -8,7 +8,17 @@
     <div class="container">
         <div class="row">
             <div class="container">
-                <h4>Donations : {{session.eventTitle}}</h4>
+                <div class=" col-md-9 col-lg-9 ">
+                    <div class="text-center">
+                        <a href="/donation/donors/Food(Non-Perishable Only)" class="btn btn-primary">Food(Non-Perishable Only)</a>
+                        <a href="/donation/donors/Clothing & Household Items" class="btn btn-warning">Clothing & Household Items</a>
+                        <a href="/donation/donors/Baby Items" class="btn btn-info">Baby Items</a>
+                        <a href="/donation/donors/Medical Supplies" class="btn btn-success">Medical Supplies</a>
+                </div>
+                </div>
+                <hr>
+                <h4>{{session.donationType}} Donations | {{session.eventTitle}}</h4>
+                <hr>
                 <br>
             <div class=" col-md-9 col-lg-9 ">
                 <div class="table-responsive">
@@ -22,23 +32,24 @@
                             <td>Amount</td>
                             <td>Action</td>
                         </tr>
+                        <tr>
+                            <td>*****</td>
+                            <td>Create Your Donation List
+                                <br>
+                                <br>(Click "Let's START" To List Your Donations)
+                                <br><br></td>
+                            <td>------</td>
+                            <td><a href="/donation/addItem">Let's START</a></td>
+                        </tr>
                         {{# each donations}}
                             <tr>
                                 <td><script>document.write(count)</script></td>
                                 <td>{{this._id}}</td>
                                 <td>{{this.quantity}}</td>
-                                <td><a href="/donation/addDonation/{{this._id}}">Add Donation</a></td>
+                                <td><a href="/donation/addDonation/{{this._id}}">Let's THIS</a></td>
                             </tr>
                             <script>count ++;</script>
                         {{/each}}
-                        <tr>
-                            <td><script>document.write(count)</script></td>
-                            <td>Others
-                                <br>
-                                <br>(Click "Add Item" to add new item)</td>
-                            <td>------</td>
-                            <td><a href="/donation/addItem">Add Item</a></td>
-                        </tr>
                         </tbody>
                     </table>
                 </h6>

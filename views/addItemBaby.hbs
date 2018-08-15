@@ -1,0 +1,132 @@
+
+<script>
+    function validateDonation(){
+        var amount=document.getElementById("formGroupAmount").value;
+        if(amount<=0){
+            alert("Enter a Positive number");
+            return false;
+        }
+        else{
+            $('#items').append('<input type="hidden" value="'+x+'" name="entries">');
+            return true;
+        }
+    }
+</script>
+
+
+<style>
+    button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+</style>
+
+
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <h3>{{session.donationType}} | {{session.eventTitle}}</h3>
+                <hr>
+                {{#if messages}}
+                    <div class="alert alert-danger">
+                        {{messages}}
+                    </div>
+                {{/if}}
+                {{#if msgSuccess}}
+                    <div id="charge-error" class="alert alert-success">
+                        {{msgSuccess}}
+                    </div>
+                {{/if}}
+                <form action="/donation/addItem" method="post" onsubmit="return validateDonation()">
+                    <div class="container">
+                        <div class="form-group col-lg-4">
+                            <label for="formGroupPostDonor">Donor Name : {{ user.firstName }} {{ user.lastName }}</label>
+                            <input type="hidden" class="form-control" id="formGroupdonor" placeholder="Name" name="donorName" value="{{ user.firstName }} {{ user.lastName }}">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="formGroupMobile">Mobile Number : {{user.mobile}}</label>
+                            <input type="hidden" class="form-control" id="formGroupMobile" placeholder="valid mobile number" name="mobile" value="{{user.mobile}}">
+                        </div>
+                        <div id="items">
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+                                    <label for="formGroupPost">Item Name</label>
+                                    <select class="form-control" id="itemName" name="itemName[0]">
+                                        <option value="" selected>Choose</option>
+                                        <option value="Baby Bottles & Formula(Powdered & liquid)">Baby Bottles & Formula(Powdered & liquid)</option>
+                                        <option value="Baby Clothes & Blankets">Baby Clothes & Blankets</option>
+                                        <option value="Baby Food(Jarred or Canned)">Baby Food(Jarred or Canned)</option>
+                                        <option value="Baby Powder (Bottles)">Baby Powder (Bottles)</option>
+                                        <option value="Diapers & Wipes (Packets)">Diapers & Wipes (Packets)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label for="formGroupPost">Amount</label>
+                                    <input type="number" class="form-control" id="formGroupAmount" placeholder="Amount" name='amount[0]'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <input type="button" value=">> Add More + >> " id="add" class="btn btn-success">
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <button type="submit" class="btn btn-primary" name="submit" value="create">Donate</button>
+                            <a href="/donation/" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script
+        src="https://code.jquery.com/jquery-1.7.1.min.js"
+        integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0="
+        crossorigin="anonymous"></script>
+
+<script>
+    var x = 1;
+    $(document).ready(function(){
+
+        $("#add").click(function (e){
+
+            $('#items').append('<div class="row">\n' +
+                    '                                <div class="form-group col-lg-4">\n' +
+                    '                                    <label for="formGroupPost">Item Name</label>\n' +
+                    '                                    <select class="form-control" id="itemName" name="itemName[0]">\n' +
+                    '                                        <option value="" selected>Choose</option>\n' +
+                    '                                        <option value="Baby Bottles & Formula(Powdered & liquid)">Baby Bottles & Formula(Powdered & liquid)</option>\n' +
+                    '                                        <option value="Baby Clothes & Blankets">Baby Clothes & Blankets</option>\n' +
+                    '                                        <option value="Baby Food(Jarred or Canned)">Baby Food(Jarred or Canned)</option>\n' +
+                    '                                        <option value="Baby Powder (Bottles)">Baby Powder (Bottles)</option>\n' +
+                    '                                        <option value="Diapers & Wipes (Packets)">Diapers & Wipes (Packets)</option>\n' +
+                    '                                    </select> \n' +
+                    '                                </div>'+
+                    '<div class="form-group col-lg-4"> <label for="formGroupPost">Amount</label> <input type="number" class="form-control" id="formGroupAmount" placeholder="Amount" name="amount['+x+']"></div>'+
+                    '&nbsp&nbsp&nbsp<button type="submit" class="btn btn-danger" id="delete" name="delete" value="Delete">X</button></div>');
+            x++;
+
+        });
+
+
+        $('body').on('click','#delete',function (e){
+
+            $(this).parent('div').remove();
+        });
+
+
+    });
+</script>
