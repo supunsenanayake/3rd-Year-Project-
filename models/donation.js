@@ -7,6 +7,7 @@ var schema = new Schema({
     phone : {type:String, required: true},
     item : {type:String, required: true},
     amount : {type:Number, required: true},
+    donationType : {type:String, required: true},
     eventId : {type:String, required: true},
     ownerId : {type:String, required: true},
     province : {type:String, required: true},
