@@ -11,10 +11,10 @@
                 <div class="text-center"><h3>Distributed Donations</h3></div>
                 <hr>
                     <div class="text-center">
-                        <a href="/donation/donors/Food(Non-Perishable Only)" class="btn btn-primary">Food(Non-Perishable Only)</a>
-                        <a href="/donation/donors/Clothing & Household Items" class="btn btn-warning">Clothing & Household Items</a>
-                        <a href="/donation/donors/Baby Items" class="btn btn-info">Baby Items</a>
-                        <a href="/donation/donors/Medical Supplies" class="btn btn-success">Medical Supplies</a>
+                        <a href="/donation/distribute/Food(Non-Perishable Only)" class="btn btn-primary">Food(Non-Perishable Only)</a>
+                        <a href="/donation/distribute/Clothing & Household Items" class="btn btn-warning">Clothing & Household Items</a>
+                        <a href="/donation/distribute/Baby Items" class="btn btn-info">Baby Items</a>
+                        <a href="/donation/distribute/Medical Supplies" class="btn btn-success">Medical Supplies</a>
                     </div>
                 <hr>
                 <div class="text-center"><h4>{{session.donationType}} Donations | {{session.eventTitle}}</h4></div>
@@ -34,20 +34,21 @@
                                     </tr>
                                     <tr>
                                         <td>*****</td>
-                                        <td>Create Your Donation List
+                                        <td>Create Distributed Donation List
                                             <br>
-                                            <br>(Click "Let's START" To List Your Donations)
+                                            <br>(Click "Let's START" To Distribute Donations)
                                             <br><br></td>
                                         <td>------</td>
                                         <td>------</td>
-                                        <td><a href="/donation/addItem">Let's START</a></td>
+                                        <td><a href="/donation/distributeList">Let's START</a></td>
                                     </tr>
                                     {{# each donations}}
                                         <tr>
                                             <td><script>document.write(count)</script></td>
-                                            <td>{{this._id}}</td>
+                                            <td>{{this._id.item}}</td>
+                                            <td>{{this._id.location}}</td>
                                             <td>{{this.quantity}}</td>
-                                            <td><a href="/donation/addDonation/{{this._id}}">Let's THIS</a></td>
+                                            <td><a href="/donation/addDistributeDonation/{{this._id.item}}/{{this._id.location}}">Let's THIS</a></td>
                                         </tr>
                                         <script>count ++;</script>
                                     {{/each}}

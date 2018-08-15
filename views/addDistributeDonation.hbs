@@ -1,0 +1,49 @@
+<script>
+    function validateDonation(){
+        var amount=document.getElementById("formGroupAmount").value;
+        if(amount<=0){
+            alert("Enter a Positive number");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+
+
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <h3>{{session.itemName}} | {{session.eventTitle}}</h3>
+                <hr>
+                {{#if messages}}
+                    {{# each messages }}
+                        <div class="alert alert-danger">
+                            {{this.msg}}
+                        </div>
+                    {{/each}}
+                {{/if}}
+                <form action="/donation/addDistributeDonation" method="post" onsubmit="return validateDonation()">
+                    <div class="form-group col-lg-4">
+                        <label for="formGroupMobile">Location : {{session.location}}</label>
+                        <input type="hidden" class="form-control" id="formGroupLocation"  name="location" value="{{session.location}}">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="formGroupPost">{{session.itemName}} - Amount</label>
+                        <input type="number" class="form-control" id="formGroupAmount" placeholder="Amount" name="amount">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
+                    </div>
+                    <div class="form-group col-xs-4">
+                        &nbsp&nbsp&nbsp<button type="submit" class="btn btn-primary" name="submit" value="create">Donate</button>
+                        <a href="/donation/distributedDonations" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>

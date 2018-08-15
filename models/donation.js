@@ -14,7 +14,8 @@ var schema = new Schema({
     district : {type:String, required: true},
     profileImage : {type:String, required: true},
     status : {type:String, required: true},
-    colour : {type:String, required: true}
+    colour : {type:String, required: true},
+    location : {type:String, required: true}
 });
 
 module.exports = mongoose.model('Donation', schema);
