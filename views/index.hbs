@@ -1,4 +1,5 @@
 <script> var count = 0;</script>
+
 <section class="banner-sec">
     <div class="container">
         <div class="row">
@@ -82,51 +83,43 @@
 {{/each}}
 {{/if}}
 
-            <div class="col-md-6 top-slider">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
 
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active">
-                            <div class="news-block">
-                                <div class="news-media"><img class="img-fluid" src="/images/2017SriLanka4474.jpg" alt=""></div>
-                                <div class="news-title">
-                                    <h2 class=" title-large"><a href="#">Click Here To Mark Influence Areas</a></h2>
-                                </div>
-                                <div class="news-des">Urban areas (satellite-visible lights) are shown in dark gray.
-                                    See also other SAR-based flood mapping...</div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="news-block">
-                                <div class="news-media"><img class="img-fluid" src="/images/z_P11-washed-1.jpg" alt=""></div>
-                                <div class="news-title">
-                                    <h2 class=" title-large"><a href="#">Click Here To Mark Influence Areas</a></h2>
-                                </div>
-                                <div class="news-des">Condimentum ultrices mi est a arcu at cum a elementum per cum turpis dui vulputate vestibulum in vehicula montes vel. Mauris nam suspendisse consectetur mus...</div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="news-block">
-                                <div class="news-media"><img class="img-fluid" src="/images/565186-PDC_SriLanka_100yr_Flood_Zone_3_Day_Rainfall_19MAY16.png" alt=""></div>
-                                <div class="news-title">
-                                    <h2 class=" title-large"><a href="#">Click Here To Mark Influence Areas</a></h2>
-                                </div>
-                                <div class="news-des">Condimentum ultrices mi est a arcu at cum a elementum per cum turpis dui vulputate vestibulum in vehicula montes vel. Mauris nam suspendisse consectetur mus...</div>
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
+            <div class="col-md-6 top-slider">
+
+                <!--The div element for the map -->
+                <div id="map"></div>
+                <script>
+                    // Initialize and add the map
+                    function initMap() {
+                        // The location of Sri Lanka
+                        var sriLanka = {lat: 7.8731, lng: 80.7718};
+                        // The map, centered at Sri Lanka
+                        var map = new google.maps.Map(
+                                document.getElementById('map'), {zoom: 8, center: sriLanka});
+
+                    }
+                </script>
+
+                <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjX8-n2SA6qoRAStfhIC4n0oYXYMVeqnQ&callback=initMap">
+                </script>
+
+                <style>
+                    #map {
+                        width: 100%;
+                        height: 700px;
+                        background-color: grey;
+                    }
+                </style>
             </div>
+
+
+
+
+
+
         </div>
     </div>
 </section>
