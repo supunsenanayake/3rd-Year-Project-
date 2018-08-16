@@ -97,7 +97,53 @@
                         var sriLanka = {lat: 7.8731, lng: 80.7718};
                         // The map, centered at Sri Lanka
                         var map = new google.maps.Map(
-                                document.getElementById('map'), {zoom: 8, center: sriLanka});
+                                document.getElementById('map'), {
+                                    zoom: 8,
+                                    center: sriLanka,
+                                    gestureHandling: 'none',
+                                    zoomControl: false
+                                });
+
+                        var polygonCords = [
+                            {lat: 5.9549, lng: 80.5550},
+                            {lat: 6.0535, lng: 80.2210},
+                            {lat: 6.1429, lng: 81.1212},
+                            {lat: 6.3162, lng: 80.8433},
+                            {lat: 6.0243, lng: 80.7941},
+
+                        ]
+
+                        var disasterPolygon = new google.maps.Polygon({
+                            paths: polygonCords,
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35
+                        });
+                        disasterPolygon.setMap(map);
+
+
+                        var polygonCords2 = [
+                            {lat: 6.9497, lng: 80.7891},
+                            {lat: 7.2906, lng: 80.6337},
+                            {lat: 6.9934, lng: 81.0550}
+
+
+                        ]
+
+
+                        var disasterPolygon2 = new google.maps.Polygon({
+                            paths: polygonCords2,
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35
+                        });
+                        disasterPolygon2.setMap(map);
+
+
 
                     }
                 </script>
@@ -109,7 +155,7 @@
                 <style>
                     #map {
                         width: 100%;
-                        height: 700px;
+                        height:800px;
                         background-color: grey;
                     }
                 </style>
