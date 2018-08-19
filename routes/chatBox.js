@@ -7,6 +7,16 @@ var passport = require('passport');
 
 router.use(csrfProtection);
 
+router.get('/msg', function(req, res, next) {
+res.send("get massage reseved");
+    //var parsedBody = JSON.parse(req.body);
+  //  console.log(req.body);
+
+});
+router.post('/msg', function(req, res, next) {
+    res.send("Post msg");
+});
+
 router.use('/', isLoggedIn, function(req, res, next) {
     next();
 });
