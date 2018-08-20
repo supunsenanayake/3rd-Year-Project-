@@ -94,17 +94,17 @@
                 <div id="map"></div>
                 <script>
 
-                    var xhttp = new XMLHttpRequest();
+                    /*var xhttp = new XMLHttpRequest();
 
                     xhttp.open("GET", "/getJson", true);
-                    xhttp.send(null);
+                    xhttp.send(null);*/
                     // Initialize and add the map
                     function initMap() {
 
-                        xhttp.onreadystatechange = function() {
+                        /*xhttp.onreadystatechange = function() {
                             if (this.readyState === 4 && this.status === 200) {
                                 var locations = JSON.parse(this.responseText);
-                            }
+                            }*/
 
 
                         // The location of Sri Lanka
@@ -119,8 +119,8 @@
                                 });
                         var polygonCords = [];
                         var disasterPolygon = [];
-                        for (var i = 0; i < locations.length; i++) {
-                            polygonCords[i] = [
+
+                            polygonCords[0] = [
 
                                 {lat: 5.9549, lng: 80.5550},
                                 {lat: 6.0535, lng: 80.2210},
@@ -132,18 +132,16 @@
                             ]
 
 
-                            disasterPolygon[i] = new google.maps.Polygon({
-                                paths: polygonCords[i],
+                            disasterPolygon[0] = new google.maps.Polygon({
+                                paths: polygonCords[0],
                                 strokeColor: '#FF0000',
                                 strokeOpacity: 0.8,
                                 strokeWeight: 2,
                                 fillColor: '#FF0000',
                                 fillOpacity: 0.35
                             });
-                            disasterPolygon[i].setMap(map);
+                            disasterPolygon[0].setMap(map);
                         }
-                        };
-                    }
 
 
                 </script>
