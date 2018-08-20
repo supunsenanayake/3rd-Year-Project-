@@ -105,7 +105,21 @@
                             if (this.readyState === 4 && this.status === 200) {
                                 var locations = JSON.parse(this.responseText);
                             }*/
-
+//-------------------------------------------------
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var locations=JSON.parse(this.responseText);
+                                for (i in locations) {
+                                    //var myLatlng = new google.maps.LatLng(locations[i].x,locations[i].y);
+                                    console.log(locations[i]);
+                                   // addMarker(myLatlng,map);
+                                }
+                            }
+                        };
+                        xhttp.open("GET", "/getJson", true);
+                        xhttp.send("aaaa");
+                        //---------------------
 
                         // The location of Sri Lanka
                         var sriLanka = {lat: 7.8731, lng: 80.7718};
