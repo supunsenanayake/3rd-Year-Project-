@@ -91,6 +91,10 @@ app.use('/video', video);
 app.use('/test', test);
 app.use('/map', map);
 
+//for testingdevice
+app.use('/device', chatBox);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
