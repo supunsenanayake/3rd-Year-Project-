@@ -113,7 +113,7 @@
                         var locations;
                         var xhttp = new XMLHttpRequest();
                         xhttp.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
+                            if (this.readyState === 4 && this.status === 200) {
                                  locations=JSON.parse(this.responseText);
                                  ssss=locations;
                                 console.log("xxx");
@@ -142,29 +142,6 @@
                         xhttp.open("GET", "/getJson", true);
                         xhttp.send("aaaa");
 
-                        //---------------------
-                       // var polygonCords = [];
-                        //var disasterPolygon = [];
-                     //   console.log("AAAA",ssss);
-                        /*
-                        console.log("BB");
-                            polygonCords = [
-                                {lat: 5.9549, lng: 80.5550},
-                                {lat: 6.0535, lng: 80.2210},
-                                {lat: 6.1429, lng: 81.1212},
-                                {lat: 6.3162, lng: 80.8433},
-                                {lat: 6.0243, lng: 80.7941}
-                            ];
-                            disasterPolygon[0] = new google.maps.Polygon({
-                                paths: polygonCords,
-                                strokeColor: '#FF0000',
-                                strokeOpacity: 0.8,
-                                strokeWeight: 2,
-                                fillColor: '#FF0000',
-                                fillOpacity: 0.35
-                            });
-                            disasterPolygon[0].setMap(map);
-*/
                         }
 
 
