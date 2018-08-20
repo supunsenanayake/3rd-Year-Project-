@@ -87,7 +87,6 @@ router.get('/addItem', function(req, res, next) {
 });
 
 router.post('/addItem', function (req, res, next) {
-    console.log(req.body);
     req.session.entries = parseInt(req.body.entries);
     var donations = [];
     req.session.validDonations = 0;

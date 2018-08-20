@@ -22,6 +22,7 @@ var operations = require('./routes/operations');
 var handlingDonations = require('./routes/handlingDonations');
 var video = require('./routes/video');
 var test = require('./routes/test');
+var map = require('./routes/map');
 var mongoose = require('mongoose');
 
 var app = express();
@@ -88,6 +89,7 @@ app.use('/operations', operations);
 app.use('/handlingDonations', handlingDonations);
 app.use('/video', video);
 app.use('/test', test);
+app.use('/map', map);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

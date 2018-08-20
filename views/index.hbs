@@ -1,8 +1,10 @@
-<script> var count = 0;</script>
+<script> var count = 0;
+</script>
 
 <section class="banner-sec">
     <div class="container">
         <div class="row">
+
             {{#if isAuthenticated}}
                 {{#if userRole}}
         {{#each events }}
@@ -91,8 +93,20 @@
                 <!--The div element for the map -->
                 <div id="map"></div>
                 <script>
+
+                    var xhttp = new XMLHttpRequest();
+
+                    xhttp.open("GET", "/getJson", true);
+                    xhttp.send(null);
                     // Initialize and add the map
                     function initMap() {
+
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState === 4 && this.status === 200) {
+                                var locations = JSON.parse(this.responseText);
+                            }
+
+
                         // The location of Sri Lanka
                         var sriLanka = {lat: 7.8731, lng: 80.7718};
                         // The map, centered at Sri Lanka
@@ -103,49 +117,35 @@
                                     gestureHandling: 'none',
                                     zoomControl: false
                                 });
+                        var polygonCords = [];
+                        var disasterPolygon = [];
+                        for (var i = 0; i < locations.length; i++) {
+                            polygonCords[i] = [
 
-                        var polygonCords = [
-                            {lat: 5.9549, lng: 80.5550},
-                            {lat: 6.0535, lng: 80.2210},
-                            {lat: 6.1429, lng: 81.1212},
-                            {lat: 6.3162, lng: 80.8433},
-                            {lat: 6.0243, lng: 80.7941},
-
-                        ]
-
-                        var disasterPolygon = new google.maps.Polygon({
-                            paths: polygonCords,
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 0.8,
-                            strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35
-                        });
-                        disasterPolygon.setMap(map);
+                                {lat: 5.9549, lng: 80.5550},
+                                {lat: 6.0535, lng: 80.2210},
+                                {lat: 6.1429, lng: 81.1212},
+                                {lat: 6.3162, lng: 80.8433},
+                                {lat: 6.0243, lng: 80.7941}
 
 
-                        var polygonCords2 = [
-                            {lat: 6.9497, lng: 80.7891},
-                            {lat: 7.2906, lng: 80.6337},
-                            {lat: 6.9934, lng: 81.0550}
+                            ]
 
 
-                        ]
-
-
-                        var disasterPolygon2 = new google.maps.Polygon({
-                            paths: polygonCords2,
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 0.8,
-                            strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35
-                        });
-                        disasterPolygon2.setMap(map);
-
-
-
+                            disasterPolygon[i] = new google.maps.Polygon({
+                                paths: polygonCords[i],
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: '#FF0000',
+                                fillOpacity: 0.35
+                            });
+                            disasterPolygon[i].setMap(map);
+                        }
+                        };
                     }
+
+
                 </script>
 
                 <script async defer

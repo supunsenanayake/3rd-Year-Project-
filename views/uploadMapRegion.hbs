@@ -1,0 +1,145 @@
+<script> var count = 1;</script>
+<script>
+    function validateDonation(){
+        var regionName=document.getElementById("formGroupRegion").value;
+        if(regionName === ''){
+            alert("Enter a Region Name");
+            return false;
+        }else{
+            $('#region').append('<input type="hidden" value="'+x+'" name="entries">');
+            return true;
+        }
+    }
+</script>
+
+
+<style>
+    button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+</style>
+
+
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <h3>Mark Map Region | {{session.eventTitle}}</h3>
+                <hr>
+                {{#if messages}}
+                    <div class="alert alert-danger">
+                        {{messages}}
+                    </div>
+                {{/if}}
+                {{#if msgSuccess}}
+                    <div id="charge-error" class="alert alert-success">
+                        {{msgSuccess}}
+                    </div>
+                {{/if}}
+                <form action="/map/" method="post" onsubmit="return validateDonation()">
+                    <div class="container">
+                        <div class="form-group col-lg-4">
+                            <label for="formGroupRegion">Region : </label>
+                            <input type="text" class="form-control" id="formGroupRegion" placeholder="Region Name" name="regionName">
+                        </div>
+                        <div id="region">
+                            <div class="row">
+                                &nbsp&nbsp&nbsp<div class="form-group col-lg-4">
+                                    <label for="formGroupPost">Latitudes :</label>
+                                    <input type="number" step="0.0001" class="form-control" id="formGroupLatitudes" placeholder="Latitudes Here" name="latitudes[0]">
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label for="formGroupPost">Longitudes :</label>
+                                    <input type="number" step="0.0001" class="form-control" id="formGroupLongitudes" placeholder="Longitudes Here" name='longitudes[0]'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="hidden" class="form-control" id="formGroupCsrf"  name="_csrf" value="{{csrfToken}}">
+                        </div>
+                        <div class="form-group col-xs-4">
+                            &nbsp&nbsp&nbsp<input type="button" value=">> Add More + >> " id="add" class="btn btn-success">
+                        </div>
+                        <div class="form-group col-xs-4">
+                            &nbsp&nbsp<button type="submit" class="btn btn-primary" name="submit" value="create">Mark Now</button>
+                            <a href="/" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
+                <div class="text-center"><h4>Map Regions | {{session.eventTitle}}</h4></div>
+                <hr>
+                <br>
+                <div class="table-responsive">
+                    <div class="text-center">
+                        <h6>
+                            <table class="table table-user-information" align="center">
+                                <tbody>
+                                <tr style="font-size: 130%">
+                                    <td>#</td>
+                                    <td>Region</td>
+                                    <td>Action</td>
+                                </tr>
+                                    {{# each donations}}
+                                    <tr>
+                                        <td><script>document.write(count)</script></td>
+                                        <td>{{this._id}}</td>
+                                        <td>
+                                            <a href="/donation/addDonation/{{this._id}}" class="btn btn-primary">Edit</a>
+                                            <a href="/donation/addDonation/{{this._id}}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                    <script>count ++;</script>
+                                </tbody>
+                            </table>
+                        </h6>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script
+        src="https://code.jquery.com/jquery-1.7.1.min.js"
+        integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0="
+        crossorigin="anonymous"></script>
+
+<script>
+    var x = 1;
+    $(document).ready(function(){
+
+        $("#add").click(function (e){
+
+            $('#region').append('<div class="row"> &nbsp&nbsp&nbsp<div class="form-group col-lg-4">\n' +
+                    '                                    <label for="formGroupPost">Latitudes :</label>' +
+                    '<input type="number" step="0.0001" class="form-control" id="formGroupLatitudes" placeholder="Latitudes Here" name="latitudes['+x+']">'+
+                    '</div>'+
+                    '<div class="form-group col-lg-4"> <label for="formGroupLongitudes">Longitudes :</label> <input type="number" step="0.0001" class="form-control" id="formGroupLongitudes" placeholder="Longitudes Here" name="longitudes['+x+']"></div>'+
+                    '&nbsp&nbsp&nbsp<button type="submit" class="btn btn-danger" id="delete" name="delete" value="Delete">X</button></div>');
+            x++;
+
+        });
+
+
+        $('body').on('click','#delete',function (e){
+
+            $(this).parent('div').remove();
+        });
+
+
+    });
+</script>
