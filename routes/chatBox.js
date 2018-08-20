@@ -7,15 +7,13 @@ var passport = require('passport');
 
 router.use(csrfProtection);
 
-router.get('/msg', function(req, res, next) {
-res.send("get massage reseved");
-    //var parsedBody = JSON.parse(req.body);
-  //  console.log(req.body);
+router.get('/msg/:msg/:address', function(req, res, next) {
+    var massage=req.params.msg;
+    var address=req.params.address;
+res.send("get massage Reseved:"+massage+" Sender Address :"+address);
 
 });
-router.post('/msg', function(req, res, next) {
-    res.send("Post msg");
-});
+
 
 router.use('/', isLoggedIn, function(req, res, next) {
     next();
