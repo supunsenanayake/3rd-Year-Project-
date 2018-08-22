@@ -26,7 +26,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                 res.send(err);
             }
             else {
-                res.send("Massage Reseved:" + msg + " Sender Address :" + address + " Time :" + formatted);
+                res.send("Massage Reserved:" + msg + " Sender Address :" + address + " Time :" + formatted);
             }
         });
     });
@@ -50,6 +50,8 @@ router.get('/deviceMessageBox', function(req, res, next) {
         });
 
 });
+
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer') ){
