@@ -19,7 +19,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
         var messages = new Device();
         messages.eventId = docs[0]._id;
         messages.deviceAddress = address;
-        messages.message = massage;
+        messages.message = msg;
         messages.time = formatted;
         messages.save(function (err, result) {
             if (err) {
