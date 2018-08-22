@@ -8,6 +8,8 @@ var Device = require('../models/device');
 var Event = require('../models/event');
 var Map = require('../models/map');
 
+var mongoose = require('mongoose');
+
 router.use(csrfProtection);
 
 router.get('/msg/:msg/:address', function(req, res, next) {
@@ -22,7 +24,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
 
     if(msgArray[0]==='r'){
         console.log(msgArray.length);
-        var LatitudeandLongitude= msgArray;
+        var LatitudeandLongitude= msg.split('');
         if(LatitudeandLongitude.length===6){
             map = [
                 new Map({
