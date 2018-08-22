@@ -8,7 +8,7 @@ var Device = require('../models/device');
 var Event = require('../models/event');
 var Map = require('../models/map');
 
-var mongoose = require('mongoose');
+
 
 router.use(csrfProtection);
 
@@ -24,7 +24,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
 
     if(msgArray[0]==='r'){
         console.log(msgArray.length);
-        var LatitudeandLongitude= msg.split('');
+        var LatitudeandLongitude= msg.split(';');
         if(LatitudeandLongitude.length===6){
             map = [
                 new Map({
@@ -41,7 +41,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                     latitudes : LatitudeandLongitude[4]})
         ];
 
-            autoMapMark(map);
+            autoMapMark(res, map);
 
         }else if(LatitudeandLongitude.length===4){
 
@@ -55,7 +55,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                     latitudes : LatitudeandLongitude[2]})
             ];
 
-            autoMapMark(map);
+            autoMapMark(res,map);
 
         }
         else{
@@ -69,13 +69,13 @@ router.get('/msg/:msg/:address', function(req, res, next) {
 });
 
 
-function autoMapMark(map) {
+function autoMapMark(res, map) {
     var done = 0;
     for (var i = 0; i< map.length; i++){
         map[i].save(function (err, result) {
             done ++;
             if(done === map.length){
-                mongoose.disconnect();
+                res.send("Successfully Map Mark Automatically");
             }
         });
 
