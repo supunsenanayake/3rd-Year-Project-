@@ -54,7 +54,16 @@ router.post('/', function(req, res, next) {
     }
 });
 
+router.get('/delete', function(req, res, next) {
 
+    mongo.connect(url, function (err, client) {
+        const db = client.db(dbName);
+        db.collection('maps').drop();
+        res.redirect('/');
+        client.close();
+    });
+
+});
 
 
 

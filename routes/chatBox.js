@@ -26,7 +26,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                 res.send(err);
             }
             else {
-                res.send("Massage Reseved:" + msg + " Sender Address :" + address + " Time :" + formatted);
+                res.send("Massage Reserved:" + msg + " Sender Address :" + address + " Time :" + formatted);
             }
         });
     });
@@ -48,6 +48,18 @@ router.get('/deviceMessageBox', function(req, res, next) {
         console.log(result);
         res.render('deviceMessageBox', {messages: result, layout: 'main'});
         });
+
+});
+
+
+router.get('/delete', function(req, res, next) {
+
+    mongo.connect(url, function (err, client) {
+        const db = client.db(dbName);
+        db.collection('devices').drop();
+        res.redirect('/');
+        client.close();
+    });
 
 });
 
