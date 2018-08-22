@@ -6,6 +6,7 @@ var passport = require('passport');
 
 var Device = require('../models/device');
 var Event = require('../models/event');
+var Map = require('../models/map');
 
 router.use(csrfProtection);
 
@@ -15,45 +16,54 @@ router.get('/msg/:msg/:address', function(req, res, next) {
     var dateTime = require('node-datetime');
     var dt = dateTime.create();
     var formatted = dt.format('Y-m-d H:M:S');
-    var msgArray="r99;180.791;6.947;81.132;6.956;".split('');
+    var msgArray= msg.split('');
+    var map = [];
 
 
     if(msgArray[0]==='r'){
         console.log(msgArray.length);
-        var LatitudeandLongitude="r99;180.791;6.947;".split(';');
+        var LatitudeandLongitude= msgArray;
         if(LatitudeandLongitude.length===6){
-            var region=LatitudeandLongitude[0];
-            var location1={lat:LatitudeandLongitude[1],log:LatitudeandLongitude[2]};
-            var location2={lat:LatitudeandLongitude[3],log:LatitudeandLongitude[4]};
+            map = [
+                new Map({
+            eventId :req.session.eventID,
+            eventTitle : req.session.eventTitle,
+            regionName : LatitudeandLongitude[0],
+            longitudes : LatitudeandLongitude[1],
+            latitudes : LatitudeandLongitude[2]}),
+                new Map({
+                    eventId :req.session.eventID,
+                    eventTitle : req.session.eventTitle,
+                    regionName : LatitudeandLongitude[0],
+                    longitudes : LatitudeandLongitude[3],
+                    latitudes : LatitudeandLongitude[4]})
+        ];
+
+            autoMapMark(map);
+
         }else if(LatitudeandLongitude.length===4){
-            var region_=LatitudeandLongitude[0];
-            var location1_={lat:LatitudeandLongitude[1],log:LatitudeandLongitude[2]};
+
+
+            map = [
+                new Map({
+                    eventId :req.session.eventID,
+                    eventTitle : req.session.eventTitle,
+                    regionName : LatitudeandLongitude[0],
+                    longitudes : LatitudeandLongitude[1],
+                    latitudes : LatitudeandLongitude[2]})
+            ];
+
+            autoMapMark(map);
+
         }
         else{
-            console.log("else",LatitudeandLongitude);
-            //think as just a message
+            storeMessages(res, msg, address, formatted);
         }
     }else{
-        //just message
+
+        storeMessages(res, msg, address, formatted);
+
     }
-    //console.log(msgArray);
-
-    /*Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
-        var messages = new Device();
-        messages.eventId = docs[0]._id;
-        messages.deviceAddress = address;
-        messages.message = msg;
-
-        messages.time = formatted;
-        messages.save(function (err, result) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.send("Massage Reserved:" + msg + " Sender Address :" + address + " Time :" + formatted);
-            }
-        });
-    });*/
 });
 
 
@@ -84,6 +94,40 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 
+function storeMessages(res , msg, address, formatted) {
 
+
+    Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
+        var messages = new Device();
+        messages.eventId = docs[0]._id;
+        messages.deviceAddress = address;
+        messages.message = msg;
+
+        messages.time = formatted;
+        messages.save(function (err, result) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.send("Massage Reserved:" + msg + " Sender Address :" + address + " Time :" + formatted);
+            }
+        });
+    });
+
+
+}
+
+function autoMapMark(map) {
+    var done = 0;
+    for (var i = 0; i< map.length; i++){
+        map[i].save(function (err, result) {
+            done ++;
+            if(done === map.length){
+                mongoose.disconnect();
+            }
+        });
+
+    }
+}
 
 module.exports = router;
