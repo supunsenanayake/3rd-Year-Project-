@@ -29,13 +29,11 @@
                         <div class="row">
                             <div id="output">
                                 {{#each messages}}
-                                    {{# each this}}
                                 <p><img src="/images/device.jpg" class="rounded" alt="..." height="30px" width="30px">
                                     <strong>{{this.deviceAddress}} :</strong> {{this.message}}
                                     <br>
                                     &nbsp&nbsp&nbsp<i class="fa fa-clock-o" aria-hidden="true"></i>  <em><small>{{this.time}}</small></em>
                                 </p>
-                                    {{/each}}
                                 {{/each}}
                             </div>
                         </div>

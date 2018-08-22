@@ -4,24 +4,24 @@ var csrf = require('csurf');
 var csrfProtection = csrf();
 var passport = require('passport');
 
-var messageFromDevice=require('../models/messageFromDevice');
+var Device = require('../models/device');
 var Event = require('../models/event');
 
 router.use(csrfProtection);
 
 router.get('/msg/:msg/:address', function(req, res, next) {
-    var msg=req.params.msg;
-    var address=req.params.address;
+    var msg = req.params.msg;
+    var address = req.params.address;
     var dateTime = require('node-datetime');
     var dt = dateTime.create();
     var formatted = dt.format('Y-m-d H:M:S');
     Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
-        var massage = new messageFromDevice();
-        message.eventId = docs[0]._id;
-        massage.deviceAddress = address;
-        massage.massage = massage;
-        massage.time = formatted;
-        massage.save(function (err, result) {
+        var messages = new Device();
+        messages.eventId = docs[0]._id;
+        messages.deviceAddress = address;
+        messages.message = massage;
+        messages.time = formatted;
+        messages.save(function (err, result) {
             if (err) {
                 res.send(err);
             }
@@ -44,13 +44,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/deviceMessageBox', function(req, res, next) {
-    messageFromDevice.find({eventId : req.session.eventID}).exec(function (err, docs) {
-        var messageChunks = [];
-        var chunkSize = 2;
-        for (var i = 0; i < docs.length; i += chunkSize) {
-            messageChunks.push(docs.slice(i, i + chunkSize));
-        }
-        res.render('deviceMessageBox', {messages: messageChunks, layout: 'main'});
+    Device.find({eventId : req.session.eventID}).exec(function (err, result) {
+        console.log(result);
+        res.render('deviceMessageBox', {messages: result, layout: 'main'});
         });
 
 });
