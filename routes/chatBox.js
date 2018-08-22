@@ -31,14 +31,14 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                     new Map({
                         eventId: docs[0]._id,
                         eventTitle: docs[0].title,
-                        regionName: LatitudeandLongitude[0],
+                        regionName: LatitudeandLongitude[0]+ "_" +address,
                         longitudes: LatitudeandLongitude[1],
                         latitudes: LatitudeandLongitude[2]
                     }),
                     new Map({
                         eventId: docs[0]._id,
                         eventTitle: docs[0].title,
-                        regionName: LatitudeandLongitude[0],
+                        regionName: LatitudeandLongitude[0] + "_" +address,
                         longitudes: LatitudeandLongitude[3],
                         latitudes: LatitudeandLongitude[4]
                     })
@@ -53,7 +53,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                     new Map({
                         eventId: docs[0]._id,
                         eventTitle: docs[0].title,
-                        regionName: LatitudeandLongitude[0],
+                        regionName: LatitudeandLongitude[0] + "_" + address,
                         longitudes: LatitudeandLongitude[1],
                         latitudes: LatitudeandLongitude[2]
                     })
