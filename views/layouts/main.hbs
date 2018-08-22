@@ -75,7 +75,20 @@
                         {{/if}}
 
                         {{#if userRole2}}
-                            <li class="nav-item"> <a class="nav-link" href="/chatBox/">Chat</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Communication
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/chatBox/">Chat Box</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/chatBox/deviceMessageBox">Device Message Box</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+
+                            </li>
                             <li class="nav-item"> <a class="nav-link" href="/handlingDonations/">Handling Donations</a> </li>
                         {{/if}}
                         {{/if}}
