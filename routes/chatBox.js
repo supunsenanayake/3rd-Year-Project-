@@ -26,39 +26,42 @@ router.get('/msg/:msg/:address', function(req, res, next) {
         console.log(msgArray.length);
         var LatitudeandLongitude= msg.split(';');
         if(LatitudeandLongitude.length===6){
-            map = [
-                new Map({
-            eventId :req.session.eventID,
-            eventTitle : req.session.eventTitle,
-            regionName : LatitudeandLongitude[0],
-            longitudes : LatitudeandLongitude[1],
-            latitudes : LatitudeandLongitude[2]}),
-                new Map({
-                    eventId :req.session.eventID,
-                    eventTitle : req.session.eventTitle,
-                    regionName : LatitudeandLongitude[0],
-                    longitudes : LatitudeandLongitude[3],
-                    latitudes : LatitudeandLongitude[4]})
-        ];
+            Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
+                map = [
+                    new Map({
+                        eventId: docs[0]._id,
+                        eventTitle: docs[0].title,
+                        regionName: LatitudeandLongitude[0],
+                        longitudes: LatitudeandLongitude[1],
+                        latitudes: LatitudeandLongitude[2]
+                    }),
+                    new Map({
+                        eventId: docs[0]._id,
+                        eventTitle: docs[0].title,
+                        regionName: LatitudeandLongitude[0],
+                        longitudes: LatitudeandLongitude[3],
+                        latitudes: LatitudeandLongitude[4]
+                    })
+                ];
 
-            autoMapMark(res, map);
-
+                autoMapMark(res, map);
+            });
         }else if(LatitudeandLongitude.length===4){
 
+            Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
+                map = [
+                    new Map({
+                        eventId: docs[0]._id,
+                        eventTitle: docs[0].title,
+                        regionName: LatitudeandLongitude[0],
+                        longitudes: LatitudeandLongitude[1],
+                        latitudes: LatitudeandLongitude[2]
+                    })
+                ];
 
-            map = [
-                new Map({
-                    eventId :req.session.eventID,
-                    eventTitle : req.session.eventTitle,
-                    regionName : LatitudeandLongitude[0],
-                    longitudes : LatitudeandLongitude[1],
-                    latitudes : LatitudeandLongitude[2]})
-            ];
-
-            autoMapMark(res,map);
-
-        }
-        else{
+                autoMapMark(res, map);
+            });
+        }else{
             storeMessages(res, msg, address, formatted);
         }
     }else{
