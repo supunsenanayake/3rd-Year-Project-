@@ -6,7 +6,13 @@ var csrfProtection = csrf();
 
 var Map = require('../models/map');
 
+
+var mongo = require('mongodb').MongoClient;
 var assert = require('assert');
+
+var url = 'mongodb://localhost:27017';
+
+const dbName= 'sahana';
 
 router.use(csrfProtection);
 
@@ -16,7 +22,22 @@ router.use('/', isLoggedIn, function(req, res, next) {
 
 
 router.get('/', function(req, res, next) {
-    res.render('uploadMapRegion',{csrfToken: req.csrfToken(), msgSuccess: req.flash('success')[0],layout : 'main'});
+    mongo.connect(url, function (err, client) {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        db.collection('maps').aggregate(
+            [
+                {$match:{eventId : req.session.eventID }
+                },
+                { $group : { _id : "$regionName"} }
+            ])
+            .toArray(function (err, result) {
+                console.log(result);
+                res.render('uploadMapRegion',{csrfToken: req.csrfToken(), msgSuccess: req.flash('success')[0], regions : result, layout : 'main'});
+                req.flash('success')[0] = false;
+                client.close();
+            });
+    });
 });
 
 
@@ -54,6 +75,16 @@ router.post('/', function(req, res, next) {
     }
 });
 
+
+router.get('/deleteEvent', function(req, res, next) {
+
+    Event.deleteMany({ ownerId : "5b002ff576cefe2710870c1d"},
+        function (err) {
+            assert.equal(null, err);
+            res.redirect('/');
+        });
+
+});
 
 
 

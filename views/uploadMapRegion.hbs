@@ -89,17 +89,21 @@
                                     <td>Region</td>
                                     <td>Action</td>
                                 </tr>
-                                    {{# each donations}}
+                                    {{# each regions}}
                                     <tr>
                                         <td><script>document.write(count)</script></td>
                                         <td>{{this._id}}</td>
                                         <td>
-                                            <a href="/donation/addDonation/{{this._id}}" class="btn btn-primary">Edit</a>
-                                            <a href="/donation/addDonation/{{this._id}}" class="btn btn-danger">Delete</a>
+                                            <a href="/map/edit/{{this._id}}" class="btn btn-primary"
+                                               onclick="return confirm('Are You Sure ' +
+                         'You Want To Edit This Region..!');">Edit</a>
+                                            <a href="/map/delete/{{this._id}}" class="btn btn-danger"
+                                               onclick="return confirm('Are You Sure ' +
+                         'You Want To Delete This Region..!');">Delete</a>
                                         </td>
                                     </tr>
-                                    {{/each}}
                                     <script>count ++;</script>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </h6>
