@@ -67,32 +67,19 @@ router.get('/msg/:msg/:address', function(req, res, next) {
 });
 
 
-
-router.use('/', isLoggedIn, function(req, res, next) {
-    next();
-});
-
-
-router.get('/', function(req, res, next) {
-    res.render('chatBox',{layout : 'main'});
-});
-
-router.get('/deviceMessageBox', function(req, res, next) {
-    Device.find({eventId : req.session.eventID}).exec(function (err, result) {
-        console.log(result);
-        res.render('deviceMessageBox', {messages: result, layout: 'main'});
+function autoMapMark(map) {
+    var done = 0;
+    for (var i = 0; i< map.length; i++){
+        map[i].save(function (err, result) {
+            done ++;
+            if(done === map.length){
+                mongoose.disconnect();
+            }
         });
 
-});
-
-
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer') ){
-        return next();
     }
-    res.redirect('/');
 }
+
 
 function storeMessages(res , msg, address, formatted) {
 
@@ -117,17 +104,38 @@ function storeMessages(res , msg, address, formatted) {
 
 }
 
-function autoMapMark(map) {
-    var done = 0;
-    for (var i = 0; i< map.length; i++){
-        map[i].save(function (err, result) {
-            done ++;
-            if(done === map.length){
-                mongoose.disconnect();
-            }
+
+
+router.use('/', isLoggedIn, function(req, res, next) {
+    next();
+});
+
+
+router.get('/', function(req, res, next) {
+    res.render('chatBox',{layout : 'main'});
+});
+
+router.get('/deviceMessageBox', function(req, res, next) {
+    Device.find({eventId : req.session.eventID}).exec(function (err, result) {
+        console.log(result);
+        res.render('deviceMessageBox', {messages: result, layout: 'main'});
         });
 
+});
+
+
+
+
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer') ){
+        return next();
     }
+    res.redirect('/');
 }
+
+
+
+
 
 module.exports = router;
