@@ -15,11 +15,35 @@ router.get('/msg/:msg/:address', function(req, res, next) {
     var dateTime = require('node-datetime');
     var dt = dateTime.create();
     var formatted = dt.format('Y-m-d H:M:S');
-    Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
+    var msgArray="r99;180.791;6.947;81.132;6.956;".split('');
+
+
+    if(msgArray[0]==='r'){
+        console.log(msgArray.length);
+        var LatitudeandLongitude="r99;180.791;6.947;".split(';');
+        if(LatitudeandLongitude.length===6){
+            var region=LatitudeandLongitude[0];
+            var location1={lat:LatitudeandLongitude[1],log:LatitudeandLongitude[2]};
+            var location2={lat:LatitudeandLongitude[3],log:LatitudeandLongitude[4]};
+        }else if(LatitudeandLongitude.length===4){
+            var region_=LatitudeandLongitude[0];
+            var location1_={lat:LatitudeandLongitude[1],log:LatitudeandLongitude[2]};
+        }
+        else{
+            console.log("else",LatitudeandLongitude);
+            //think as just a message
+        }
+    }else{
+        //just message
+    }
+    //console.log(msgArray);
+
+    /*Event.find().sort({_id : -1}).limit(1).exec(function (err, docs) {
         var messages = new Device();
         messages.eventId = docs[0]._id;
         messages.deviceAddress = address;
         messages.message = msg;
+
         messages.time = formatted;
         messages.save(function (err, result) {
             if (err) {
@@ -29,7 +53,7 @@ router.get('/msg/:msg/:address', function(req, res, next) {
                 res.send("Massage Reserved:" + msg + " Sender Address :" + address + " Time :" + formatted);
             }
         });
-    });
+    });*/
 });
 
 
