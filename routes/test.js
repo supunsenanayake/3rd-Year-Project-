@@ -7,7 +7,14 @@ var News = require('../models/news');
 var Video = require('../models/video');
 
 
+
 var assert = require('assert');
+
+var mongo = require('mongodb').MongoClient;
+
+var url = 'mongodb://localhost:27017';
+
+const dbName= 'sahana';
 
 
 router.get('/', function(req, res, next) {
@@ -38,26 +45,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/deleteEvent', function(req, res, next) {
 
-    Event.deleteMany({ ownerId : "5b002ff576cefe2710870c1d"},
-        function (err) {
-            assert.equal(null, err);
-            res.redirect('/');
-        });
-
-});
-
-
-router.get('/deleteNews', function(req, res, next) {
-
-    News.deleteMany({ ownerId : "5b002ff576cefe2710870c1d"},
-        function (err) {
-            assert.equal(null, err);
-            res.redirect('/');
-        });
-
-});
 
 
 router.get('/addNews', function(req, res, next) {
@@ -113,6 +101,64 @@ router.get('/addVideos', function(req, res, next) {
 
 
 });
+
+
+router.use('/', isLoggedIn, function(req, res, next) {
+    next();
+});
+
+router.get('/mapDelete', function(req, res, next) {
+
+    mongo.connect(url, function (err, client) {
+        const db = client.db(dbName);
+        db.collection('maps').drop();
+        res.redirect('/');
+        client.close();
+    });
+
+});
+
+
+router.get('/deviceDelete', function(req, res, next) {
+
+    mongo.connect(url, function (err, client) {
+        const db = client.db(dbName);
+        db.collection('devices').drop();
+        res.redirect('/');
+        client.close();
+    });
+
+});
+
+
+router.get('/deleteEvent', function(req, res, next) {
+
+    Event.deleteMany({ ownerId : "5b002ff576cefe2710870c1d"},
+        function (err) {
+            assert.equal(null, err);
+            res.redirect('/');
+        });
+
+});
+
+
+router.get('/deleteNews', function(req, res, next) {
+
+    News.deleteMany({ ownerId : "5b002ff576cefe2710870c1d"},
+        function (err) {
+            assert.equal(null, err);
+            res.redirect('/');
+        });
+
+});
+
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer') ){
+        return next();
+    }
+    res.redirect('/');
+}
 
 
 module.exports = router;

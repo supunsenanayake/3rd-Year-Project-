@@ -52,16 +52,6 @@ router.get('/deviceMessageBox', function(req, res, next) {
 });
 
 
-router.get('/delete', function(req, res, next) {
-
-    mongo.connect(url, function (err, client) {
-        const db = client.db(dbName);
-        db.collection('devices').drop();
-        res.redirect('/');
-        client.close();
-    });
-
-});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && (req.user.role === 'Admin' || req.user.role === 'Super Volunteer') ){
