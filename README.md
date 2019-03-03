@@ -93,7 +93,8 @@ Communication System manly has two parts
             2). Gateway 
      Communication device 
      
-            These devices use by rescue teams and use to send messages among other rescue teams and also if necessary can send messages             to web server thru a gateway
+            These devices use by rescue teams and use to send messages among other rescue teams and also
+            if necessary can send messages to web server thru a gateway
             
             each device has Lora Node(E32-TTL-100)
      Gateway
