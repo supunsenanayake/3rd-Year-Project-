@@ -1,7 +1,4 @@
 # SAHANA Disaster Management & Communication System - 3rd year Project
-
-Web URL : http://ec2-18-221-166-17.us-east-2.compute.amazonaws.com
-
 Our Vision : HELP EACH OTHER & BUILD SRI LANKA TOGETHER
 
 Objective : In this website we are mainly focusing on gathering donations, sending donations to required places,Inform the details of the disaster
@@ -86,3 +83,18 @@ user selected Event.
 
 
  2). Communication System
+ 
+Basically, we use the communication system to  communicate among rescue teams
+
+Communication System manly has two parts
+            1). Communication device  
+            2). Gateway 
+     Communication device 
+            These devices use by rescue teams and use to send messages among other rescue teams and also if necessary can send messages             to web server thru a gateway
+            each device has Lora Node(E32-TTL-100)
+     Gateway
+           these devices use to send messages outside network (From rescue teams to web server )
+           each deevice has Lora Node(E32-TTL-100) and GPRS module(sim900) 
+Lora(E32-TTL-100) Range is (3-4KM)
+
+We write simple Protocol to stop looping and data losing
