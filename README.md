@@ -94,11 +94,11 @@ Communication System manly has two parts
             These devices use by rescue teams and use to send messages among other rescue teams and also
             if necessary can send messages to web server thru a gateway
             
-            each device has Lora Node(E32-TTL-100)
+            each device has Lora Node(E32-TTL-100) with Arduino Mega 2560
      Gateway
      
            these devices use to send messages outside network (From rescue teams to web server)        
-           each deevice has Lora Node(E32-TTL-100) and GPRS module(sim900) 
+           each deevice has Lora Node(E32-TTL-100) , GPRS module(sim900) and Arduino Mega 2560
            
 Lora(E32-TTL-100) Range is (3-4KM)
 
