@@ -88,8 +88,7 @@ Basically, we use the communication system to  communicate among rescue teams
 
 Communication System manly has two parts
 
-            1). Communication device  
-            
+            1). Communication device            
             2). Gateway 
      Communication device 
      
