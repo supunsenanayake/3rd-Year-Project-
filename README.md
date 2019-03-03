@@ -85,7 +85,6 @@ user selected Event.
  2). Communication System
  
 Basically, we use the communication system to  communicate among rescue teams
-
 Communication System manly has two parts
 
             1). Communication device            
