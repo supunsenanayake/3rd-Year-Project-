@@ -87,14 +87,21 @@ user selected Event.
 Basically, we use the communication system to  communicate among rescue teams
 
 Communication System manly has two parts
+
             1). Communication device  
+            
             2). Gateway 
      Communication device 
+     
             These devices use by rescue teams and use to send messages among other rescue teams and also if necessary can send messages             to web server thru a gateway
+            
             each device has Lora Node(E32-TTL-100)
      Gateway
+     
            these devices use to send messages outside network (From rescue teams to web server )
+           
            each deevice has Lora Node(E32-TTL-100) and GPRS module(sim900) 
+           
 Lora(E32-TTL-100) Range is (3-4KM)
 
 We write simple Protocol to stop looping and data losing
