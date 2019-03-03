@@ -98,8 +98,7 @@ Communication System manly has two parts
             each device has Lora Node(E32-TTL-100)
      Gateway
      
-           these devices use to send messages outside network (From rescue teams to web server )
-           
+           these devices use to send messages outside network (From rescue teams to web server)        
            each deevice has Lora Node(E32-TTL-100) and GPRS module(sim900) 
            
 Lora(E32-TTL-100) Range is (3-4KM)
